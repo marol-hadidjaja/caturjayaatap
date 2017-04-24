@@ -1,0 +1,11 @@
+RewriteEngine On
+RewriteBase /caturjayaatap/
+RewriteCond %{REQUEST_URI} ^system.*
+RewriteCond $1 !^(index\.php|images|js|uploads|css|robots\.txt)
+RewriteRule ^(.*)$ /index.php/$1 [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]
+SetEnvIf Host www.yoursite.tld$ CI_ENV=production
+SetEnvIf Host test.yoursite.tld$ CI_ENV=testing
+SetEnvIf Host localhost$ CI_ENV=development
