@@ -13,7 +13,10 @@ class Dashboard extends Admin_Controller
     if (!$this->ion_auth->logged_in()){
 			redirect('auth/login');
 		}
-    else
-      $this->load->view('admin/dashboard_view');
+    else{
+      $this->middle = 'admin/home'; // passing middle to function. change this for different views.
+      $this->layout();
+      // $this->load->view('admin/dashboard_view');
+    }
   }
 }

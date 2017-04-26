@@ -16,9 +16,7 @@ class Auth extends CI_Controller {
 	}
 
 	// redirect if needed, otherwise display the user list
-	public function index()
-	{
-
+	public function index(){
 		if (!$this->ion_auth->logged_in())
 		{
 			// redirect them to the login page
@@ -65,7 +63,7 @@ class Auth extends CI_Controller {
 				//if the login is successful
 				//redirect them back to the home page
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect('/', 'refresh');
+				redirect('admin/dashboard', 'refresh');
 			}
 			else
 			{
