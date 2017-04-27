@@ -1,22 +1,20 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Dashboard extends Admin_Controller
-{
-
-  function __construct()
-  {
+class Dashboard extends Admin_Controller{
+  function __construct(){
     parent::__construct();
-  }
 
-  public function index()
-  {
     if (!$this->ion_auth->logged_in()){
 			redirect('auth/login');
 		}
-    else{
-      $this->middle = 'admin/home'; // passing middle to function. change this for different views.
+    $this->load->model('page_model');
+  }
+
+  public function index(){
+      $this->middle = 'admin/pages/index'; // passing middle to function. change this for different views.
+      $data = array();
+      $data['pages'] = $this->page_model->get_pages();
+      $this->data = $data;
       $this->layout();
-      // $this->load->view('admin/dashboard_view');
-    }
   }
 }
