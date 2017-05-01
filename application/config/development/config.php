@@ -526,10 +526,8 @@ $config['proxy_ips'] = '';
 * Load My own MY_Controllers
 */
 function my_own_controllers($class) {
-  if (strpos($class, 'CI_') !== 0)
-  {
-    if (is_readable(APPPATH . 'core/' . $class . '.php'))
-    {
+  if (strpos($class, 'CI_') !== 0){
+    if (is_readable(APPPATH . 'core/' . $class . '.php')){
       require_once(APPPATH . 'core/' . $class . '.php');
     }
   }

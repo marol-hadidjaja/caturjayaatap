@@ -28,3 +28,34 @@
 
   echo form_close();
 ?>
+
+<script>
+  $(document).ready(function() {
+    var toolbar = [
+                    ['style', ['style', 'bold', 'italic', 'underline', 'strikethrough', 'clear']],
+                    ['fonts', ['fontsize', 'fontname']],
+                    ['color', ['color']],
+                    ['undo', ['undo', 'redo', 'help']],
+                    ['misc', ['link', 'table', 'hr', 'fullscreen']],
+                    ['para', ['ul', 'ol', 'leftButton', 'centerButton', 'rightButton', 'justifyButton', 'outdentButton', 'indentButton']],
+                    ['height', ['lineheight']],
+                ];
+    $('#content').materialnote({
+      height: 550,
+      toolbar: toolbar
+    });
+
+    $('button.dropdown').click(function(event){
+      event.preventDefault();
+      event.stopPropagation();
+    });
+
+    // $('#content').summernote();
+
+    /*
+    var quill = new Quill('#content', {
+      theme: 'snow'
+    });
+    */
+  });
+</script>

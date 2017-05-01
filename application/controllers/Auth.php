@@ -83,6 +83,7 @@ class Auth extends CI_Controller {
 				'id'    => 'identity',
 				'type'  => 'text',
 				'value' => $this->form_validation->set_value('identity'),
+        'autofocus' => ''
 			);
 			$this->data['password'] = array('name' => 'password',
 				'id'   => 'password',
