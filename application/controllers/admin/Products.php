@@ -5,7 +5,8 @@ class Products extends Admin_Controller{
     parent::__construct();
 
     $this->load->model('product_model');
-    $this->options_per = array("lembar", "unit", "batang");
+
+    $this->options_per = array("lembar" => "lembar", "unit" => "unit", "batang" => "batang");
     $this->options_specs_name = array("panjang", "lebar", "tebal", "tinggi");
     $this->options_specs_unit = array("in", "m", "cm", "mm");
   }
@@ -16,7 +17,7 @@ class Products extends Admin_Controller{
       $this->_new();
     }
     else{
-      $this->default_method();
+      $this->$method();
     }
   }
 
@@ -35,6 +36,8 @@ class Products extends Admin_Controller{
   }
 
   public function create(){
+    print_r($this->input->post());
+    /*
     $data = array('product' => array('name' => $this->input->post('name'),
       'price' => array(),
       'specifications' => array()));
@@ -42,6 +45,7 @@ class Products extends Admin_Controller{
       $this->session->set_flashdata('message', "Create product succeed");
     else
       $this->session->set_flashdata('message', "Create product failed");
+    */
   }
 
   public function edit($url){

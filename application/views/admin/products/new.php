@@ -6,7 +6,8 @@
   echo form_label('Name', 'name');
   $data = array('name' => 'name',
     'class' => '',
-    'id' => 'name');
+    'id' => 'name',
+    'autofocus' => '');
   echo form_input($data);
 
   echo form_label('Images', 'image');
@@ -20,29 +21,25 @@
     'id' => 'add_price');
   echo form_button($data, 'Add price');
 
-  $data = array('name' => 'prices[][price]',
-    'class' => 'prices_price',
-    'placeholder' => 'Price');
-  echo form_input($data);
-
-  $data = array('name' => 'prices[][per]',
-    'class' => 'prices_per');
-  echo form_dropdown($data, $options_per);
-
-  $data = array('name' => 'specifications[][name]',
-    'class' => 'specification_name');
-  echo form_dropdown($data, $options_specs_name);
-
-  $data = array('name' => 'specifications[][measurement]',
-    'class' => 'specification_measurement',
-    'placeholder' => 'Measurement');
-  echo form_input($data);
-
-  $data = array('name' => 'specifications[][unit]',
-    'class' => 'specification_unit');
-  echo form_dropdown($data, $options_specs_unit);
+  echo "<div id='prices_container'>";
+  $this->load->view('admin/prices/new');
+  echo "</div><!-- close #prices_container -->";
 
   echo form_submit('btn_save', 'Save');
 
   echo form_close();
 ?>
+
+<script>
+  $("select").material_select();
+
+  $("#add_price").click(function(e){
+    $.ajax({
+      url: '<?= base_url()."admin/prices/new" ?>',
+      success: function(result){
+        $('#prices_container').prepend(result);
+        $("select").material_select();
+      }
+    });
+  });
+</script>

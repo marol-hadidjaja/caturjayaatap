@@ -1,5 +1,4 @@
-<?= anchor("admin/products/_new", "New product") ?>
-<?= anchor("admin/products/new", "New product 2") ?>
+<?= anchor("admin/products/new", "New product") ?>
 <?php if(count($products) > 0){ ?>
   <table border='1'>
     <tr>
