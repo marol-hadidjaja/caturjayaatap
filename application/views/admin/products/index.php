@@ -12,7 +12,7 @@
         echo "<tr>";
         echo "<td>{$item["name"]}</td>";
         echo "<td>{$item["updated_at"]}</td>";
-        echo "<td>".anchor("admin/products/edit/{$id}", "Edit")."</td>";
+        echo "<td>".anchor("admin/products/edit/{$item['id']}", "Edit")."</td>";
         echo "</tr>";
       }
     ?>

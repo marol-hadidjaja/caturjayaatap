@@ -7,17 +7,17 @@ class Products extends Admin_Controller{
     $this->load->model('product_model');
 
     $this->options_per = array("lembar" => "lembar", "unit" => "unit", "batang" => "batang");
-    $this->options_specs_name = array("panjang", "lebar", "tebal", "tinggi");
-    $this->options_specs_unit = array("in", "m", "cm", "mm");
+    $this->options_specs_name = array("panjang" => "panjang", "lebar" => "lebar", "tebal" => "tebal", "tinggi" => "tinggi");
+    $this->options_specs_unit = array("in" => "in", "m" => "m", "cm" => "cm", "mm" => "mm");
   }
 
   // this function make user can access /admin/products/new
-  public function _remap($method){
+  public function _remap($method, $params = array()){
     if ($method === 'new'){
       $this->_new();
     }
     else{
-      $this->$method();
+      $this->$method($params);
     }
   }
 
@@ -32,26 +32,52 @@ class Products extends Admin_Controller{
     $this->data["options_per"] = $this->options_per;
     $this->data["options_specs_name"] = $this->options_specs_name;
     $this->data["options_specs_unit"] = $this->options_specs_unit;
+    $this->data["prices_count"] = 0;
+    $this->data["specs_count"] = 0;
     $this->layout();
   }
 
   public function create(){
     print_r($this->input->post());
     /*
-    $data = array('product' => array('name' => $this->input->post('name'),
-      'price' => array(),
-      'specifications' => array()));
+      Array ( [name] => pagar galvanize
+      [prices] => Array ( [1] => Array ( [price] => 240000
+                                         [per] => lembar
+                                         [specifications] => Array ( [1] => Array ( [name] => lebar
+                                                                                    [measurement] => 240
+                                                                                    [unit] => in )
+                                                                     [0] => Array ( [name] => panjang
+                                                                                    [measurement] => 240
+                                                                                    [unit] => in ) ) )
+        [0] => Array ( [price] => 195000
+                       [per] => lembar
+                       [specifications] => Array ( [1] => Array ( [name] => lebar
+                                                                  [measurement] => 120
+                                                                  [unit] => in )
+                                                   [0] => Array ( [name] => panjang
+                                                                  [measurement] => 240
+                                                                  [unit] => in ) ) ) ) [btn_save] => Save )
+    */
+    $data = array('product' => array('name' => $this->input->post('name')),
+      'prices' => $this->input->post('prices'));
     if($this->product_model->create($data))
       $this->session->set_flashdata('message', "Create product succeed");
     else
       $this->session->set_flashdata('message', "Create product failed");
-    */
+
+    redirect('admin/products');
   }
 
-  public function edit($url){
+  public function edit($params){
     $this->middle = 'admin/products/edit';
-    $this->data['page'] = $this->product_model->get($url);
-    $this->data['url'] = $url;
+    $product = $this->product_model->get($params[0]);
+    $this->data["product"] = $product["product"];
+    $this->data["id"] = $params[0];
+    $this->data["options_per"] = $this->options_per;
+    $this->data["options_specs_name"] = $this->options_specs_name;
+    $this->data["options_specs_unit"] = $this->options_specs_unit;
+    $this->data["prices_count"] = $product["prices_count"];
+    $this->data["specs_count"] = $product["specs_count"];
     $this->layout();
   }
 

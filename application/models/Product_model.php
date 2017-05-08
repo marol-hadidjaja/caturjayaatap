@@ -6,6 +6,8 @@ class Product_model extends CI_Model{
   public function __construct(){
 		parent::__construct();
 		$this->load->database();
+    $this->load->model('price_model');
+    $this->load->model('specification_model');
   }
 
   public function get($id = FALSE){
@@ -15,13 +17,38 @@ class Product_model extends CI_Model{
     }
 
     $query = $this->db->get_where('products', array('id' => $id));
-    return $query->row_array();
+    $result = array('product' => $query->row_array(),
+      'prices_count' => $this->price_model->_count($id),
+      'specs_count' => $this->specification_model->_count($id));
+    return $result;
   }
 
   public function create($data){
     $this->db->trans_start();
-    $this->db->insert('products', $data);
+    $product = $data['product'];
+    $product['created_at'] = (new DateTime())->format('Y-m-d');
+    $product['category_id'] = 1;
+    $this->db->insert('products', $product);
+    $product_id = $this->db->insert_id();
+
+    foreach($data['prices'] as $price){
+      $item = array('price' => $price['price'],
+        'per' => $price['per'],
+        'product_id' => $product_id);
+
+      $this->price_model->create($item);
+      $price_id = $this->db->insert_id();
+
+      foreach($price['specifications'] as $specification){
+        $specification['price_id'] = $price_id;
+        $this->specification_model->create($specification);
+      }
+    }
     $this->db->trans_complete();
+    if ($this->db->trans_status() === FALSE)
+      return FALSE;
+    else
+      return TRUE;
   }
 
   public function update($id, $data){
