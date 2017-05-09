@@ -9,18 +9,11 @@ class Price_model extends CI_Model{
   }
 
   public function get($product_id){
-    /*
-    $this->db->select('*');
-    $this->db->from('specifications');
-    $this->db->join('prices', 'prices.id = specifications.price_id');
-    $this->db->where('prices.product_id', $product_id);
-    $query = $this->db->get();
-    */
-    $this->db->select('*');
+    $this->db->select('prices.id AS price_id, prices.price, prices.per,
+                       specifications.id, specifications.name, specifications.measurement, specifications.unit');
     $this->db->from('prices');
     $this->db->join('specifications', 'prices.id = specifications.price_id', 'left');
-    $this->db->where('product_id', $product_id);
-    // $this->db->group_by('specifications.price_id');
+    $this->db->where('prices.product_id', $product_id);
     $query = $this->db->get();
     return $query->result_array();
   }

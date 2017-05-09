@@ -1,5 +1,5 @@
 <?php
-  echo "<div class='specifications' style='border: 1px solid purple;'>";
+  echo "<div class='specifications' style='border: 1px solid purple; margin-bottom:20px;'>";
   // $this->load->view('admin/specifications/_form', array('specification' => $specification, 'specs_count' => $specs_count, 'prices_count' => $prices_count));
   $data = array('name' => "prices[{$prices_count}][specifications][{$specs_count}][name]",
     'class' => 'specification_name');

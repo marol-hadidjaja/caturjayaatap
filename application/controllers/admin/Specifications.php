@@ -25,6 +25,7 @@ class Specifications extends Admin_Controller{
     $this->data["options_specs_unit"] = $this->options_specs_unit;
     $this->data["prices_count"] = $this->input->get("prices_count");
     $this->data["specs_count"] = (int)$this->input->get("specs_count") + 1;
-    $this->load->view('admin/specifications/new', $this->data);
+    $this->load->view('admin/specifications/_form', $this->data);
+    // $this->load->view('admin/specifications/new', $this->data);
   }
 }

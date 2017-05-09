@@ -74,16 +74,22 @@ class Products extends Admin_Controller{
     $this->data["product"] = $product["product"];
     $prices = array();
     foreach($product['prices'] as $key => $item){
-      if(in_array($key, array('price', 'per', 'product_id')))
-        $prices[$item['id']][$key] = $item;
-      else{
-        if(isset($prices[$item['id']]['specifications']))
-          $prices[$item['id']]['specifications'][$key] = $item;
-        else
-          $prices[$item['id']]['specifications'] = array();
-      }
+      $allowed = array('price_id', 'price', 'per');
+      if(!isset($prices[$item['price_id']]))
+        $prices[$item['price_id']] = array_intersect_key($item, array_flip($allowed));
+      // echo "before - prices[price_id] - {$item['price_id']}: ";
+      // print_r($prices[$item['price_id']]);
+      // echo "<br/>";
+      if(!isset($prices[$item['price_id']]['specifications']))
+        $prices[$item['price_id']]['specifications'] = array();
+
+      $allowed = array('name', 'measurement', 'unit');
+      $spec = array_intersect_key($item, array_flip($allowed));
+      array_push($prices[$item['price_id']]['specifications'], $spec);
+      // echo "after - prices[price_id] - {$item['price_id']}: ";
+      // print_r($prices[$item['price_id']]);
+      // echo "<hr/>";
     }
-    ksort($prices, SORT_NUMERIC);
     $this->data["prices"] = $prices;
     $this->data["id"] = $params[0];
     $this->data["options_per"] = $this->options_per;
