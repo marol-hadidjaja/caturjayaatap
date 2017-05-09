@@ -72,12 +72,25 @@ class Products extends Admin_Controller{
     $this->middle = 'admin/products/edit';
     $product = $this->product_model->get($params[0]);
     $this->data["product"] = $product["product"];
+    $prices = array();
+    foreach($product['prices'] as $key => $item){
+      if(in_array($key, array('price', 'per', 'product_id')))
+        $prices[$item['id']][$key] = $item;
+      else{
+        if(isset($prices[$item['id']]['specifications']))
+          $prices[$item['id']]['specifications'][$key] = $item;
+        else
+          $prices[$item['id']]['specifications'] = array();
+      }
+    }
+    ksort($prices, SORT_NUMERIC);
+    $this->data["prices"] = $prices;
     $this->data["id"] = $params[0];
     $this->data["options_per"] = $this->options_per;
     $this->data["options_specs_name"] = $this->options_specs_name;
     $this->data["options_specs_unit"] = $this->options_specs_unit;
-    $this->data["prices_count"] = $product["prices_count"];
-    $this->data["specs_count"] = $product["specs_count"];
+    // $this->data["prices_count"] = $product["prices_count"];
+    // $this->data["specs_count"] = $product["specs_count"];
     $this->layout();
   }
 

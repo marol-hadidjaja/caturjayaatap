@@ -17,9 +17,13 @@ class Product_model extends CI_Model{
     }
 
     $query = $this->db->get_where('products', array('id' => $id));
+    /*
     $result = array('product' => $query->row_array(),
       'prices_count' => $this->price_model->_count($id),
       'specs_count' => $this->specification_model->_count($id));
+    */
+    $result = array('product' => $query->row_array(),
+      'prices' => $this->price_model->get($id));
     return $result;
   }
 

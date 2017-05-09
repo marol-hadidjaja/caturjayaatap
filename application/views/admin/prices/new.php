@@ -1,5 +1,5 @@
 <?php
-  echo "<div class='prices'>";
+  echo "<div class='prices' style='border: 1px solid black;'>";
 
   $data = array('name' => "prices[{$prices_count}][price]",
     'type' => 'number',
@@ -24,7 +24,7 @@
   echo "</div><!-- close .prices -->";
 ?>
 
-  <script>
+<script>
   $("#add_spec").click(function(e){
     $prices = $(this).parent('.prices');
     specs_count = $prices.find('.specifications').length - 1;
@@ -37,4 +37,4 @@
       }
     });
   });
-  </script>
+</script>

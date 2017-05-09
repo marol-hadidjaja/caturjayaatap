@@ -8,14 +8,21 @@ class Price_model extends CI_Model{
 		$this->load->database();
   }
 
-  public function get($id = FALSE){
-    if ($id === FALSE){
-      $query = $this->db->get('prices');
-      return $query->result_array();
-    }
-
-    $query = $this->db->get_where('prices', array('id' => $id));
-    return $query->row_array();
+  public function get($product_id){
+    /*
+    $this->db->select('*');
+    $this->db->from('specifications');
+    $this->db->join('prices', 'prices.id = specifications.price_id');
+    $this->db->where('prices.product_id', $product_id);
+    $query = $this->db->get();
+    */
+    $this->db->select('*');
+    $this->db->from('prices');
+    $this->db->join('specifications', 'prices.id = specifications.price_id', 'left');
+    $this->db->where('product_id', $product_id);
+    // $this->db->group_by('specifications.price_id');
+    $query = $this->db->get();
+    return $query->result_array();
   }
 
   public function _count($product_id){

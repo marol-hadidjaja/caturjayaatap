@@ -25,10 +25,18 @@
     'id' => 'add_price');
   echo form_button($data, 'Add price');
 
-  echo "prices_count: {$prices_count}<br/>";
-  echo "specification_count: {$specs_count}<br/>";
   echo "<div id='prices_container'>";
-  $this->load->view('admin/prices/new');
+  if(count($prices) > 0){
+    echo 'prices in products/_form.php: <br/>';
+    print_r($prices);
+    echo "<br/>";
+    foreach($prices as $prices_count => $price){
+      // echo "price in products/_form.php: <br/>";
+      // print_r($price);
+      // echo "<br/>";
+      $this->load->view('admin/prices/_form', array('price' => $price, 'prices_count' => $prices_count));
+    }
+  }
   echo "</div><!-- close #prices_container -->";
 
   echo form_submit('btn_save', 'Save');
