@@ -13,6 +13,7 @@
         echo "<td>{$item["name"]}</td>";
         echo "<td>{$item["updated_at"]}</td>";
         echo "<td>".anchor("admin/products/edit/{$item['id']}", "Edit")."</td>";
+        echo "<td>".anchor("admin/products/delete/{$item['id']}", "Delete", array("class" => "delete_product"))."</td>";
         echo "</tr>";
       }
     ?>
@@ -20,3 +21,14 @@
 <?php } else{ ?>
   <p>No products yet</p>
 <?php } ?>
+
+<script>
+  $("body").on("click", ".delete_product", function(e){
+    if(confirm("Are you sure to delete this product?"))
+      return true;
+    else
+      return false;
+
+    e.preventDefault();
+  });
+</script>

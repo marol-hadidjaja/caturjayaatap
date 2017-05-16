@@ -6,6 +6,9 @@ class Admin_Controller extends MY_Controller{
     // echo 'This is from admin controller';
     $this->load->add_package_path(APPPATH.'libraries/third_party/ion_auth/');
 		$this->load->library('ion_auth');
+
+    // $this->load->add_package_path(APPPATH.'libraries/third_party/');
+		// $this->load->library('eventviva/imageResize');
     if (!$this->ion_auth->logged_in()){
 			redirect('auth/login');
 		}

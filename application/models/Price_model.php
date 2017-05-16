@@ -14,6 +14,7 @@ class Price_model extends CI_Model{
     $this->db->from('prices');
     $this->db->join('specifications', 'prices.id = specifications.price_id', 'left');
     $this->db->where('prices.product_id', $product_id);
+    $this->db->order_by('specifications.id DESC, prices.id DESC');
     $query = $this->db->get();
     return $query->result_array();
   }

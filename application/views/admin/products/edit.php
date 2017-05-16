@@ -1,7 +1,7 @@
 <?php
   echo validation_errors();
 
-  echo form_open_multipart("admin/products/create");
+  echo form_open_multipart("admin/products/update");
 
   $this->load->view('admin/products/_form');
 

@@ -40,4 +40,12 @@ class Specification_model extends CI_Model{
     else
       return FALSE;
   }
+
+  public function _delete($price_id, $spec_ids){
+    // $conds = array('price_id' => $price_id, 'id IN ' => );
+    // $this->db->where($conds);
+    $this->db->where('price_id', $price_id);
+    $this->db->where_not_in('id', $spec_ids);
+    $this->db->delete('specifications');
+  }
 }
