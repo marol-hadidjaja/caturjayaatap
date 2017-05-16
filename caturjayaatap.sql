@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 02, 2017 at 01:33 AM
--- Server version: 5.5.54-0ubuntu0.14.04.1
+-- Generation Time: May 17, 2017 at 05:56 AM
+-- Server version: 5.5.54-0ubuntu0.14.04.1-log
 -- PHP Version: 5.5.9-1ubuntu4.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -32,7 +32,15 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `created_at` datetime NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'pagar', '2017-05-08 00:00:00', '2017-05-08 15:39:34'),
+(2, 'pintu', '2017-05-08 00:00:00', '2017-05-08 15:39:34');
 
 -- --------------------------------------------------------
 
@@ -109,7 +117,23 @@ CREATE TABLE IF NOT EXISTS `prices` (
   `product_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
+
+--
+-- Dumping data for table `prices`
+--
+
+INSERT INTO `prices` (`id`, `price`, `per`, `product_id`) VALUES
+(5, 241000, 'lembar', 3),
+(6, 196000, 'lembar', 3),
+(12, 67800, 'batang', 9),
+(13, 61400, 'batang', 9),
+(14, 32100, 'lembar', 12),
+(15, 33200, 'lembar', 12),
+(16, 32000, 'lembar', 13),
+(17, 27000, 'lembar', 13),
+(22, 65000, 'lembar', 16),
+(23, 68000, 'lembar', 16);
 
 -- --------------------------------------------------------
 
@@ -126,7 +150,42 @@ CREATE TABLE IF NOT EXISTS `products` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `category_id` (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `name`, `hide`, `category_id`, `created_at`, `updated_at`) VALUES
+(3, 'pagar galvanize-- edit', 0, 1, '2017-05-08 00:00:00', '2017-05-08 16:49:39'),
+(9, 'tiang galvanize', 0, 1, '2017-05-13 00:00:00', '2017-05-12 17:11:13'),
+(12, 'Reng', 0, 1, '2017-05-13 00:00:00', '2017-05-12 18:08:21'),
+(13, 'atap cja - 75', 0, 1, '2017-05-13 00:00:00', '2017-05-12 18:24:52'),
+(16, 'Kanal C-75', 0, 1, '2017-05-17 05:05:23', '2017-05-16 22:08:23');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_images`
+--
+
+CREATE TABLE IF NOT EXISTS `product_images` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `filename` varchar(100) NOT NULL,
+  `alt` varchar(100) NOT NULL,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `product_images`
+--
+
+INSERT INTO `product_images` (`id`, `product_id`, `filename`, `alt`, `created_at`) VALUES
+(2, 16, '933aab2e00ffaae560d25dd7fb9f129e.jpg', 'kanal-c_(3)', '2017-05-17 05:05:23'),
+(3, 16, '883de19cae1e38968f4c1417626cb57b.jpg', 'kanal-c_(3)', '2017-05-17 05:05:18');
 
 -- --------------------------------------------------------
 
@@ -173,12 +232,40 @@ CREATE TABLE IF NOT EXISTS `sliders` (
 CREATE TABLE IF NOT EXISTS `specifications` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(15) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `measurement` int(11) NOT NULL,
+  `measurement` float NOT NULL,
   `unit` varchar(5) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `price_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `price_id` (`price_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=68 ;
+
+--
+-- Dumping data for table `specifications`
+--
+
+INSERT INTO `specifications` (`id`, `name`, `measurement`, `unit`, `price_id`) VALUES
+(5, 'lebar', 120, 'cm', 5),
+(6, 'panjang', 240, 'in', 5),
+(7, 'lebar', 90, 'cm', 6),
+(8, 'panjang', 240, 'cm', 6),
+(13, 'tebal', 11, 'in', 5),
+(17, 'tebal', 11, 'in', 6),
+(44, 'tebal', 1.4, 'mm', 13),
+(45, 'tinggi', 120, 'cm', 12),
+(46, 'tebal', 1.2, 'mm', 12),
+(47, 'tinggi', 120, 'cm', 13),
+(48, 'panjang', 6, 'm', 14),
+(49, 'panjang', 6, 'm', 15),
+(50, 'tebal', 0.4, 'mm', 15),
+(51, 'tebal', 0.35, 'mm', 14),
+(52, 'lebar', 75, 'cm', 16),
+(53, 'tebal', 0.25, 'cm', 16),
+(54, 'tebal', 0.2, 'cm', 17),
+(55, 'lebar', 75, 'cm', 17),
+(64, 'tebal', 0.7, 'mm', 22),
+(65, 'panjang', 6, 'm', 22),
+(66, 'tebal', 0.73, 'mm', 23),
+(67, 'panjang', 6, 'm', 23);
 
 -- --------------------------------------------------------
 
@@ -212,7 +299,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1493661385, 1, 'Admin', 'istrator', 'ADMIN', '0');
+(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1494966904, 1, 'Admin', 'istrator', 'ADMIN', '0');
 
 -- --------------------------------------------------------
 
@@ -253,6 +340,12 @@ ALTER TABLE `prices`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `product_images`
+--
+ALTER TABLE `product_images`
+  ADD CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `specifications`

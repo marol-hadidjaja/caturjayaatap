@@ -26,6 +26,25 @@
     'id' => 'image',
     'multiple' => true);
   echo form_upload($data);
+  if(count($images) > 0){
+    foreach($images as $image){
+      $extension_pos = strrpos($image['filename'], '.'); // find position of the last dot, so where the extension starts
+      $thumb = substr($image['filename'], 0, $extension_pos) . '_thumb' . substr($image['filename'], $extension_pos);
+      echo "<div class='product_images' data-id='{$image['id']}'>";
+      echo img("uploads/{$thumb}");
+
+      $data = array('name' => 'delete_image',
+        'class' => 'delete_image');
+      echo form_button($data, 'X');
+      echo "</div><!-- close .product_images -->";
+    }
+    $image_ids = array_map(function($val){ return $val['id']; }, $images);
+    $data = array('name' => 'product_images',
+      'type' => 'hidden',
+      'id' => 'product_images',
+      'value' => join($image_ids, ','));
+    echo form_input($data);
+  }
 
   $data = array('name' => 'add_price',
     'class' => '',
@@ -91,5 +110,20 @@
   $("body").on("click", ".delete_price", function(e){
     $price = $(this).parent('.prices');
     $price.remove();
+  });
+
+  $("body").on("click", ".delete_image", function(e){
+    $product_image = $(this).parent(".product_images");
+    $product_image_id = $product_image.data("id");
+
+    product_images = $("#product_images").val();
+    product_images = product_images.split(',');
+    removed_idx = product_images.indexOf($product_image_id);
+    product_images.splice(removed_idx, 1);
+    product_image_ids = product_images.join(',');
+
+    // change product image ids, because user remove image
+    $("#product_images").val(product_image_ids);
+    $product_image.remove();
   });
 </script>

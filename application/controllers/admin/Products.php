@@ -46,7 +46,8 @@ class Products extends Admin_Controller{
     $data = array('product' => array('name' => $this->input->post('name')),
       'prices' => $this->input->post('prices'));
 
-    if($this->product_model->create($data))
+    $images = $this->handle_upload($_FILES, 'image', array('thumb'));
+    if($this->product_model->create($data, $images))
       $this->session->set_flashdata('message', "Create product succeed");
     else
       $this->session->set_flashdata('message', "Create product failed");
@@ -58,6 +59,7 @@ class Products extends Admin_Controller{
     $this->middle = 'admin/products/edit';
     $product = $this->product_model->get($params[0]);
     $this->data["product"] = $product["product"];
+    $this->data['images'] = $this->product_image_model->get($params[0]);
     // echo "<pre>";
     // print_r($product['prices']);
     // echo "</pre>";
@@ -131,44 +133,38 @@ class Products extends Admin_Controller{
     $this->layout();
   }
 
-    //appends all error messages
-    private function handle_error($err) {
-        $this->error .= $err . "rn";
-        echo "handle_error: {$err}";
-    }
- 
-    //appends all success messages
-    private function handle_success($succ) {
-        $this->success .= $succ . "rn";
-        echo "handle_success: {$succ}";
-    }
+  //appends all error messages
+  private function handle_error($err) {
+    $this->error .= $err . "rn";
+    echo "handle_error: {$err}<br/>";
+  }
 
-  public function update(){
-    // print_r($this->input->post());
-    $product_id = $this->input->post('id');
-    // echo "product_id: {$product_id}";
-    $data = array('product' => array('name' => $this->input->post('name')),
-      'prices' => $this->input->post('prices'));
+  //appends all success messages
+  private function handle_success($succ) {
+    $this->success .= $succ . "rn";
+    echo "handle_success: {$succ}<br/>";
+  }
 
-
+  private function handle_upload($files, $input_name, $image_sizes){
+    $result = array('success' => array(), 'error' => array());
     $config = array();
-    $config['image_library'] = 'gd2';
+    // $config['image_library'] = 'gd2';
     // $config['source_image'] = '/path/to/image/mypic.jpg';
     $upload_path = './uploads';
     $config['upload_path'] = $upload_path;
     $config['allowed_types'] = 'jpg|jpeg|png';
-    $config['max_size'] = '2000';
+    // $config['max_size'] = '2000'; // default is 2048KB => 2MB
     $config['encrypt_name'] = TRUE;
-    $config['create_thumb'] = TRUE;
-    $config['maintain_ratio'] = TRUE;
-    $config['width']         = 75;
-    $config['height']       = 50;
+    // $config['create_thumb'] = TRUE;
+    // $config['maintain_ratio'] = TRUE;
+    // $config['width']         = 75;
+    // $config['height']       = 50;
 
     $this->load->library('image_lib', $config);
     $image_data = array();
     $is_file_error = FALSE;
     //check if file was selected for upload
-    if (!$_FILES) {
+    if (!$files) {
       echo "NO FILES<br/>";
       $is_file_error = TRUE;
       $this->handle_error('Select an image file.');
@@ -180,9 +176,20 @@ class Products extends Admin_Controller{
     if (!$is_file_error) {
       echo "No error in file<br/>";
       //load the preferences
+      // echo "Config: ";
+      // print_r($config);
+      // echo "<br/>";
       $this->load->library('upload', $config);
+      /*
+      foreach ($_FILES as $fieldname => $fileObject)  //fieldname is the form field name
+      {
+        if (!empty($fileObject['name']))
+        {
+          $this->upload->initialize($config);
+          if (!$this->upload->do_upload($fieldname))
+      */
       //check file successfully uploaded. 'image_name' is the name of the input
-      if (!$this->upload->do_upload('image')) {
+      if (!$this->upload->do_upload($input_name)) {
         echo "Upload failed<br/>";
         //if file upload failed then catch the errors
         $this->handle_error($this->upload->display_errors());
@@ -194,15 +201,21 @@ class Products extends Admin_Controller{
         echo "image_data: ";
         print_r($image_data);
         echo "<br/>";
-        $config['image_library'] = 'gd2';
-        $config['source_image'] = $image_data['full_path']; //get original image
-        $config['maintain_ratio'] = TRUE;
-        $config['width'] = 150;
-        $config['height'] = 100;
-        $this->load->library('image_lib', $config);
+        $image_lib_config['image_library'] = 'gd2';
+        $image_lib_config['source_image'] = $image_data['full_path']; //get original image
+        $image_lib_config['maintain_ratio'] = TRUE;
+        $image_lib_config['width'] = 150;
+        $image_lib_config['height'] = 100;
+        $image_lib_config['create_thumb'] = TRUE;
+        $image_lib_config['thumb_marker'] = '_thumb';
+        $this->load->library('image_lib');
+        $this->image_lib->initialize($image_lib_config);
         if (!$this->image_lib->resize()) {
           echo "Cannot resize<br/>";
           $this->handle_error($this->image_lib->display_errors());
+        }
+        else{
+          echo "image_lib resize OK<br/>";
         }
       }
     }
@@ -212,16 +225,39 @@ class Products extends Admin_Controller{
       if ($image_data) {
         echo "IMAGE Data is HERE<br/>";
         $file = $upload_path . $image_data['file_name'];
-        if (file_exists($file)) {
+        echo "file: {$file}<br/>";
+        array_push($result['error'], $image_data['orig_name']);
+        if(file_exists($file)){
           unlink($file);
         }
       }
     } else {
       $data['resize_img'] = $upload_path . $image_data['file_name'];
+      $alt = pathinfo($image_data['orig_name'], PATHINFO_FILENAME);
+      array_push($result['success'], array('filename' => $image_data['file_name'], 'alt' => $alt));
+      echo "resize success<br/>";
       $this->handle_success('Image was successfully uploaded to direcoty <strong>' . $upload_path . '</strong> and resized.');
     }
+    return $result;
+  }
+
+  public function update(){
+    // print_r($this->input->post());
+    $product_id = $this->input->post('id');
+    // echo "product_id: {$product_id}";
+    $data = array('product' => array('name' => $this->input->post('name')),
+      'prices' => $this->input->post('prices'),
+      'images' => $this->input->post('product_images'));
+
+    $new_images = $this->handle_upload($_FILES, 'image', array('thumb'));
     /*
-    if($this->product_model->update($product_id, $data))
+    echo "images result: <br/>";
+    print_r($new_images);
+    echo "<br/>";
+    */
+    $this->product_model->update($product_id, $data, $new_images);
+    /*
+    if($this->product_model->update($product_id, $data, $images))
       $this->session->set_flashdata('message', "Update product succeed");
     else
       $this->session->set_flashdata('message', "Update product failed");
