@@ -10,7 +10,7 @@ class Sliders extends Admin_Controller{
   public function index(){
     $this->middle = 'admin/sliders/index';
     $data = array();
-    $this->data['slider'] = $this->slider_model->get();
+    $this->data['sliders'] = $this->slider_model->get();
     $this->layout();
   }
 

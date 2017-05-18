@@ -21,9 +21,9 @@
   echo form_input($data);
 
   echo form_label('Images', 'image');
-  $data = array('name' => 'image',
+  $data = array('name' => 'images[]',
     'class' => '',
-    'id' => 'image',
+    'id' => 'images',
     'multiple' => true);
   echo form_upload($data);
   if(count($images) > 0){

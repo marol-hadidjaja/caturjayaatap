@@ -76,9 +76,22 @@ class Product_model extends CI_Model{
     $this->db->update('products', $product);
 
     $product_images = $this->product_image_model->get($id);
+    echo "current product_images: ";
+    print_r($product_images);
+    echo "<br/>";
     $product_image_ids = array_map(function($val){ return $val['id']; }, $product_images);
+    echo "current product_image_ids: ";
+    print_r($product_image_ids);
+    echo "<br/>";
     $deleted_image_ids = array_diff($product_image_ids, explode(',', $data['images']));
-    $this->product_image_model->_delete($deleted_image_ids);
+    echo "deleted_image_ids: ";
+    print_r($deleted_image_ids);
+    echo "<br/>";
+    if(count($deleted_image_ids) > 0)
+      $this->product_image_model->_delete($id, $deleted_image_ids);
+    echo "images: ";
+    print_r($images);
+    echo "<br/>";
     foreach($images['success'] as $image){
       $image_item = array('product_id' => $id,
         'filename' => $image['filename'],
