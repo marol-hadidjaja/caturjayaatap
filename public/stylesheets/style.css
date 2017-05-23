@@ -1,0 +1,446 @@
+p, ol{ color: rgba(0,0,0,0.6); }
+h1,h2,h3,h4,h5,h6{
+	margin-top: 0;
+	margin-bottom: 7px;
+}
+
+img{ max-width: 100%; }
+
+i.left{ margin-right: 10px; }
+a{ color: rgba(0,0,0,0.8); }
+
+.btn{
+  background-color: #00af50 !important;
+}
+
+.container{ width: 75%; }
+.row{ margin-bottom: 0; }
+.backBlack{
+	background-color: rgba(0,0,0,0.5);
+	width: 100vw;
+	height: 100vh;
+	position: absolute;
+}
+
+.slider, .slides, .slides img{ height: 100vh !important; }
+	.slides img{ object-fit: cover; }
+	.slider .indicators{
+		z-index: 10;
+    bottom: 120px;
+	}
+	.slider .slides li .caption{ top: 30%; }
+	.slider .indicators .indicator-item{
+		height: 12px;
+    width: 12px;
+    margin: 0px 7px;
+	}
+.padded{
+	padding-top: 7%;
+	padding-bottom: 7%;
+}
+.backgrey, .backgrey .container{ position: relative; }
+	.backgrey{ background-color: #e4e4e4; }
+	.backgrey.home .container{
+		top: -100px;
+		z-index: 10;
+	}
+	.backgrey .first{ background-color: white; }
+		.homepage .content{
+			padding-top: 5%;
+			padding-bottom: 7%;
+		}
+		.content .subcontent{
+			max-width: 80%;
+			margin: 0 auto;
+		}
+		.title h5{
+			font-style: italic;
+			color: #00af50;
+			margin-bottom: 20px;
+		}
+		.title span{
+			color: rgba(0,0,0,0.84);
+		}
+
+nav{
+  background-color: white;
+  box-shadow: none;
+  border-top: 5px solid #00af50;
+  line-height: 100px;
+  padding: 0 20px;
+}
+	nav .brand-logo img{
+		max-height: 85px;
+		margin-top: 5px;
+	}
+	nav li a{
+		text-transform: uppercase;
+		color: rgba(0,0,0,0.6);
+		padding: 0 25px;
+	}
+		ul li.current a{ color: #00af50; }
+
+	.menu .col{
+		padding: 0;
+	}
+
+	.Hproduct{
+		margin-top: 7%;
+	}
+		.Hproduct .card-content{
+			border-top: 1px solid #e3e3e3;
+		}
+		.Hproduct img{
+			height: 250px;
+			object-fit: cover;
+		}
+
+		.Hproduct h6 {
+		  display: block; /* Fallback for non-webkit */
+		  display: -webkit-box;
+		  max-width: 400px;
+		  height: 15px*1.4*3; /* Fallback for non-webkit */
+		  margin: 0 auto;
+		  font-size: 15px;
+		  line-height: 1.4;
+		  -webkit-line-clamp: 3;
+		  -webkit-box-orient: vertical;
+		  overflow: hidden;
+		  text-overflow: ellipsis;
+			color: rgba(0,0,0,0.6) !important;
+		}
+		.Hproduct .button{
+			margin-top: 15px;
+		}
+
+		.contentProd .title{
+			margin-bottom: 3%;	
+		}
+		.mobImgProd{ display: none; }
+footer{
+	height: 350px;
+	object-fit: cover;
+	position: relative;
+	color: white;
+}
+	footer a{
+		color: rgba(255,255,255,0.9);
+		font-style: italic;
+		text-transform: uppercase;
+		font-weight: 500;
+		font-size: 12px;
+	}
+	footer .greenBack{
+		background: rgba(18,181,92,0.85);
+    height: 100%;
+	}
+	.fatFooter{
+		position: absolute;
+		width: 100%;
+		padding-top: 5%;
+	}
+	footer p{
+		color: white;
+	}
+	footer h5{ 
+		margin-bottom: 15px; 
+		font-size: 20px;
+	}
+	footer ul li{
+		line-height: 20px;
+		display: block;
+		margin-bottom: 10px;
+		font-size: 14px;
+	}
+	footer .about img{
+		max-width: 200px;
+	}
+
+	footer .prod img{
+		width: 70px;
+		height: 70px;
+		object-fit: cover;
+	}
+	footer .prod li{
+		display: inline-block;
+		margin-right: 10px;
+	}
+	footer .copyright{
+		background-color: #00af50;
+	}
+		footer .copyright p{
+			margin-top: 0;
+			padding-top: 10px;
+			padding-bottom: 10px;
+		}
+
+		.material-icons{ font-size: 18px; }
+blockquote{
+	border: none;
+	color: rgba(0,0,0,0.7);
+	margin-top: 30px;
+	font-size: 20px;
+	padding: 0;
+}
+
+.visiMisi{
+	background: #f3f3f3;
+	display: inline-block;
+	margin-bottom: 20px;
+	padding: 5%;
+	width: 100%;
+}
+	.visiMisi img{
+		height: 300px;
+		object-fit: cover;
+		width: 100%;
+	}
+	.visiMisi .title{ margin-bottom: 8%; }
+	.visiMisi .title h5{
+		background: #00af50;
+		color: white;
+		padding: 5px;
+		margin-bottom: 0;
+	}
+	.visiMisi ol{
+		padding-left: 8%;
+	}
+
+.icon{
+	margin-top: 5%;
+	margin-bottom: 5%;
+	width: 70%;
+	margin-left: auto !important;
+	margin-right: auto !important;
+}
+	.icon img{
+		max-width: 30%;
+		margin-bottom: 10px;
+		-webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+	}
+	.icon h6{
+		font-weight: bold;
+		color: rgba(0,0,0,0.7);
+		line-height: 1.6;
+	}
+	.icon span{
+		color: #00af50;
+	}
+
+.Hproduct.det{
+	margin-top: 0;
+}
+
+.detailProd .title h5{
+	display: inline-block;
+}
+	.detailProd .btn{
+		float: right;
+    height: 30px;
+    line-height: 30px;
+    padding: 2px 14px;
+    font-size: 14px;
+    z-index: 0;
+	}
+	.detailProd p{
+		margin-top: 5px;
+	}
+
+.imgLarge {
+  margin-bottom: 10px;
+}
+
+.viewProduct .content{
+	position: relative;
+}
+.viewProduct img, .zoomContainer {
+    width: 92% !important;
+    height: inherit !important;
+    object-fit: cover
+}
+
+img#pict1 {
+  margin-left: 0;
+}
+.thumb {
+  margin-top: 20px;
+  float: left;
+  margin: auto;
+  overflow: hidden;
+}
+	.thumb img {
+	  vertical-align: middle;
+	  border: 1px solid #c4c1c1;
+	  margin: 0 5px;
+	  cursor: pointer;
+	  width: 90px !important;
+	}
+
+.priceList table{
+	border: 1px solid #d0d0d0;
+  background: white;
+}
+	.priceList table td, .priceList table th{
+		padding: 15px;
+	}
+
+.contact .subcontent{
+	max-width: 100%;
+	margin-bottom: 5%;
+}
+
+@media screen and (max-width: 1250px){
+	.Hproduct img {
+    height: 200px;
+  }
+}
+
+@media screen and (max-width: 1100px){
+	nav li a{ padding: 0 15px; }
+	.Hproduct img {
+    height: 170px;
+  }
+
+  .title h5{
+		margin-bottom: 10px;
+	}
+	.icon img { max-width: 35%; }
+}
+
+@media only screen and (max-width: 992px){
+	nav .button-collapse{ display: none; }
+	nav .brand-logo {
+    left: 0;
+    -webkit-transform: inherit;
+    transform: inherit;
+	}
+		nav .brand-logo img {
+	    max-height: 65px;
+	    margin-top: 15px;
+		}
+	.container{ width: 85%; }
+	.slider .indicators .indicator-item{
+		height: 8px;
+    width: 8px;
+    margin: 0px 5px;
+	}
+	.Hproduct img {
+    height: 150px;
+  }
+	.Hproduct h5{ font-size: 20px; }
+	.Hproduct h6, p, footer ul li{ font-size: 14px; }
+	footer { height: 450px; }
+
+	.visiMisi .title h5{ font-size: 18px; }
+
+	.icon{ width: 80%; }
+		.icon img{ margin-bottom: 0; }
+
+	.imgProd{
+		display: none;
+	}
+	.mobImgProd{ 
+		display: block; 
+		margin-top: 5%;
+	}
+		.mobImgProd img{ width: 100% !important; }
+}
+
+@media only screen and (max-width: 770px){
+	nav{ line-height: 70px; }
+	nav li a {
+    padding: 0 10px;
+    font-size: 12px;
+	}
+	nav .brand-logo img {
+    max-height: 50px;
+    margin-top: 9px;
+  }
+  .backgrey.home .container {
+    top: -70px;
+  }
+
+  .caption h3{ font-size: 2.3rem; }
+  .caption h5, blockquote{ font-size: 18px; }
+
+  .slider .indicators{
+  	bottom: 80px;
+  }
+  .Hproduct img { height: 120px; }
+  .Hproduct { margin-top: 10%; }
+  .Hproduct .card .card-content{ padding: 16px; }
+  blockquote{
+  	margin-top: 5%;
+    margin-bottom: 0;
+  }
+
+  .icon{ width: 100%; }
+  	.icon img { max-width: 50%; }
+}
+
+@media only screen and (max-width: 630px){
+	nav li a {
+    padding: 0 7px;
+    font-size: 11px;
+	}
+	.title h5{ 
+		font-size: 18px; 
+	}
+	p,.Hproduct h6, footer ul li{ font-size: 13px; }
+
+	.homepage .content{ padding-top: 10%; }
+	footer { height: 480px; }
+}
+
+@media only screen and (max-width: 600px){
+	nav{ padding: 0; }
+	nav .button-collapse{ display: block; }
+	nav .brand-logo {
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+	}
+	nav .button-collapse i {
+    height: 70px;
+    line-height: 70px;
+    color: black;
+	}
+	.menu{ height: 75px; }
+	.side-nav{ width: 250px; }
+	.side-nav li>a{
+		height: 50px;
+    line-height: 60px;
+    padding: 0 20px;
+	}
+	footer{ height: 570px; }
+
+	.Hproduct .card .card-content{ padding: 24px;	}
+		.Hproduct h6{ margin-left: 0; }
+		.Hproduct img { height: 150px; }
+
+	.visi{ margin-top: 5%; }
+	.priceList table td, .priceList table th{ 
+		font-size: 12px; 
+		padding: 10px;
+	}
+}
+
+@media only screen and (max-width: 500px){
+	.title h5{ font-size: 16px; }
+	p, footer ul li, .Hproduct h6{ font-size: 12px; }
+}
+
+@media only screen and (max-width: 450px){
+	.priceList table td, .priceList table th{ 
+		font-size: 11px; 
+		padding: 7px;
+	}
+}
+
+@media only screen and (max-width: 380px){
+	.priceList table td, .priceList table th{ 
+		font-size: 10px; 
+		padding: 5px;
+	}
+}

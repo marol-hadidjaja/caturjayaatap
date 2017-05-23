@@ -9,6 +9,7 @@ class Product_model extends CI_Model{
     $this->load->model('price_model');
     $this->load->model('specification_model');
     $this->load->model('product_image_model');
+    $this->load->model('category_model');
   }
 
   public function get($id = FALSE){
@@ -19,6 +20,32 @@ class Product_model extends CI_Model{
       return $query->result_array();
     }
 
+    /*
+    $this->db->select('products.name AS name, products.id AS product_id, ');
+    $this->db->join('categories', 'categories.id = products.category_id', 'left');
+    */
+    $query = $this->db->get_where('products', array('id' => $id));
+    $result = array('product' => $query->row_array(),
+      'prices' => $this->price_model->get($id));
+    return $result;
+  }
+
+  public function get_full($id = FALSE){
+    if ($id === FALSE){
+      $this->db->from('products');
+      $this->db->order_by('updated_at', 'DESC');
+      $query = $this->db->get();
+      $result = $query->result_array();
+      foreach($result as $k => $v){
+        $result['images'] = $this->product_image_model->get($id);
+      }
+      return $result;
+    }
+
+    /*
+    $this->db->select('products.name AS name, products.id AS product_id, ');
+    $this->db->join('categories', 'categories.id = products.category_id', 'left');
+    */
     $query = $this->db->get_where('products', array('id' => $id));
     $result = array('product' => $query->row_array(),
       'prices' => $this->price_model->get($id));
@@ -68,30 +95,47 @@ class Product_model extends CI_Model{
   public function update($id, $data, $images){
     $this->db->trans_start();
     $product = $data['product'];
-    $product['category_id'] = 1;
-    // echo "data product:<br/>";
-    // print_r($product);
-    // echo "<br/>";
+    if(is_numeric($data['product']['category']))
+      $product['category_id'] = $data['product']['category'];
+    else{
+      $category_id = $this->category_model->create($data['product']['category']);
+      $product['category_id'] = $category_id;
+    }
+    unset($product['category']);
+    // $product['category_id'] = 1;
+    /*
+    echo "data product:<br/>";
+    print_r($product);
+    echo "<br/>";
+     */
     $this->db->where('id', $id);
     $this->db->update('products', $product);
 
     $product_images = $this->product_image_model->get($id);
+    /*
     echo "current product_images: ";
     print_r($product_images);
     echo "<br/>";
+     */
     $product_image_ids = array_map(function($val){ return $val['id']; }, $product_images);
+    /*
     echo "current product_image_ids: ";
     print_r($product_image_ids);
     echo "<br/>";
+     */
     $deleted_image_ids = array_diff($product_image_ids, explode(',', $data['images']));
+    /*
     echo "deleted_image_ids: ";
     print_r($deleted_image_ids);
     echo "<br/>";
+     */
     if(count($deleted_image_ids) > 0)
       $this->product_image_model->_delete($id, $deleted_image_ids);
+    /*
     echo "images: ";
     print_r($images);
     echo "<br/>";
+     */
     foreach($images['success'] as $image){
       $image_item = array('product_id' => $id,
         'filename' => $image['filename'],

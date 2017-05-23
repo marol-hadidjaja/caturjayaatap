@@ -223,7 +223,8 @@ class Products extends Admin_Controller{
     // print_r($this->input->post());
     $product_id = $this->input->post('id');
     // echo "product_id: {$product_id}";
-    $data = array('product' => array('name' => $this->input->post('name')),
+    $data = array('product' => array('name' => $this->input->post('name'),
+                                     'category' => $this->input->post('category')),
       'prices' => $this->input->post('prices'),
       'images' => $this->input->post('product_images'));
 

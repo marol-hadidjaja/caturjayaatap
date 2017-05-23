@@ -1,3 +1,8 @@
+<style>
+  select#category{
+    witdh: 250px;
+  }
+</style>
 <?php
   $data = array('name' => "id",
     'type' => 'hidden',
@@ -14,11 +19,28 @@
   echo form_input($data);
 
   echo form_label('Category', 'category');
+  /*
   $data = array('name' => 'category',
     'class' => '',
     'id' => 'category',
     'autofocus' => '');
   echo form_input($data);
+  */
+  $data = array('name' => "category",
+    'id' => 'category');
+
+  if(isset($product))
+    echo form_dropdown($data, array(), $product['category_id']);
+  else
+    echo form_dropdown($data, array());
+
+  echo form_label('Description', 'description');
+  $data = array('name' => 'description',
+    'class' => '',
+    'id' => 'description',
+    'autofocus' => '',
+    'value' => isset($product) ? set_value('description', $product['description']) : set_value('description'));
+  echo form_textarea($data);
 
   echo form_label('Images', 'image');
   $data = array('name' => 'images[]',
@@ -74,6 +96,41 @@
 ?>
 
 <script>
+  var url = '<?= base_url()."admin/categories" ?>';
+  $("select#category").select2({
+    tags: true,
+    minimumInputLength:1,
+    "ajax": {
+      "url": url,
+      data:function (params) {
+        // console.log('params: ', params);
+        return { term:params.term, page:params.page };
+      },
+      dataType:"json",
+      quietMillis:100,
+      processResults: function (data, params) {
+        // console.log('processResults -- data: ', data);
+        // console.log('processResults -- params: ', params);
+        return {results: data};
+      },
+    },
+
+    // Allow manually entered text in drop down.
+    createTag: function(params){
+      var term = $.trim(params.term);
+
+      if (term === '') {
+        return null;
+      }
+
+      return {
+        id: term,
+        text: term,
+        newOption: true // add additional parameters
+      }
+    }
+  });
+
   $("select").material_select();
 
   $("body").on("click", "#add_price", function(e){

@@ -27,12 +27,15 @@
     <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/codeMirror/codemirror.css">
     <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/codeMirror/monokai.css">
     <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/main.css">
+    <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/select2.min.css">
 
     <script src="<?= base_url() ?>public/javascripts/materialize.min.js"></script>
     <script src="<?= base_url() ?>public/javascripts/ckMaterializeOverrides.js"></script>
     <script src="<?= base_url() ?>public/javascripts/codeMirror/codemirror.js"></script>
     <script src="<?= base_url() ?>public/javascripts/codeMirror/xml.js"></script>
     <script src="<?= base_url() ?>public/javascripts/materialNote.js"></script>
+    <script src="<?= base_url() ?>public/javascripts/select2.full.min.js"></script>
+
   </head>
 
   <body>

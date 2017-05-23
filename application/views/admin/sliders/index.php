@@ -19,7 +19,7 @@
     ?>
   </table>
 <?php } else{ ?>
-  <p>No products yet</p>
+  <p>No sliders yet</p>
 <?php } ?>
 
 <script>
