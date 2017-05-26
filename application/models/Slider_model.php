@@ -18,6 +18,13 @@ class Slider_model extends CI_Model{
     return $query->row_array();
   }
 
+  public function create($slider){
+    // $slider = array('name' => $name, 'created_at' => (new DateTime())->format('Y-m-d h:m:s'));
+    $slider['created_at'] = (new DateTime())->format('Y-m-d h:m:s');
+    $this->db->insert('sliders', $slider);
+    return $this->db->insert_id();
+  }
+
   public function update($id, $data){
     $this->db->set($data);
     $this->db->where('id', $id);

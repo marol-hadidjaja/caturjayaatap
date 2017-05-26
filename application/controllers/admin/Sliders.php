@@ -17,8 +17,9 @@ class Sliders extends Admin_Controller{
     }
   }
 
-  private function handle_upload($files, $input_name, $image_sizes){
-    $result = array('success' => array(), 'error' => array('upload' => array(), 'resize' => array()));
+  private function handle_upload($files, $input_name){
+    $result = array('success' => array(), 'error' => array('upload' => array()));
+    $r = '';
     $config = array();
     $upload_path = './uploads';
     $config['upload_path'] = $upload_path;
@@ -37,19 +38,21 @@ class Sliders extends Admin_Controller{
 
     // if file was selected then proceed to upload
     if (!$is_file_error) {
-      for($i=0; $i<$files_count; $i++){
+      // for($i=0; $i<$files_count; $i++){
+        /*
         $_FILES['image']['name'] = $_FILES['images']['name'][$i];
         $_FILES['image']['type'] = $_FILES['images']['type'][$i];
         $_FILES['image']['tmp_name'] = $_FILES['images']['tmp_name'][$i];
         $_FILES['image']['error'] = $_FILES['images']['error'][$i];
         $_FILES['image']['size'] = $_FILES['images']['size'][$i];
+        */
 
         $this->load->library('upload');
         $this->upload->initialize($config);
         if(!$this->upload->do_upload('image')){
           // echo "Upload failed<br/>";
           //if file upload failed then catch the errors
-          $this->handle_error($this->upload->display_errors());
+          // $this->handle_error($this->upload->display_errors());
           // $is_file_error = TRUE;
           $image_data = $this->upload->data();
           $file = $upload_path . $image_data['file_name'];
@@ -63,6 +66,7 @@ class Sliders extends Admin_Controller{
           // echo "Upload succeed<br/>";
           $image_data = $this->upload->data();
           // Resize file
+          /*
           $image_lib_config['image_library'] = 'gd2';
           $image_lib_config['source_image'] = $image_data['full_path']; //get original image
           $image_lib_config['maintain_ratio'] = TRUE;
@@ -82,12 +86,17 @@ class Sliders extends Admin_Controller{
             array_push($result['success'], array('filename' => $image_data['file_name'], 'alt' => $alt));
             // $this->handle_success('Image was successfully uploaded to direcoty <strong>' . $upload_path . '</strong> and resized.');
           }
+          */
+          $alt = pathinfo($image_data['orig_name'], PATHINFO_FILENAME);
+          $r = $image_data['orig_name'];
+          // array_push($result['success'], array('filename' => $image_data['file_name'], 'alt' => $alt));
         }// close check upload file succeed
-      } // close foreach
+      // } // close foreach
       //check file successfully uploaded. 'image_name' is the name of the input
     } // close check is_file_error
 
-    return $result;
+    return $r;
+    // return $result;
   }
 
   public function index(){
@@ -103,16 +112,18 @@ class Sliders extends Admin_Controller{
   }
 
   public function create(){
-    $data = array('product' => array('name' => $this->input->post('name')),
-      'prices' => $this->input->post('prices'));
+    $data = array('title' => $this->input->post('title'),
+      'description' => $this->input->post('description'));
 
-    $images = $this->handle_upload($_FILES, 'image', array('thumb'));
-    if($this->product_model->create($data, $images))
-      $this->session->set_flashdata('message', "Create product succeed");
+    $image = $this->handle_upload($_FILES, 'image');
+    $data['filename'] = $image;
+    print_r($data);
+    if($this->slider_model->create($data))
+      $this->session->set_flashdata('message', "Create slider succeed");
     else
-      $this->session->set_flashdata('message', "Create product failed");
+      $this->session->set_flashdata('message', "Create slider failed");
 
-    redirect('admin/sliders');
+    // redirect('admin/sliders');
   }
 
   public function edit($id){
