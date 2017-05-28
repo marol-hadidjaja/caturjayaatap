@@ -12,19 +12,20 @@ class Product_model extends CI_Model{
     $this->load->model('category_model');
   }
 
-  public function get($id = FALSE){
+  public function get($id = FALSE, $limit = FALSE){
     if ($id === FALSE){
       $this->db->from('products');
       $this->db->order_by('updated_at', 'DESC');
+      if($limit)
+        $this->db->limit($limit);
       $query = $this->db->get();
       return $query->result_array();
     }
 
-    /*
-    $this->db->select('products.name AS name, products.id AS product_id, ');
-    $this->db->join('categories', 'categories.id = products.category_id', 'left');
-    */
-    $query = $this->db->get_where('products', array('id' => $id));
+    $this->db->select('products.name AS name, products.id AS product_id, products.description AS description,
+      categories.id AS category_id, categories.name AS category_name');
+    $this->db->join('categories', 'categories.id = products.category_id');
+    $query = $this->db->get_where('products', array('products.id' => $id));
     $result = array('product' => $query->row_array(),
       'prices' => $this->price_model->get($id));
     return $result;

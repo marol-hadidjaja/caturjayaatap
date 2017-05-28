@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Auth extends CI_Controller {
+class Auth extends MY_Controller {
 
 	public function __construct()
 	{
@@ -121,8 +121,7 @@ class Auth extends CI_Controller {
 
 		$user = $this->ion_auth->user()->row();
 
-		if ($this->form_validation->run() == false)
-		{
+		if ($this->form_validation->run() == false){
 			// display the form
 			// set the flash data error message if there is one
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
@@ -519,6 +518,12 @@ class Auth extends CI_Controller {
         }
     }
 
+  protected function render($the_view = NULL, $template = 'auth_master'){
+    // parent::middle = $the_view;
+    parent::layout();
+    // parent::layout($the_view, $template);
+  }
+
 	// edit a user
 	public function edit_user($id)
 	{
@@ -668,6 +673,8 @@ class Auth extends CI_Controller {
 		);
 
 		$this->_render_page('auth/edit_user', $this->data);
+    // $this->middle = 'auth/edit_user';
+    // $this->layout();
 	}
 
 	// create a new group

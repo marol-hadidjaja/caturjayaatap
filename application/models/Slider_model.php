@@ -19,7 +19,6 @@ class Slider_model extends CI_Model{
   }
 
   public function create($slider){
-    // $slider = array('name' => $name, 'created_at' => (new DateTime())->format('Y-m-d h:m:s'));
     $slider['created_at'] = (new DateTime())->format('Y-m-d h:m:s');
     $this->db->insert('sliders', $slider);
     return $this->db->insert_id();

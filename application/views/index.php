@@ -1,32 +1,22 @@
 <div class="slider">
   <ul class="slides">
+    <?php
+      if(count($sliders) > 0){
+        foreach($sliders as $idx => $slider){
+          echo '<li>';
+          echo '<div class="backBlack"></div>';
+          echo img('uploads/'.$slider['filename']);
+          echo '<div class="caption center-align">';
+          echo '<h3>'.$slider['title'].'</h3>';
+          echo '<h5 class="light grey-text text-lighten-3">'.$slider['description'].'</h5>';
+          echo '</div>';
+          echo '</li>';
+        }
+      }
+    ?>
     <li>
       <div class="backBlack"></div>
       <img src="<?= base_url() ?>public/images/slider1.jpg"> <!-- random image -->
-      <div class="caption center-align">
-        <h3>This is our big Tagline!</h3>
-        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-      </div>
-    </li>
-    <li>
-      <div class="backBlack"></div>
-      <img src="<?= base_url() ?>public/images/slider2.jpg"> <!-- random image -->
-      <div class="caption center-align">
-        <h3>Left Aligned Caption</h3>
-        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-      </div>
-    </li>
-    <li>
-      <div class="backBlack"></div>
-      <img src="<?= base_url() ?>public/images/slider3.jpg"> <!-- random image -->
-      <div class="caption center-align">
-        <h3>Right Aligned Caption</h3>
-        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-      </div>
-    </li>
-    <li>
-      <div class="backBlack"></div>
-      <img src="<?= base_url() ?>public/images/slider4.jpg"> <!-- random image -->
       <div class="caption center-align">
         <h3>This is our big Tagline!</h3>
         <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
@@ -83,7 +73,10 @@
           echo '<div class="card">';
           echo '<a href="detailProd.html">';
           echo '<div class="card-image">';
-          echo img('images/'.$product['images'][0]['filename']);
+          if(count($product['images']) > 0)
+            echo img('uploads/'.$product['images'][0]['filename']);
+          else
+            echo "NO IMAGE";
           echo '</div><!-- .card-image -->';
           echo '<div class="card-content">';
           echo '<h5 class="truncate">'.$product['name'].'</h5>';
@@ -94,45 +87,7 @@
           echo '</div><!-- .col.s12.m4 -->';
         }
       ?>
-      <div class="col s12 m4">
-        <div class="card">
-          <a href="detailProd.html">
-            <div class="card-image">
-              <img src="img/product1.jpg">
-            </div>
-            <div class="card-content">
-              <h5 class="truncate">Pagar Tipe BRC</h5>
-              <h6>Pagar berdesain minimalis yang memiliki kegunaan serupa dengan pagar-pagar pada umumnya yakni sebagai pengaman rumah, lahan, kantor, dll.</h6>
-            </div>
-          </a>
-        </div>
-      </div>
-      <div class="col s12 m4">
-        <div class="card">
-          <a href="detailProd.html">
-            <div class="card-image">
-              <img src="img/product2.jpg">
-            </div>
-            <div class="card-content">
-              <h5 class="truncate">Tiang Tipe BRC</h5>
-              <h6>Kelebihan menggunakan tiang BRC adalah kuat dan aman, cara pemasangannya yang mudah, tahan karat, serta harga yang terjangkau.</h6>
-            </div>
-          </a>
-        </div>
-      </div>
-      <div class="col s12 m4">
-        <div class="card">
-          <a href="detailProd.html">
-            <div class="card-image">
-              <img src="img/product3.jpg">
-            </div>
-            <div class="card-content">
-              <h5 class="truncate">Kanal-C</h5>
-              <h6>Kanal-c adalah material hasil pabrikasi dari bahan plat koil yang dibentuk dengan metode cutting dan banding sehingga menjadi seperti huruf C.</h6>
-            </div>
-          </a>
-        </div>
-      </div>
+
       <div class="col s12 center-align button">
         <a class="waves-effect btn" href="product.html">Product Lainnya</a>
       </div>

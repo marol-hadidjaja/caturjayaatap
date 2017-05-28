@@ -59,7 +59,7 @@ class Products extends Admin_Controller{
     $this->middle = 'admin/products/edit';
     $product = $this->product_model->get($params[0]);
     $this->data["product"] = $product["product"];
-    $this->data['images'] = $this->product_image_model->get($params[0]);
+    $this->data["images"] = $this->product_image_model->get($params[0]);
     // echo "<pre>";
     // print_r($product['prices']);
     // echo "</pre>";
@@ -68,68 +68,21 @@ class Products extends Admin_Controller{
     $count_price = 0;
     $count_spec = 0;
     foreach($product['prices'] as $key => $item){
-      // echo "key price: {$key}<br/>";
-      /*
-      $price_id = $item['price_id'];
-
-      $allowed = array('price_id', 'price', 'per');
-      if($key == 0)
-        $prices[$count_price] = array_intersect_key($item, array_flip($allowed));
-
-      // echo "-------------filtering price_id<br/>";
-      $help = array_filter($prices, function($v) use(&$item){
-        // echo "-----v: ";
-        // print_r($v);
-        // echo "-----item: ";
-        // print_r($item);
-        // echo "<br/>";
-        return $v['price_id'] == $item['price_id'];
-      });
-      // echo "length for found price_id: ".count($help);
-
-      if(count($help) == 0){
-        $count_price ++;
-        // echo "NOT found current price_id -- count_price: {$count_price}<br/>";
-        $prices[$count_price] = array_intersect_key($item, array_flip($allowed));
-      }
-
-      if(!isset($prices[$count_price]['specifications']))
-        $prices[$count_price]['specifications'] = array();
-
-      $allowed = array('id', 'name', 'measurement', 'unit');
-      $spec = array_intersect_key($item, array_flip($allowed));
-      // array_push($prices[$item['price_id']]['specifications'], $spec);
-      array_push($prices[$count_price]['specifications'], $spec);
-
-      // echo "after - prices[price_id] - {$item['price_id']}: ";
-      // echo "<pre>";
-      // print_r($prices);
-      // echo "</pre>";
-      // echo "<hr/>";
-      */
-
       $allowed = array('price_id', 'price', 'per');
       if(!isset($prices[$item['price_id']]))
         $prices[$item['price_id']] = array_intersect_key($item, array_flip($allowed));
-      // echo "before - prices[price_id] - {$item['price_id']}: ";
-      // print_r($prices[$item['price_id']]);
-      // echo "<br/>";
+
       if(!isset($prices[$item['price_id']]['specifications']))
         $prices[$item['price_id']]['specifications'] = array();
       $allowed = array('id', 'name', 'measurement', 'unit');
       $spec = array_intersect_key($item, array_flip($allowed));
       array_push($prices[$item['price_id']]['specifications'], $spec);
-      // echo "after - prices[price_id] - {$item['price_id']}: ";
-      // print_r($prices[$item['price_id']]);
-      // echo "<hr/>";
     }
     $this->data["prices"] = $prices;
     $this->data["id"] = $params[0];
     $this->data["options_per"] = $this->options_per;
     $this->data["options_specs_name"] = $this->options_specs_name;
     $this->data["options_specs_unit"] = $this->options_specs_unit;
-    // $this->data["prices_count"] = $product["prices_count"];
-    // $this->data["specs_count"] = $product["specs_count"];
     $this->layout();
   }
 
@@ -221,26 +174,27 @@ class Products extends Admin_Controller{
 
   public function update(){
     // print_r($this->input->post());
-    $product_id = $this->input->post('id');
+    $product_id = $this->input->post('product_id');
     // echo "product_id: {$product_id}";
     $data = array('product' => array('name' => $this->input->post('name'),
-                                     'category' => $this->input->post('category')),
+        'category' => $this->input->post('category'),
+        'description' => $this->input->post('description')),
       'prices' => $this->input->post('prices'),
       'images' => $this->input->post('product_images'));
 
     $new_images = $this->handle_upload($_FILES, 'images', array('thumb'));
+    /*
     echo "images result: <br/>";
     print_r($new_images);
     echo "<br/>";
     $this->product_model->update($product_id, $data, $new_images);
-    /*
-    if($this->product_model->update($product_id, $data, $images))
+    */
+    if($this->product_model->update($product_id, $data, $new_images))
       $this->session->set_flashdata('message', "Update product succeed");
     else
       $this->session->set_flashdata('message', "Update product failed");
 
     redirect('admin/products');
-    */
   }
 
   public function delete($params){

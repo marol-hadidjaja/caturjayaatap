@@ -1,13 +1,13 @@
 <style>
   select#category{
-    witdh: 250px;
+    width: 250px;
   }
 </style>
 <?php
-  $data = array('name' => "id",
+  $data = array('name' => "product_id",
     'type' => 'hidden',
-    'class' => 'id',
-    'value' => isset($product) ? set_value('id', $product['id']) : set_value('id'));
+    'class' => 'product_id',
+    'value' => isset($product) ? set_value('product_id', $product['product_id']) : set_value('product_id'));
   echo form_input($data);
 
   echo form_label('Name', 'name');
@@ -30,7 +30,7 @@
     'id' => 'category');
 
   if(isset($product))
-    echo form_dropdown($data, array(), $product['category_id']);
+    echo form_dropdown($data, array($product['category_id'] => $product['category_name']));
   else
     echo form_dropdown($data, array());
 
