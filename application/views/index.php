@@ -55,6 +55,7 @@
       </div><!-- homepage -->
     </div>
   </div><!-- container -->
+  <?php if(count($products) > 0){ ?>
   <div class="container Hproduct">
     <div class="row">
       <div class="content l12 m12 s12 col center-align">
@@ -85,12 +86,13 @@
           echo '</a>';
           echo '</div><!-- .card -->';
           echo '</div><!-- .col.s12.m4 -->';
-        }
+        } // close foreach
       ?>
 
       <div class="col s12 center-align button">
         <a class="waves-effect btn" href="product.html">Product Lainnya</a>
       </div>
-    </div>
-  </div>
+    </div><!-- // .row -->
+  </div><!-- // .Hproduct -->
+  <?php } // close check products ?>
 </div><!-- homepage -->

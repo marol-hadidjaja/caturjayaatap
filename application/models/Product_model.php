@@ -32,6 +32,16 @@ class Product_model extends CI_Model{
     return $result;
   }
 
+  public function get_featured($limit = FALSE){
+    $this->db->from('products');
+    $this->db->where('featured', true);
+    $this->db->order_by('updated_at', 'DESC');
+    if($limit)
+      $this->db->limit($limit);
+    $query = $this->db->get();
+    return $query->result_array();
+  }
+
   public function get_full($id = FALSE){
     if ($id === FALSE){
       $this->db->from('products');

@@ -14,7 +14,7 @@ class Pages extends Public_Controller{
     $data = array();
     $this->data['pages'] = $this->page_model->get_pages();
     $this->data['sliders'] = $this->slider_model->get();
-    $products = $this->product_model->get(FALSE, 3);
+    $products = $this->product_model->get_featured(3);
 
     foreach($products as $idx => $product){
       $products[$idx]['images'] = $this->product_image_model->get($product['id']);
