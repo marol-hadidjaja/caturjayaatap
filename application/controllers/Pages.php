@@ -7,6 +7,7 @@ class Pages extends Public_Controller{
     $this->load->model('page_model');
     $this->load->model('product_model');
     $this->load->model('slider_model');
+    $this->load->model('setting_model');
   }
 
   public function index(){
@@ -14,12 +15,21 @@ class Pages extends Public_Controller{
     $data = array();
     $this->data['pages'] = $this->page_model->get_pages();
     $this->data['sliders'] = $this->slider_model->get();
-    $products = $this->product_model->get_featured(3);
+    $featured_products = $this->product_model->get_featured(3);
 
-    foreach($products as $idx => $product){
-      $products[$idx]['images'] = $this->product_image_model->get($product['id']);
+    foreach($featured_products as $idx => $product){
+      $featured_products[$idx]['images'] = $this->product_image_model->get($product['id']);
     }
-    $this->data['products'] = $products;
+    $this->data['featured_products'] = $featured_products;
+
+    $latest_products = $this->product_model->get();
+
+    foreach($latest_products as $idx => $product){
+      $latest_products[$idx]['images'] = $this->product_image_model->get($product['id']);
+    }
+    $this->data['latest_products'] = $latest_products;
+
+    $this->data['setting'] = $this->setting_model->get();
     $this->layout();
   }
 

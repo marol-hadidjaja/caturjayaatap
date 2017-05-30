@@ -1,11 +1,14 @@
 RewriteEngine On
 RewriteBase /caturjayaatap/
+SetEnvIf Host caturjayaatap.com$ CI_ENV=production
+SetEnvIf Host test.yoursite.tld$ CI_ENV=testing
+SetEnvIf Host localhost$ CI_ENV=development
 RewriteCond %{REQUEST_URI} ^system.*
+# Rewrite user URLs
+#   Input:  index.php
+#   Output: index.php
 RewriteCond $1 !^(index\.php|images|js|uploads|css|public|robots\.txt)
 RewriteRule ^(.*)$ /index.php/$1 [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php/$1 [L]
-SetEnvIf Host www.yoursite.tld$ CI_ENV=production
-SetEnvIf Host test.yoursite.tld$ CI_ENV=testing
-SetEnvIf Host localhost$ CI_ENV=development

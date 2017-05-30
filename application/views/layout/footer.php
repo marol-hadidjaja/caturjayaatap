@@ -3,26 +3,45 @@
     <div class="container">
       <div class="row">
         <div class="col l4 m6 s12 about">
+          <?php
+          $about = array_map(function($page){
+            if($page['url'] == 'about')
+              return $page;
+          }, $pages)[0];
+          print_r($about);
+          ?>
           <ul><h5>Tentang Kami</h5>
             <li><?= img('public/images/LogoFooter.png') ?></li>
-            <li>Kami akan memberikan kualitas dan pelayanan terbaik bagi Anda. <a href="about.html">Read More</a>
+            <li><?= $about['summary'] ?> <?= anchor('/about', 'Read More') ?>
             </li>
           </ul>
         </div>
         <div class="col l3 m6 s12 prod">
-          <ul><h5>Produk Terbaik</h5>
-            <li><a href="detailProd.html"><img src="img/product1.jpg"></a></li>
-            <li><a href="detailProd.html"><img src="img/product2.jpg"></a></li>
-            <li><a href="detailProd.html"><img src="img/product3.jpg"></a></li>
+          <?php if(count($latest_products) > 0){ ?>
+          <ul>
+            <h5>Produk Terbaru</h5>
+            <?php
+              foreach($latest_products as $key => $product){
+                echo '<li>';
+                echo '<a href="products/'.$product['id'].'">';
+                if(count($product['images']) > 0){
+                  echo img('uploads/'.$product['images'][0]['filename']);
+                }
+                echo '</a>';
+                echo '</li>';
+              } // close foreach latest_products
+            ?>
           </ul>
+          <?php } ?>
         </div>
         <div class="col l5 m12 s12">
-          <ul><h5>Hubungi Kami</h5>
-            <li><i class="material-icons left">phone</i> (031) 99037054</li>
-            <li><i class="material-icons left">smartphone</i> 081235952384 / 082338065412</li>
-            <li><i class="material-icons left">mail</i> caturjayaatap@yahoo.com</li>
-            <li><i class="material-icons left">account_balance</i> Kav. Industri Ds. Bogem Sukodono</li>
-            <li><i class="material-icons left">account_balance</i> Jl. Putra Bangsa Anggaswangi Sukodono, Sidoarjo</li>
+          <ul>
+            <h5>Hubungi Kami</h5>
+            <?= (isset($setting) && $setting->workshop_phone) ? '<li><i class="material-icons left">phone</i> '.$setting->workshop_phone.'</li>' : '' ?>
+            <?= (isset($setting) && $setting->office_phone) ? '<li><i class="material-icons left">smartphone</i> '.$setting->office_phone.'</li>' : '' ?>
+            <?= (isset($setting) && $setting->email) ? '<li><i class="material-icons left">mail</i> '.$setting->email.'</li>' : '' ?>
+            <?= (isset($setting) && $setting->office_address) ? '<li><i class="material-icons left">account_balance</i> '.$setting->office_address.'</li>' : '' ?>
+            <?= (isset($setting) && $setting->workshop_address) ? '<li><i class="material-icons left">account_balance</i> '.$setting->workshop_address.'</li>' : '' ?>
           </ul>
         </div>
       </div>

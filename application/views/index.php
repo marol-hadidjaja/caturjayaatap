@@ -36,7 +36,8 @@
             <ul class="right hide-on-small-and-down">
               <?php
                 foreach($pages as $page){
-                  echo "<li>".anchor($page['url'], $page['title'])."</li>";
+                  $class = $page['url'] == '' ? " class='current'" : "";
+                  echo "<li{$class}>".anchor($page['url'], $page['title'])."</li>";
                 }
               ?>
             </ul>
@@ -55,7 +56,7 @@
       </div><!-- homepage -->
     </div>
   </div><!-- container -->
-  <?php if(count($products) > 0){ ?>
+  <?php if(count($featured_products) > 0){ ?>
   <div class="container Hproduct">
     <div class="row">
       <div class="content l12 m12 s12 col center-align">
@@ -69,7 +70,7 @@
     </div>
     <div class="row">
       <?php
-        foreach($products as $k_product => $product){
+        foreach($featured_products as $key => $product){
           echo '<div class="col s12 m4">';
           echo '<div class="card">';
           echo '<a href="detailProd.html">';
@@ -90,7 +91,7 @@
       ?>
 
       <div class="col s12 center-align button">
-        <a class="waves-effect btn" href="product.html">Product Lainnya</a>
+        <a class="waves-effect btn" href="product.php">Product Lainnya</a>
       </div>
     </div><!-- // .row -->
   </div><!-- // .Hproduct -->

@@ -93,13 +93,13 @@ class Products extends Admin_Controller{
   //appends all error messages
   private function handle_error($err) {
     $this->error .= $err . "rn";
-    echo "handle_error: {$err}<br/>";
+    // echo "handle_error: {$err}<br/>";
   }
 
   //appends all success messages
   private function handle_success($succ) {
     $this->success .= $succ . "rn";
-    echo "handle_success: {$succ}<br/>";
+    // echo "handle_success: {$succ}<br/>";
   }
 
   private function handle_upload($files, $input_name, $image_sizes){
@@ -117,7 +117,7 @@ class Products extends Admin_Controller{
     if($files[$input_name]['error'][0] == 4 || empty($files[$input_name]['name'])) {
       // echo "NO FILES<br/>";
       $is_file_error = TRUE;
-      $this->handle_error('Select an image file.');
+      // $this->handle_error('Select an image file.');
     }
 
     // if file was selected then proceed to upload
@@ -135,7 +135,7 @@ class Products extends Admin_Controller{
         if(!$this->upload->do_upload('image')){
           // echo "Upload failed<br/>";
           //if file upload failed then catch the errors
-          $this->handle_error($this->upload->display_errors());
+          // $this->handle_error($this->upload->display_errors());
           // $is_file_error = TRUE;
           $image_data = $this->upload->data();
           $file = $upload_path . $image_data['file_name'];

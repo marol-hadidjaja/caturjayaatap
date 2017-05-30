@@ -57,7 +57,7 @@
   if(! defined('ENVIRONMENT') ){
   $domain = strtolower($_SERVER['HTTP_HOST']);
   switch($domain){
-    case 'www.yoursite.tld' :
+    case 'caturjayaatap.com' :
       define('ENVIRONMENT', 'production');
     break;
     case 'test.yoursite.tld' :
