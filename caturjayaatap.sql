@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 24, 2017 at 04:33 AM
+-- Generation Time: May 30, 2017 at 07:12 AM
 -- Server version: 5.5.54-0ubuntu0.14.04.1-log
 -- PHP Version: 5.5.9-1ubuntu4.21
 
@@ -146,6 +146,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `description` varchar(300) NOT NULL,
+  `featured` tinyint(1) NOT NULL DEFAULT '0',
   `hide` tinyint(1) NOT NULL DEFAULT '0',
   `category_id` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
@@ -158,12 +159,12 @@ CREATE TABLE IF NOT EXISTS `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `description`, `hide`, `category_id`, `created_at`, `updated_at`) VALUES
-(3, 'pagar galvanize-- edit', '', 0, 1, '2017-05-08 00:00:00', '2017-05-08 16:49:39'),
-(9, 'tiang galvanize', '', 0, 1, '2017-05-13 00:00:00', '2017-05-12 17:11:13'),
-(12, 'Reng', '', 0, 1, '2017-05-13 00:00:00', '2017-05-12 18:08:21'),
-(13, 'atap cja - 75', '', 0, 1, '2017-05-13 00:00:00', '2017-05-12 18:24:52'),
-(16, 'Kanal C-75', '', 0, 3, '2017-05-17 05:05:23', '2017-05-22 15:43:12');
+INSERT INTO `products` (`id`, `name`, `description`, `featured`, `hide`, `category_id`, `created_at`, `updated_at`) VALUES
+(3, 'pagar galvanize-- edit', '', 0, 0, 1, '2017-05-08 00:00:00', '2017-05-08 16:49:39'),
+(9, 'tiang galvanize', '', 0, 0, 1, '2017-05-13 00:00:00', '2017-05-12 17:11:13'),
+(12, 'Reng', '', 0, 0, 1, '2017-05-13 00:00:00', '2017-05-12 18:08:21'),
+(13, 'atap cja - 75', 'description atap cja-75', 0, 0, 1, '2017-05-13 00:00:00', '2017-05-28 21:49:34'),
+(16, 'Kanal C-75', 'description kanal', 0, 0, 3, '2017-05-17 05:05:23', '2017-05-28 21:46:33');
 
 -- --------------------------------------------------------
 
@@ -224,13 +225,20 @@ INSERT INTO `settings` (`office_address`, `office_phone`, `workshop_address`, `w
 
 CREATE TABLE IF NOT EXISTS `sliders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) NOT NULL,
-  `filename` varchar(100) NOT NULL,
-  `description` varchar(100) NOT NULL,
+  `title` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `filename` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `description` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `sliders`
+--
+
+INSERT INTO `sliders` (`id`, `title`, `filename`, `description`, `created_at`, `updated_at`) VALUES
+(3, 'first', 'da33602163f496739bfb067f99a40a0b.jpg', 'first descdddddd', '2017-05-26 09:05:16', '2017-05-26 15:22:01');
 
 -- --------------------------------------------------------
 
@@ -308,7 +316,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1495573762, 1, 'Admin', 'istrator', 'ADMIN', '0');
+(1, '127.0.0.1', 'administrator', '$2y$08$zOdvJVQE22qdKES.73XvcOvOQprBTnCSLWNNBDoMBDUkiVbRPO576', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1496066299, 1, 'Admin', 'istrator', NULL, NULL);
 
 -- --------------------------------------------------------
 

@@ -23,6 +23,7 @@ class Product_model extends CI_Model{
     }
 
     $this->db->select('products.name AS name, products.id AS product_id, products.description AS description,
+      products.hide AS hide, products.featured AS featured,
       categories.id AS category_id, categories.name AS category_name');
     $this->db->join('categories', 'categories.id = products.category_id');
     $query = $this->db->get_where('products', array('products.id' => $id));
@@ -57,7 +58,14 @@ class Product_model extends CI_Model{
     $this->db->trans_start();
     $product = $data['product'];
     $product['created_at'] = (new DateTime())->format('Y-m-d h:m:s');
-    $product['category_id'] = 1;
+    // $product['category_id'] = 1;
+    if(is_numeric($product['category']))
+      $product['category_id'] = $product['category'];
+    else{
+      $category_id = $this->category_model->create($product['category']);
+      $product['category_id'] = $category_id;
+    }
+    unset($product['category']);
     $this->db->insert('products', $product);
     $product_id = $this->db->insert_id();
 

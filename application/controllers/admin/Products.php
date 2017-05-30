@@ -43,7 +43,11 @@ class Products extends Admin_Controller{
   }
 
   public function create(){
-    $data = array('product' => array('name' => $this->input->post('name')),
+    $data = array('product' => array('name' => $this->input->post('name'),
+        'description' => $this->input->post('description'),
+        'category' => $this->input->post('category'),
+        'hide' => $this->input->post('hide'),
+        'featured' => $this->input->post('featured')),
       'prices' => $this->input->post('prices'));
 
     $images = $this->handle_upload($_FILES, 'image', array('thumb'));
@@ -178,7 +182,9 @@ class Products extends Admin_Controller{
     // echo "product_id: {$product_id}";
     $data = array('product' => array('name' => $this->input->post('name'),
         'category' => $this->input->post('category'),
-        'description' => $this->input->post('description')),
+        'description' => $this->input->post('description'),
+        'hide' => $this->input->post('hide'),
+        'featured' => $this->input->post('featured')),
       'prices' => $this->input->post('prices'),
       'images' => $this->input->post('product_images'));
 

@@ -22,19 +22,19 @@
     <!--<link href="https://cdn.quilljs.com/1.2.4/quill.snow.css" rel="stylesheet">-->
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/materialize.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/materialNote.css">
     <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/codeMirror/codemirror.css">
     <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/codeMirror/monokai.css">
     <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/main.css">
     <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/select2.min.css">
+    <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/materialize.min.css">
 
-    <script src="<?= base_url() ?>public/javascripts/materialize.min.js"></script>
     <script src="<?= base_url() ?>public/javascripts/ckMaterializeOverrides.js"></script>
     <script src="<?= base_url() ?>public/javascripts/codeMirror/codemirror.js"></script>
     <script src="<?= base_url() ?>public/javascripts/codeMirror/xml.js"></script>
     <script src="<?= base_url() ?>public/javascripts/materialNote.js"></script>
     <script src="<?= base_url() ?>public/javascripts/select2.full.min.js"></script>
+    <script src="<?= base_url() ?>public/javascripts/materialize.min.js"></script>
 
   </head>
 

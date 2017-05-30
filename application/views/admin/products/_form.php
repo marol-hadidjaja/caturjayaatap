@@ -42,6 +42,22 @@
     'value' => isset($product) ? set_value('description', $product['description']) : set_value('description'));
   echo form_textarea($data);
 
+  echo form_label('Hide', 'hide');
+  $data = array('name' => 'hide',
+    'class' => '',
+    'id' => 'hide',
+    'autofocus' => '',
+    'value' => isset($product) ? set_value('hide', $product['hide']) : set_value('hide'));
+  echo form_checkbox('hide', isset($product) ? set_value('hide', $product['hide']) : set_value('hide'), $product['hide'], array('id' => 'hide'));
+
+  echo form_label('Featured', 'featured');
+  $data = array('name' => 'featured',
+    'class' => '',
+    'id' => 'featured',
+    'autofocus' => '',
+    'value' => isset($product) ? set_value('featured', $product['featured']) : set_value('featured'));
+  echo form_checkbox('featured', isset($product) ? set_value('featured', $product['featured']) : set_value('featured'), $product['featured'], array('id' => 'featured'));
+
   echo form_label('Images', 'image');
   $data = array('name' => 'images[]',
     'class' => '',
@@ -94,6 +110,9 @@
 
   echo form_submit('btn_save', 'Save');
 ?>
+
+                          <input type="checkbox" id="remember" />
+                          <label for="remember">Remember</label>
 
 <script>
   var url = '<?= base_url()."admin/categories" ?>';
