@@ -11,42 +11,41 @@ class Pages extends Public_Controller{
   }
 
   public function index(){
+    $this->default_vars();
     $this->middle = 'index'; // passing middle to function. change this for different views.
-    $data = array();
+
+    $this->data['page'] = $this->page_model->get_pages('');
     $this->data['pages'] = $this->page_model->get_pages();
     $this->data['sliders'] = $this->slider_model->get();
     $featured_products = $this->product_model->get_featured(3);
 
-    foreach($featured_products as $idx => $product){
-      $featured_products[$idx]['images'] = $this->product_image_model->get($product['id']);
+    if(count($featured_products) < 0){
+      foreach($featured_products as $idx => $product){
+        $featured_products[$idx]['images'] = $this->product_image_model->get($product['id']);
+      }
+      $this->data['featured_products'] = $featured_products;
     }
-    $this->data['featured_products'] = $featured_products;
-
-    $latest_products = $this->product_model->get();
-
-    foreach($latest_products as $idx => $product){
-      $latest_products[$idx]['images'] = $this->product_image_model->get($product['id']);
+    else{
+      $this->data['featured_products'] = array_slice($this->data['latest_products'], 0, 3);
     }
-    $this->data['latest_products'] = $latest_products;
 
-    $this->data['setting'] = $this->setting_model->get();
     $this->layout();
   }
 
   public function view($url){
-    echo 'url---'.$url.'---<br/>';
+    // echo 'url---'.$url.'---<br/>';
     $this->data['page'] = $this->page_model->get_pages($url);
     if($this->data['page']){
-      echo "PAGE IS HERE<br/>";
+      // echo "PAGE IS HERE<br/>";
       $this->data['pages'] = $this->page_model->get_pages();
-      print_r($this->data['pages']);
+      // print_r($this->data['pages']);
       if($url == ''){
-        echo 'index page<br/>';
+        // echo 'index page<br/>';
         $this->data['products'] = $this->product_model->get();
         $this->middle = 'index';
       }
       else{
-        echo 'not index page';
+        // echo 'not index page';
         $this->middle = $url;
       }
     }

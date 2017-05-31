@@ -7,6 +7,18 @@ class Public_Controller extends MY_Controller{
 
   var $template  = array();
   var $data      = array();
+
+  public function default_vars(){
+    $latest_products = $this->product_model->get();
+
+    foreach($latest_products as $idx => $product){
+      $latest_products[$idx]['images'] = $this->product_image_model->get($product['id']);
+    }
+    $this->data['latest_products'] = $latest_products;
+
+    $this->data['setting'] = $this->setting_model->get();
+  }
+
   public function layout(){
     // making template and send data to view.
     $this->template['header'] = $this->load->view('layout/header', $this->data, true);

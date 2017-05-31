@@ -4,11 +4,11 @@
       <div class="row">
         <div class="col l4 m6 s12 about">
           <?php
-          $about = array_map(function($page){
-            if($page['url'] == 'about')
-              return $page;
-          }, $pages)[0];
-          print_r($about);
+            $filterBy = 'about';
+            $about = array_filter($pages, function($var) use($filterBy){
+              return ($var['url'] == $filterBy);
+            });
+            $about = array_values($about)[0];
           ?>
           <ul><h5>Tentang Kami</h5>
             <li><?= img('public/images/LogoFooter.png') ?></li>

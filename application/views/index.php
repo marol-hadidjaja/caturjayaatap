@@ -31,13 +31,13 @@
       <div class="l12 m12 s12 col">
         <nav>
           <div class="nav-wrapper">
-            <a href="#" class="brand-logo"><?= img('public/images/logo.png') ?>
+            <a href="#" class="brand-logo"><?= img('public/images/logo.png') ?></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-            <ul class="right hide-on-small-and-down">
+            <ul id="nav-mobile" class="right hide-on-small-and-down">
               <?php
-                foreach($pages as $page){
-                  $class = $page['url'] == '' ? " class='current'" : "";
-                  echo "<li{$class}>".anchor($page['url'], $page['title'])."</li>";
+                foreach($pages as $p){
+                  $class = $p['url'] == '' ? " class='current'" : "";
+                  echo "<li{$class}>".anchor($p['url'], $p['title'])."</li>";
                 }
               ?>
             </ul>

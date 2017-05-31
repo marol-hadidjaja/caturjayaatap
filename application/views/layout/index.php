@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title><?= isset($title) ? $title : "Catur Jaya Atap Admin" ?></title>
+    <title><?= isset($title) ? $title : "Catur Jaya Atap" ?></title>
     <script src="<?= base_url() ?>public/javascripts/jquery-3.2.1.min.js"></script>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
