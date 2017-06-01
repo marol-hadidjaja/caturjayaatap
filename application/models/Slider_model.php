@@ -34,6 +34,8 @@ class Slider_model extends CI_Model{
       return FALSE;
   }
 
-  public function _delete(){
+  public function _delete($id){
+    $this->db->where('id', $id);
+    $this->db->delete('sliders');
   }
 }

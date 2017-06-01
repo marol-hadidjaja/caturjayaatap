@@ -17,6 +17,7 @@ class Public_Controller extends MY_Controller{
     $this->data['latest_products'] = $latest_products;
 
     $this->data['setting'] = $this->setting_model->get();
+    $this->data['pages'] = $this->page_model->get_pages();
   }
 
   public function layout(){

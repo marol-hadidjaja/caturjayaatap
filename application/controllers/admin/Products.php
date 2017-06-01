@@ -1,11 +1,11 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Products extends Admin_Controller{
+ //variable for storing error message
+  private $error;
+  //variable for storing success message
+  private $success;
 
-   //variable for storing error message
-    private $error;
-    //variable for storing success message
-    private $success;
   function __construct(){
     parent::__construct();
 
@@ -48,7 +48,7 @@ class Products extends Admin_Controller{
         'category' => $this->input->post('category'),
         'hide' => $this->input->post('hide'),
         'featured' => $this->input->post('featured')),
-      'prices' => $this->input->post('prices'));
+        'prices' => $this->input->post('prices'));
 
     $images = $this->handle_upload($_FILES, 'image', array('thumb'));
     if($this->product_model->create($data, $images))
@@ -185,8 +185,8 @@ class Products extends Admin_Controller{
         'description' => $this->input->post('description'),
         'hide' => $this->input->post('hide'),
         'featured' => $this->input->post('featured')),
-      'prices' => $this->input->post('prices'),
-      'images' => $this->input->post('product_images'));
+        'prices' => $this->input->post('prices'),
+        'images' => $this->input->post('product_images'));
 
     $new_images = $this->handle_upload($_FILES, 'images', array('thumb'));
     /*

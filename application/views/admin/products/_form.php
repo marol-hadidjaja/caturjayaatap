@@ -42,18 +42,11 @@
     'value' => isset($product) ? set_value('description', $product['description']) : set_value('description'));
   echo form_textarea($data);
 
-  // echo "<div>";
-  // echo form_checkbox('hide', isset($product) ? set_value('hide', $product['hide']) : set_value('hide'), $product['hide'], array('id' => 'hide'));
   echo form_checkbox('hide', 1, $product['hide'], array('id' => 'hide'));
   echo form_label('Hide', 'hide');
-  // echo "</div>";
-  // echo "<br/>";
 
-  // echo "<div>";
-  // echo form_checkbox('featured', isset($product) ? set_value('featured', $product['featured']) : set_value('featured'), $product['featured'], array('id' => 'featured'));
   echo form_checkbox('featured', 1, $product['featured'], array('id' => 'featured'));
   echo form_label('Featured', 'featured');
-  // echo "</div>";
 
   echo form_label('Images', 'image');
   $data = array('name' => 'images[]',

@@ -91,9 +91,9 @@
       ?>
 
       <div class="col s12 center-align button">
-        <a class="waves-effect btn" href="product.php">Product Lainnya</a>
+        <?= anchor('Produk Lainnya', 'product', array('class' => 'waves-effect btn')) ?>
       </div>
     </div><!-- // .row -->
   </div><!-- // .Hproduct -->
-  <?php } // close check products ?>
+  <?php } // close check featured_products ?>
 </div><!-- homepage -->

@@ -38,7 +38,42 @@
     'value' => $setting->email);
   echo form_input($data);
 
+  echo form_label('Visi', 'visi');
+  $data = array('name' => 'visi',
+    'class' => '',
+    'id' => 'visi',
+    'value' => $setting->visi);
+  echo form_textarea($data);
+
+  echo form_label('Misi', 'misi');
+  $data = array('name' => 'add_mission',
+    'id' => 'add_mission');
+  echo form_button($data, 'Add mission');
+
+  echo "<div id='missions_container'>";
+  if(count($missions) > 0){
+    $missions_count = count($missions) - 1;
+    foreach($missions as $mission){
+      $this->load->view('admin/missions/_form', array('mission' => $mission, 'missions_count' => $missions_count));
+      $missions_count --;
+    }
+  }
+  echo "</div><!-- close #missions_container -->";
+
   echo form_submit('btn_save', 'Save');
 
   echo form_close();
 ?>
+
+  <script>
+  $("body").on("click", "#add_mission", function(e){
+    missions_count = $('.mission').length - 1;
+    $.ajax({
+      url: '<?= base_url() ?>' + 'admin/missions/new?missions_count=' + missions_count,
+      success: function(result){
+        $('#missions_container').prepend(result);
+      }
+    });
+    e.preventDefault();
+  });
+  </script>

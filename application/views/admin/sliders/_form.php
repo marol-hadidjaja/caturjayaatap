@@ -21,7 +21,7 @@
     'value' => isset($slider) ? set_value('description', $slider['description']) : set_value('description'));
   echo form_textarea($data);
 
-  echo form_label('Images', 'image');
+  echo form_label('Image', 'image');
   $data = array('name' => 'image',
     'class' => '',
     'id' => 'image');

@@ -14,6 +14,28 @@ class Setting_model extends CI_Model{
   }
 
   public function update($data){
+    $missions = $data['misi'];
+    unset($data['misi']);
+
+    if($missions && count($missions) > 0){
+      $new_missions = array_filter($missions,
+        function($val, $key){
+          return $val['id'] == '';
+        },
+        ARRAY_FILTER_USE_BOTH);
+
+      $updated_missions = array_filter(
+        $missions,
+        function ($val, $key){
+          return $val['id'] != '';
+        },
+        ARRAY_FILTER_USE_BOTH
+      );
+
+      $this->mission_model->bulk_create($new_missions);
+      $this->mission_model->bulk_update($updated_missions);
+    }
+
     $this->db->set($data);
     $query = $this->db->update('settings');
     if($this->db->affected_rows() == 1)

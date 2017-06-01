@@ -8,13 +8,13 @@ class Pages extends Public_Controller{
     $this->load->model('product_model');
     $this->load->model('slider_model');
     $this->load->model('setting_model');
+    $this->load->model('mission_model');
   }
 
   public function index(){
     $this->default_vars();
     $this->middle = 'index'; // passing middle to function. change this for different views.
 
-    $this->data['page'] = $this->page_model->get_pages('');
     $this->data['pages'] = $this->page_model->get_pages();
     $this->data['sliders'] = $this->slider_model->get();
     $featured_products = $this->product_model->get_featured(3);
@@ -33,20 +33,26 @@ class Pages extends Public_Controller{
   }
 
   public function view($url){
-    // echo 'url---'.$url.'---<br/>';
+    $this->default_vars();
     $this->data['page'] = $this->page_model->get_pages($url);
     if($this->data['page']){
-      // echo "PAGE IS HERE<br/>";
-      $this->data['pages'] = $this->page_model->get_pages();
-      // print_r($this->data['pages']);
       if($url == ''){
-        // echo 'index page<br/>';
-        $this->data['products'] = $this->product_model->get();
         $this->middle = 'index';
       }
       else{
-        // echo 'not index page';
         $this->middle = $url;
+        if($url == 'about'){
+          $this->data['missions'] = $this->mission_model->get();
+        }
+        else if($url == 'products'){
+          $products = $this->product_model->get();
+          if(count($products) > 0){
+            foreach($products as $idx => $product){
+              $products[$idx]['images'] = $this->product_image_model->get($product['id']);
+            }
+            $this->data['products'] = $products;
+          }
+        }
       }
     }
     else

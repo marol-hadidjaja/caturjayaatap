@@ -1,7 +1,7 @@
 <?php
   echo validation_errors();
 
-  echo form_open("admin/pages/update/{$url}");
+  echo form_open_multipart("admin/pages/update/{$url}");
 
   echo form_label('Title', 'title');
   $data = array('name' => 'title',
@@ -23,6 +23,16 @@
     'id' => 'content',
     'value' => $page['content']);
   echo form_textarea($data);
+
+  if($page['url'] == 'about'){
+    echo form_label('Select New Image', 'image');
+    $data = array('name' => 'image',
+      'id' => 'image');
+    echo form_upload($data);
+    if(file_exists("uploads/about.jpg") == 1){
+      echo img("uploads/about.jpg", TRUE, array('width' => '300', 'height' => '300'));
+    }
+  }
 
   echo form_submit('btn_save', 'Save');
 

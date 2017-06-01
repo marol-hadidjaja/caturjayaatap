@@ -26,6 +26,5 @@ class Prices extends Admin_Controller{
     $this->data["prices_count"] = (int)$this->input->get("prices_count") + 1;
     $this->data["specs_count"] = 0;
     $this->load->view('admin/prices/_form', $this->data);
-    // $this->load->view('admin/prices/new', $this->data);
   }
 }

@@ -38,23 +38,27 @@
     <div class="visiMisi">
       <div class="container">
         <div class="col m6">
-          <img src="img/about.jpg">
+          <?= img('uploads/about.jpg', TRUE) ?>
         </div>
         <div class="col m6">
           <div class="title">
             <h5>Visi</h5>
-            <p>Menjadi perusahaan terdepan dalam bidang rangka atap dan plafon, atap galvalum, dan pagar type BRC</p>
+            <p><?= $setting->visi ?></p>
           </div>
         </div>
         <div class="col m6">
-          <div class="title">
-            <h5>Misi</h5>
-            <ol>
-              <li>Berkomitmen menerapan sistem kerja yang aman dan baik bagi semua karyawan.</li>
-              <li>Berkomitmen memberi layanan dan solusi yang terbaik kepada seluruh customer.</li>
-              <li>Berkomitmen untuk kepuasaan pelanggan dengan menghasilkan produk dan jasa dengan kualitas terbaik.</li>
-            </ol>
-          </div>
+          <?php
+            if(count($missions) > 0){
+              echo '<div class="title">';
+              echo '<h5>Misi</h5>';
+              echo '<ol>';
+              foreach($missions as $mission){
+                echo "<li>{$mission['mission']}</li>";
+              }
+              echo '</ol>';
+              echo '</div><!-- close .title -->';
+            }
+          ?>
         </div>
       </div>
     </div><!-- visiMisi -->
@@ -70,15 +74,15 @@
         </div>
         <div class="row icon">
           <div class="col m4">
-            <img src="img/service1.png">
+            <?= img('public/images/service1.png', TRUE) ?>
             <h6>Harga yang <span>Kompetitif</span></h6>
           </div>
           <div class="col m4">
-            <img src="img/service2.png">
+            <?= img('public/images/service2.png', TRUE) ?>
             <h6>Hasil yang <span>Terbaik</span></h6>
           </div>
           <div class="col m4">
-            <img src="img/service3.png">
+            <?= img('public/images/service3.png', TRUE) ?>
             <h6>Ketepatan <span>Waktu</span></h6>
           </div>
         </div>
