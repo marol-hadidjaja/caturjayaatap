@@ -1,25 +1,53 @@
-<h1><?php echo lang('change_password_heading');?></h1>
+<div class="col l10 m9 right">
+  <div class="sideRight detPage">
+    <div class="title">
+      <?php echo lang('change_password_heading');?>
+    </div>
+    <?= validation_errors() ?>
 
-<!--<div id="infoMessage"><?php //echo $message;?></div>-->
+    <?= form_open_multipart("admin/user/edit", array('class' => 'updatePassword')) ?>
 
-<?php echo form_open("admin/user/edit");?>
+    <div class="input-field col s12">
+      <?php
+        $old_password['placeholder'] = 'Your Old Password';
+        $old_password['class'] = 'validate';
+      ?>
+      <?php echo form_input($old_password);?>
+      <?php echo lang('change_password_old_password_label', 'old_password');?> <br />
+    </div>
 
-<p>
-  <?php echo lang('change_password_old_password_label', 'old_password');?> <br />
-  <?php echo form_input($old_password);?>
-</p>
+    <div class="input-field col s12">
+      <?php
+        $new_password['placeholder'] = 'Your Email';
+        $new_password['class'] = 'validate';
+      ?>
+      <?php echo form_input($new_password);?>
+      <label for="new_password"><?php echo sprintf(lang('change_password_new_password_label'), $min_password_length);?></label> <br />
+    </div>
 
-<p>
-  <label for="new_password"><?php echo sprintf(lang('change_password_new_password_label'), $min_password_length);?></label> <br />
-  <?php echo form_input($new_password);?>
-</p>
+    <div class="input-field col s12">
+      <?php
+        $new_password_confirm['placeholder'] = 'Your Email';
+        $new_password_confirm['class'] = 'validate';
+      ?>
+      <?php echo form_input($new_password_confirm);?>
+      <?php echo lang('change_password_new_password_confirm_label', 'new_password_confirm');?> <br />
+    </div>
 
-<p>
-  <?php echo lang('change_password_new_password_confirm_label', 'new_password_confirm');?> <br />
-  <?php echo form_input($new_password_confirm);?>
-</p>
+    <?php echo form_input($user_id);?>
 
-<?php echo form_input($user_id);?>
-<p><?php echo form_submit('submit', lang('change_password_submit_btn'));?></p>
+    <?= form_close() ?>
 
-<?php echo form_close();?>
+    <div class="actionBtn">
+      <a class="waves-effect waves-light btn btnSave"><?= lang('change_password_submit_btn') ?></a>
+      <?= anchor('admin/dashboard', 'Cancel', array('class' => "waves-effect waves-light btn grey")) ?>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on("click", ".btnSave", function(e){
+    $('.updatePassword').submit();
+    e.preventDefault();
+  });
+</script>

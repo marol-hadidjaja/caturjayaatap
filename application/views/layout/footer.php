@@ -23,9 +23,12 @@
             <?php
               foreach($latest_products as $key => $product){
                 echo '<li>';
-                echo '<a href="products/'.$product['id'].'">';
+                echo '<a href="products/'.$product['id'].'/detail">';
                 if(count($product['images']) > 0){
-                  echo img('uploads/'.$product['images'][0]['filename']);
+                  echo img('uploads/'.$product['images'][0]['filename'], TRUE, array('title' => $product['images'][0]['alt']));
+                }
+                else{
+                  echo img('public/images/no image.jpg', TRUE, array('title' => 'no image'));
                 }
                 echo '</a>';
                 echo '</li>';

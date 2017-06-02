@@ -1,6 +1,6 @@
 <div class="menu z-depth-3">
   <div class="row">
-    <div class="l12 col">
+    <div class="l12 s12 m12 col">
       <nav>
         <div class="nav-wrapper">
           <a href="#" class="brand-logo"><?= img('public/images/logo.png') ?></a>

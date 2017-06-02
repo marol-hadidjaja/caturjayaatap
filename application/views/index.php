@@ -73,16 +73,15 @@
         foreach($featured_products as $key => $product){
           echo '<div class="col s12 m4">';
           echo '<div class="card">';
-          echo '<a href="detailProd.html">';
+          echo '<a href="'.base_url().'products/'.$product['id'].'/detail">';
           echo '<div class="card-image">';
           if(count($product['images']) > 0)
             echo img('uploads/'.$product['images'][0]['filename']);
           else
-            echo "NO IMAGE";
+            echo img('public/images/no image.jpg');
           echo '</div><!-- .card-image -->';
           echo '<div class="card-content">';
           echo '<h5 class="truncate">'.$product['name'].'</h5>';
-          echo '<h6>'.$product['description'].'</h6>';
           echo '</div><!- .card-content ->';
           echo '</a>';
           echo '</div><!-- .card -->';
@@ -91,7 +90,7 @@
       ?>
 
       <div class="col s12 center-align button">
-        <?= anchor('Produk Lainnya', 'product', array('class' => 'waves-effect btn')) ?>
+        <?= anchor('products', 'product', array('class' => 'waves-effect btn')) ?>
       </div>
     </div><!-- // .row -->
   </div><!-- // .Hproduct -->

@@ -1,43 +1,74 @@
-<?php
-  echo validation_errors();
+<div class="col l10 m9 right">
+  <div class="sideRight detPage">
+    <div class="title">
+      <h5>Page <?= $page['title'] ?></h5>
+      <a href="<?= base_url()."admin/dashboard" ?>" class="waves-effect waves-light btn"><i class="material-icons left">arrow_back</i>Back to Pages</a>
+    </div>
+    <?= validation_errors() ?>
 
-  echo form_open_multipart("admin/pages/update/{$url}");
+    <?= form_open_multipart("admin/pages/update/{$url}", array('class' => 'editPage')) ?>
+      <div class="row">
+        <div class="input-field col s12">
+          <?php
+            $data = array('name' => 'title',
+              'class' => 'validate',
+              'id' => 'title',
+              'value' => $page['title'],
+              'placeholder' => 'Title');
+            echo form_input($data);
+          ?>
+          <?= form_label('Title', 'title') ?>
+        </div>
 
-  echo form_label('Title', 'title');
-  $data = array('name' => 'title',
-    'class' => '',
-    'id' => 'title',
-    'value' => $page['title']);
-  echo form_input($data);
+        <div class="input-field col s12">
+          <?php
+            $data = array('name' => 'summary',
+              'placeholder' => 'Summary',
+              'id' => 'summary',
+              'class' => 'materialize-textarea',
+              'value' => $page['summary']);
+            echo form_textarea($data);
+            echo form_label('Summary', 'summary');
+          ?>
+        </div>
 
-  echo form_label('Summary', 'summary');
-  $data = array('name' => 'summary',
-    'class' => '',
-    'id' => 'summary',
-    'value' => $page['summary']);
-  echo form_textarea($data);
+        <div class="wysiwyg col s12">
+          <?php
+            echo form_label('Content', 'content');
+            echo '<div class="row">';
+            echo '<div class="input-field col s12">';
+            $data = array('name' => 'content',
+              'class' => '',
+              'id' => 'content',
+              'value' => $page['content']);
+            echo form_textarea($data);
+            echo '</div><!-- close .input-field.col.s12 -->';
+            echo '</div><!-- close .row -->';
+          ?>
+        </div><!-- close .wysiwyg -->
+      </div>
 
-  echo form_label('Content', 'content');
-  $data = array('name' => 'content',
-    'class' => '',
-    'id' => 'content',
-    'value' => $page['content']);
-  echo form_textarea($data);
+      <div class="input-field col s12">
+        <?php
+          if($page['url'] == 'about'){
+            echo form_label('Select New Image', 'image');
+            $data = array('name' => 'image',
+              'id' => 'image');
+            echo form_upload($data);
+            if(file_exists("uploads/about.jpg") == 1){
+              echo img("uploads/about.jpg", TRUE, array('width' => '300', 'height' => '300'));
+            }
+          }
+        ?>
+      </div>
+    <?= form_close() ?>
 
-  if($page['url'] == 'about'){
-    echo form_label('Select New Image', 'image');
-    $data = array('name' => 'image',
-      'id' => 'image');
-    echo form_upload($data);
-    if(file_exists("uploads/about.jpg") == 1){
-      echo img("uploads/about.jpg", TRUE, array('width' => '300', 'height' => '300'));
-    }
-  }
-
-  echo form_submit('btn_save', 'Save');
-
-  echo form_close();
-?>
+    <div class="actionBtn">
+      <a class="waves-effect waves-light btn btnSave">Save</a>
+      <a class="waves-effect waves-light btn grey">Cancel</a>
+    </div>
+  </div>
+</div>
 
 <script>
   $(document).ready(function() {
@@ -60,12 +91,9 @@
       event.stopPropagation();
     });
 
-    // $('#content').summernote();
-
-    /*
-    var quill = new Quill('#content', {
-      theme: 'snow'
+    $('body').on("click", ".btnSave", function(e){
+      $('.editPage').submit();
+      e.preventDefault();
     });
-    */
   });
 </script>

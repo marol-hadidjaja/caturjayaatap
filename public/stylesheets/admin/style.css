@@ -1,0 +1,206 @@
+.row{
+  margin:0 ;
+}
+.table {
+  display: table;
+  width: 100%;
+  height: 100vh;
+}
+.tableCell {
+  display: table-cell;
+  vertical-align: middle;
+  height: 100vh;
+}
+
+[type="checkbox"]+label{ padding-left: 30px; }
+
+ul{ margin: 0; }
+
+td, th{ padding: 15px; }
+
+h1, h2, h3, h4, h5, h6{
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+body::-webkit-scrollbar {
+    width: 0.7em;
+}
+
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+  background-color: #ddd;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #aaa;
+  outline: 1px solid slategrey;
+}
+
+i.left{ margin-right: 5px; }
+
+/* PAGE LOGIN */
+.login, .sideLeft{
+  background: #242e38;
+}
+  .login .container{
+    max-width: 40%;
+    height: 100vh;
+  }
+  .login .logo{
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .login .logo img{
+    max-width: 180px;
+  }
+  .login .formLogin{
+    padding: 1% 8% 6% 8%;
+  }
+  .backWhite{
+    background: white;
+    padding-top: 4%;
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.4);
+  }
+  .btnLogin{
+    width: 100%;
+    border-radius: 0;
+  }
+  .login .forgot{
+    margin-top: 20px;
+    text-align: center;
+    color: rgba(255,255,255, 0.7);
+    width: 100%;
+    display: block;
+  }
+
+/* ADMIN */
+.admin > .left, .admin > .right{
+  padding: 0;
+}
+.admin > .left{
+  position: fixed;
+  overflow: auto;
+}
+
+/* MENU */
+.sideLeft{
+  height: 100vh;
+  color: white;
+  position: relative;
+}
+  .btnLogout{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+  }
+  .companyName{ padding: 30px; }
+    .companyName a{
+      font-size: 22px;
+      color: white;
+      font-weight: 100;
+    }
+
+  ul.menu li{
+    padding: 20px 30px;
+    text-align: left;
+    text-transform: uppercase;
+    border-top: 1px solid #1b252f;
+  }
+  ul.menu a:last-child li{
+    border-bottom: 1px solid #1b252f;
+  }
+  ul.menu li.current{
+    background: #212a33;
+    border-right: 5px solid #2bbbad;
+  }
+    ul.menu a li { color: rgba(255,255,255,0.7); }
+    ul.menu a li.current { color: white; }
+
+/* sideRight */
+.sideRight{
+  min-height: 100vh;
+  overflow: auto;
+  background: #fafafa;
+  padding: 30px;
+}
+
+/* PAGES.html */
+  .sideRight table{
+    margin-top: 3%;
+    border: 1px solid #ddd;
+  }
+
+/* EDITPAGE.html */
+form.editPage{
+  margin-top: 3%;
+}
+form.editPage > .row > .col{
+  padding: 0;
+}
+form.editPage > .row > .input-field.col label{ left: 0; }
+.actionBtn{
+  margin-top: 20px;
+}
+  .detPage .title h5{ display: inline-block; }
+  .detPage .title a{
+    float: right !important;
+    font-size: 12px;
+    line-height: 25px;
+    height: 25px;
+    padding: 0 20px;
+  }
+
+/* PRODUCT.html */
+.addProduct{
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+}
+  .products a{ margin-right: 30px; }
+
+/* DETPRODUCT.html */
+.detProd{
+  margin-top: 20px;
+  background: white;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+}
+  .detPrice{
+    padding: 30px 20px;
+  }
+section h5{
+  font-size: 18px;
+  border-bottom: 1px solid #ddd;
+  padding: 15px 20px;
+  margin-bottom: 0;
+}
+.addPrice span, .addSpec span{
+  margin-left: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.7);
+}
+.secPrice{
+  margin-top: 20px;
+}
+  .secPrice > a{ float: right; }
+  .secPrice .title{
+    background: #ddd;
+  }
+  .secPrice h5{
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 0;
+    display: inline-block;
+  }
+  .secPrice .title, .secPrice .content{
+    border: 1px solid #d3d3d3;
+    padding: 10px 10px 15px 10px;
+  }
+  .addSpec{
+    margin-bottom: 20px;
+  }
+  .delSpec a{
+    padding: 0 10px;
+    width: 100%;
+  }

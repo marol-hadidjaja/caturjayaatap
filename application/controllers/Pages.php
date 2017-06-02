@@ -15,7 +15,7 @@ class Pages extends Public_Controller{
     $this->default_vars();
     $this->middle = 'index'; // passing middle to function. change this for different views.
 
-    $this->data['pages'] = $this->page_model->get_pages();
+    $this->data['page'] = $this->page_model->get_pages('');
     $this->data['sliders'] = $this->slider_model->get();
     $featured_products = $this->product_model->get_featured(3);
 

@@ -9,7 +9,7 @@ class Public_Controller extends MY_Controller{
   var $data      = array();
 
   public function default_vars(){
-    $latest_products = $this->product_model->get();
+    $latest_products = $this->product_model->get(FALSE, 3);
 
     foreach($latest_products as $idx => $product){
       $latest_products[$idx]['images'] = $this->product_image_model->get($product['id']);

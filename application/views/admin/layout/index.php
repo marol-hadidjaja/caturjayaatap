@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/main.css">
     <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/select2.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/materialize.min.css">
+    <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/admin/style.css">
 
     <script src="<?= base_url() ?>public/javascripts/ckMaterializeOverrides.js"></script>
     <script src="<?= base_url() ?>public/javascripts/codeMirror/codemirror.js"></script>
@@ -39,7 +40,7 @@
   </head>
 
   <body>
-    <div class="container" id="container">
+    <div class="row admin">
       <div class="message"><?= $this->session->flashdata('message') ?></div>
       <?php if($header) echo $header ;?>
       <?php if($left) echo $left ;?>

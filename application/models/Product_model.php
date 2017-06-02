@@ -88,10 +88,6 @@ class Product_model extends CI_Model{
     }
 
     foreach($data['prices'] as $price){
-      echo "<br/>price: ";
-      print_r($price);
-      echo "<br/>";
-      echo "price per: {$price['per']}<br/>";
       $item = array('price' => $price['price'],
         'per' => $price['per'],
         'product_id' => $product_id);

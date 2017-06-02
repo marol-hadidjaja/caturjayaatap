@@ -42,11 +42,10 @@
           if(count($product['images']) > 0)
             echo img('uploads/'.$product['images'][0]['filename']);
           else
-            echo "NO IMAGE";
+            echo img('public/images/no image.jpg');
           echo '</div><!-- .card-image -->';
           echo '<div class="card-content">';
           echo '<h5 class="truncate">'.$product['name'].'</h5>';
-          echo '<h6>'.$product['description'].'</h6>';
           echo '</div><!- .card-content ->';
           echo '</a>';
           echo '</div><!-- .card -->';

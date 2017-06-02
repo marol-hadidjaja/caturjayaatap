@@ -31,9 +31,6 @@ class Setting_model extends CI_Model{
         },
         ARRAY_FILTER_USE_BOTH
       );
-
-      $this->mission_model->bulk_create($new_missions);
-      $this->mission_model->bulk_update($updated_missions);
     }
 
     $this->db->set($data);
