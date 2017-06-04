@@ -59,10 +59,17 @@
         <?php } ?>
       </div><!-- content -->
 
+<pre>
+<?//= print_r($products) ?>
+</pre>
+
+<pre>
+<?= print_r($category) ?>
+</pre>
       <div class="l8 m12 s12 col contentProd">
         <div class="subcontent">
           <div class="title">
-          <h5><?= $product['product']['name'] ?></h5>
+          <h5><?= $category['name'] ?></h5>
           <a class="waves-effect waves-light btn" href="<?= base_url() ?>products"><i class="material-icons left">keyboard_arrow_left</i>Back Product</a>
           </div>
           <p><?= $product['product']['description'] ?></p>

@@ -34,18 +34,19 @@
     </div>
     <div class="row">
       <?php
-        foreach($products as $key => $product){
+        // foreach($products as $key => $product){
+        foreach($categories as $key => $category){
           echo '<div class="col s12 m4">';
           echo '<div class="card">';
-          echo '<a href="products/detail/'.$product['id'].'">';
+          echo '<a href="'.base_url().'products/detail/'.$category['id'].'">';
           echo '<div class="card-image">';
-          if(count($product['images']) > 0)
-            echo img('uploads/'.$product['images'][0]['filename']);
+          if(count($category['images']) > 0)
+            echo img('uploads/'.$category['images'][0]['filename']);
           else
             echo img('public/images/no image.jpg');
           echo '</div><!-- .card-image -->';
           echo '<div class="card-content">';
-          echo '<h5 class="truncate">'.$product['name'].'</h5>';
+          echo '<h5 class="truncate">'.$category['name'].'</h5>';
           echo '</div><!- .card-content ->';
           echo '</a>';
           echo '</div><!-- .card -->';

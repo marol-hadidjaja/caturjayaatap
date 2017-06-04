@@ -13,10 +13,21 @@ class Category_model extends CI_Model{
     return $query->result_array();
   }
 
-  public function get($name){
+  public function get($name = FALSE){
+    if ($name === FALSE){
+      $query = $this->db->get('categories');
+      return $query->result_array();
+    }
+
     $this->db->where('name', $name);
     $query = $this->db->get('categories');
     return $query->row();
+  }
+
+  public function find_by_id($id){
+    $this->db->where('id', $id);
+    $query = $this->db->get('categories');
+    return $query->row_array();
   }
 
   public function create($name){

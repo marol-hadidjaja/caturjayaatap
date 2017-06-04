@@ -6,6 +6,7 @@ class Pages extends Public_Controller{
 
     $this->load->model('page_model');
     $this->load->model('product_model');
+    $this->load->model('category_model');
     $this->load->model('slider_model');
     $this->load->model('setting_model');
     $this->load->model('mission_model');
@@ -51,6 +52,15 @@ class Pages extends Public_Controller{
               $products[$idx]['images'] = $this->product_image_model->get($product['id']);
             }
             $this->data['products'] = $products;
+          }
+
+          $categories = $this->category_model->get();
+          if(count($categories) > 0){
+            foreach($categories as $idx => $category){
+              $categories[$idx]['images'] = $this->product_image_model->get($category['id']);
+              print_r($categories[$idx]);
+            }
+            $this->data['categories'] = $categories;
           }
         }
       }

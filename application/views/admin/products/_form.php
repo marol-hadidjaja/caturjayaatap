@@ -56,10 +56,10 @@
   </div>
 
   <?php
-    echo form_checkbox('hide', 1, $product['hide'], array('id' => 'hide'));
+    echo form_checkbox('hide', 1, isset($product) ? $product['hide'] : '', array('id' => 'hide'));
     echo form_label('Hide', 'hide');
 
-    echo form_checkbox('featured', 1, $product['featured'], array('id' => 'featured'));
+    echo form_checkbox('featured', 1, isset($product) ? $product['featured'] : '', array('id' => 'featured'));
     echo form_label('Featured', 'featured');
   ?>
 
@@ -80,7 +80,7 @@
   </div>
 
   <?php
-    if(count($images) > 0){
+    if(isset($images) && count($images) > 0){
       foreach($images as $image){
         $extension_pos = strrpos($image['filename'], '.'); // find position of the last dot, so where the extension starts
         $thumb = substr($image['filename'], 0, $extension_pos) . '_thumb' . substr($image['filename'], $extension_pos);

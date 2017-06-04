@@ -36,6 +36,22 @@ class Product_model extends CI_Model{
     return $result;
   }
 
+  public function get_by_category($category_id){
+    $this->db->select('products.name AS name, products.id AS product_id, products.description AS description,
+      products.hide AS hide, products.featured AS featured');
+
+    // $this->db->join('categories', 'categories.id = products.category_id');
+    $this->db->where('category_id', $category_id);
+    $this->db->from('products');
+    $this->db->order_by('products.updated_at', 'DESC');
+    $query = $this->db->get();
+    $products = $query->result_array();
+    foreach($products as $key => $product){
+      $products[$key]['prices'] = $this->price_model->get($product['product_id']);
+    }
+    return $products;
+  }
+
   public function get_featured($limit = FALSE){
     $this->db->from('products');
     $this->db->where('featured', true);
