@@ -44,7 +44,7 @@ class Sliders extends Admin_Controller{
         $file = $upload_path . $image_data['file_name'];
         $r['status'] = 'error';
         $r['message'] = $this->upload->display_errors();
-        if(file_exists($file)){
+        if(strlen($image_data['file_name']) > 0 && file_exists($file)){
           unlink($file);
         }
       } // close check upload file failed
@@ -99,15 +99,22 @@ class Sliders extends Admin_Controller{
       'description' => $this->input->post('description'));
 
     $result_upload = $this->handle_upload($_FILES, 'image');
-    if($result_upload['status'] == 'success')
+    if($result_upload['status'] == 'success'){
       $data['filename'] = $result_upload['filename'];
 
-    $slider_id = $this->input->post('id');
-    if($this->slider_model->update($slider_id, $data))
-      $this->session->set_flashdata('message', "Update slider succeed");
-    else
-      $this->session->set_flashdata('message', "Update slider failed");
+      $slider_id = $this->input->post('id');
+      if($this->slider_model->update($slider_id, $data))
+        $this->session->set_flashdata('message', "Update slider succeed");
+      else
+        $this->session->set_flashdata('message', "Update slider failed");
 
-    redirect('admin/sliders');
+      redirect('admin/sliders');
+    }
+    else{
+      $upload_message = '';
+      if(strpos($result_upload['message'], 'exceeds the maximum') >= 0)
+        $upload_message = 'Maximum file size: 2MB';
+      $this->session->set_flashdata('message', "Update slider failed: ".$upload_message);
+    }
   }
 }

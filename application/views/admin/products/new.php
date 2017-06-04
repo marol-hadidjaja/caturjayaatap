@@ -1,9 +1,17 @@
-<?php
-  echo validation_errors();
+<div class="title">
+  <h5>New Product</h5>
+  <a href="<?= base_url().'admin/products' ?>" class="waves-effect waves-light btn"><i class="material-icons left">arrow_back</i>Back to Product</a>
+</div>
 
-  echo form_open_multipart("admin/products/create");
+<?php echo validation_errors(); ?>
 
-  $this->load->view('admin/products/_form');
+<?= form_open_multipart("admin/products/create", array('class' => 'editPage')) ?>
 
-  echo form_close();
-?>
+  <?php $this->load->view('admin/products/_form'); ?>
+
+<?= form_close() ?>
+
+<div class="actionBtn">
+  <a class="waves-effect waves-light btn btnSave">Save</a>
+  <?= anchor('admin/products', 'Cancel', array('class' => 'waves-effect waves-light btn grey')) ?>
+</div>

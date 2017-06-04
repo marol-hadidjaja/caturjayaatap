@@ -55,8 +55,12 @@ class Pages extends Public_Controller{
         }
       }
     }
-    else
-      $this->middle = 'error';
+    else{
+      if($url == 'phpinfo')
+        $this->middle = 'phpinfo';
+      else
+        $this->middle = 'error';
+    }
 
     $this->layout();
   }

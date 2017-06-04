@@ -11,9 +11,9 @@ class Products extends Admin_Controller{
 
     $this->load->model('product_model');
 
-    $this->options_per = array("lembar" => "lembar", "unit" => "unit", "batang" => "batang");
-    $this->options_specs_name = array("panjang" => "panjang", "lebar" => "lebar", "tebal" => "tebal", "tinggi" => "tinggi");
-    $this->options_specs_unit = array("in" => "in", "m" => "m", "cm" => "cm", "mm" => "mm");
+    $this->options_per = array("Choose your type" => "", "lembar" => "lembar", "unit" => "unit", "batang" => "batang");
+    $this->options_specs_name = array("Choose your spec" => "", "panjang" => "panjang", "lebar" => "lebar", "tebal" => "tebal", "tinggi" => "tinggi");
+    $this->options_specs_unit = array("Choose your size" => "", "in" => "Inchi - in", "m" => "Meter - m", "cm" => "Centimeter - cm", "mm" => "Milimeter - mm");
   }
 
   // this function make user can access /admin/products/new
@@ -68,21 +68,23 @@ class Products extends Admin_Controller{
     // print_r($product['prices']);
     // echo "</pre>";
     // echo "<br/>";
-    $prices = array();
-    $count_price = 0;
-    $count_spec = 0;
-    foreach($product['prices'] as $key => $item){
-      $allowed = array('price_id', 'price', 'per');
-      if(!isset($prices[$item['price_id']]))
-        $prices[$item['price_id']] = array_intersect_key($item, array_flip($allowed));
+    if(count($product['prices']) > 0){
+      $prices = array();
+      $count_price = 0;
+      $count_spec = 0;
+      foreach($product['prices'] as $key => $item){
+        $allowed = array('price_id', 'price', 'per');
+        if(!isset($prices[$item['price_id']]))
+          $prices[$item['price_id']] = array_intersect_key($item, array_flip($allowed));
 
-      if(!isset($prices[$item['price_id']]['specifications']))
-        $prices[$item['price_id']]['specifications'] = array();
-      $allowed = array('id', 'name', 'measurement', 'unit');
-      $spec = array_intersect_key($item, array_flip($allowed));
-      array_push($prices[$item['price_id']]['specifications'], $spec);
+        if(!isset($prices[$item['price_id']]['specifications']))
+          $prices[$item['price_id']]['specifications'] = array();
+        $allowed = array('id', 'name', 'measurement', 'unit');
+        $spec = array_intersect_key($item, array_flip($allowed));
+        array_push($prices[$item['price_id']]['specifications'], $spec);
+      }
+      $this->data["prices"] = $prices;
     }
-    $this->data["prices"] = $prices;
     $this->data["id"] = $params[0];
     $this->data["options_per"] = $this->options_per;
     $this->data["options_specs_name"] = $this->options_specs_name;
@@ -177,7 +179,9 @@ class Products extends Admin_Controller{
   }
 
   public function update(){
-    // print_r($this->input->post());
+    echo "<pre>";
+    print_r($this->input->post());
+    echo "</pre>";
     $product_id = $this->input->post('product_id');
     // echo "product_id: {$product_id}";
     $data = array('product' => array('name' => $this->input->post('name'),
@@ -193,7 +197,6 @@ class Products extends Admin_Controller{
     echo "images result: <br/>";
     print_r($new_images);
     echo "<br/>";
-    $this->product_model->update($product_id, $data, $new_images);
     */
     if($this->product_model->update($product_id, $data, $new_images))
       $this->session->set_flashdata('message', "Update product succeed");

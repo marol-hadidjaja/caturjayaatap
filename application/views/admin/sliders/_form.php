@@ -35,11 +35,19 @@
 
   <div class="input-field col s12">
     <?php
+      echo '<div class="file-field input-field">';
+      echo '<div class="btn">';
+      echo '<span>File</span>';
       $data = array('name' => 'image',
         'class' => 'validate',
         'id' => 'image');
       echo form_upload($data);
-      echo form_label('Image', 'image');
+      echo '</div><!-- close .btn -->';
+      echo '<div class="file-path-wrapper">';
+      echo '<input class="file-path validate" type="text">';
+      echo '</div><!-- close .file-path-wrapper -->';
+      echo '</div><!-- close .file-field -->';
+      echo '<div>Maximum file size: 2MB</div>';
 
       if(isset($slider)){
         echo img("uploads/{$slider['filename']}");

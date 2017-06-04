@@ -7,6 +7,7 @@ class Price_model extends CI_Model{
   }
 
   public function get($product_id){
+    echo "Price_model - get: product_id -- {$product_id}<br/>";
     $this->db->select('prices.id AS price_id, prices.price, prices.per,
                        specifications.id, specifications.name, specifications.measurement, specifications.unit');
     $this->db->from('prices');
@@ -34,5 +35,11 @@ class Price_model extends CI_Model{
       return TRUE;
     else
       return FALSE;
+  }
+
+  public function _delete($price_ids){
+    $this->db->from('prices');
+    $this->db->where_in("id", $price_ids);
+    $this->db->delete("prices");
   }
 }

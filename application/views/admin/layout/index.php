@@ -5,27 +5,12 @@
     <meta charset="utf-8">
     <title><?= isset($title) ? $title : "Catur Jaya Atap Admin" ?></title>
     <script src="<?= base_url() ?>public/javascripts/jquery-3.2.1.min.js"></script>
-    <!--<script src="<?//= base_url() ?>public/javascripts/jquery-2.1.4.js"></script>-->
-    <!-- include libraries(jQuery, bootstrap) -->
-    <!--<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> -->
-
-    <!-- include summernote css/js-->
-    <!--<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.3/summernote.js"></script>-->
-
-    <!-- Main Quill library -->
-    <!--<script src="https://cdn.quilljs.com/1.2.4/quill.min.js"></script>-->
-
-    <!-- Theme included stylesheets -->
-    <!--<link href="https://cdn.quilljs.com/1.2.4/quill.snow.css" rel="stylesheet">-->
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/materialNote.css">
     <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/codeMirror/codemirror.css">
     <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/codeMirror/monokai.css">
-    <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/main.css">
+    <!--<link rel="stylesheet" href="<?//= base_url() ?>public/stylesheets/main.css">-->
     <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/select2.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/materialize.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/admin/style.css">
@@ -37,15 +22,22 @@
     <script src="<?= base_url() ?>public/javascripts/select2.full.min.js"></script>
     <script src="<?= base_url() ?>public/javascripts/materialize.min.js"></script>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   </head>
 
   <body>
     <div class="row admin">
-      <div class="message"><?= $this->session->flashdata('message') ?></div>
-      <?php if($header) echo $header ;?>
       <?php if($left) echo $left ;?>
-      <?php if($middle) echo $middle ;?>
-      <?php if($footer) echo $footer ;?>
+      <?php
+        if($middle){
+          echo '<div class="col l10 m9 right">';
+          echo '<div class="sideRight">';
+          echo '<div id="message" class="col s12">'.$this->session->flashdata('message').'</div>';
+          echo $middle;
+          echo '</div><!-- close .sideRight -->';
+          echo '</div><!-- close .col.l10.m9.right -->';
+        }
+      ?>
     </div>
   </body>
 </html>

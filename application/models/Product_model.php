@@ -14,8 +14,12 @@ class Product_model extends CI_Model{
 
   public function get($id = FALSE, $limit = FALSE){
     if ($id === FALSE){
+      $this->db->select('products.*');
       $this->db->from('products');
+      // $this->db->join('prices', 'products.id = prices.product_id');
+      // $this->db->join('specifications', 'specifications.price_id = prices.id');
       $this->db->order_by('updated_at', 'DESC');
+      // $this->db->order_by('products.updated_at DESC, prices.updated_at DESC, specifications.updated_at DESC');
       if($limit)
         $this->db->limit($limit);
       $query = $this->db->get();
@@ -159,6 +163,32 @@ class Product_model extends CI_Model{
       $this->product_image_model->create($image_item);
     }
 
+    $product_prices = $this->price_model->get($id);
+    // echo "price_model last query: ". $this->db->last_query()."<br/>";
+    $product_price_ids = array_unique(array_map(function($val){ return $val['price_id']; }, $product_prices));
+    /*
+    echo "current product_price_ids: ";
+    print_r($product_price_ids);
+    echo "<br/>";
+    echo "data prices:";
+    print_r($data['prices']);
+    echo "<br/>";
+    */
+    $h_prices = array_map(function($val){ return $val['id']; }, $data['prices']);
+    /*
+    echo "h_prices: ";
+    print_r($h_prices);
+    echo "<br/>";
+    */
+    $deleted_price_ids = array_diff($product_price_ids, $h_prices);
+    if(count($deleted_price_ids) > 0){
+      $this->price_model->_delete($deleted_price_ids);
+    }
+    /*
+    echo "deleted_price_ids: ";
+    print_r($deleted_price_ids);
+    echo "<br/>";
+    */
     foreach($data['prices'] as $price){
       $item = array('price' => $price['price'],
         'per' => $price['per']);

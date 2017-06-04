@@ -1,41 +1,59 @@
-<?php
-  echo "<div class='specifications' style='border: 1px solid purple; margin-bottom:20px;'>";
+<div class="specifications spec">
+  <div class="input-field col s2">
+  <h5>Spec <?= ($specs_count + 1)?>:</h5>
+  </div>
 
-  $data = array('name' => 'delete_spec',
-    'class' => 'delete_spec');
-  echo form_button($data, 'Delete specification');
+  <?php
+    if(isset($specification)){
+      $data = array('name' => "prices[{$prices_count}][specifications][{$specs_count}][id]",
+        'type' => 'hidden',
+        'class' => 'specifications_id',
+        'value' => isset($specification) ? set_value('id', $specification['id']) : set_value('id'));
+      echo form_input($data);
+    }
+  ?>
 
-  if(isset($specification)){
-    $data = array('name' => "prices[{$prices_count}][specifications][{$specs_count}][id]",
-      'type' => 'hidden',
-      'class' => 'specifications_id',
-      'value' => isset($specification) ? set_value('id', $specification['id']) : set_value('id'));
-    echo form_input($data);
-  }
+  <div class="input-field col s3">
+    <?php
+      $data = array('name' => "prices[{$prices_count}][specifications][{$specs_count}][unit]",
+        'class' => 'specification_unit');
 
-  // $this->load->view('admin/specifications/_form', array('specification' => $specification, 'specs_count' => $specs_count, 'prices_count' => $prices_count));
-  $data = array('name' => "prices[{$prices_count}][specifications][{$specs_count}][name]",
-    'class' => 'specification_name');
+      if(isset($specification))
+        echo form_dropdown($data, $options_specs_unit, $specification['unit']);
+      else
+        echo form_dropdown($data, $options_specs_unit, '0', 'disabled=disabled');
 
-  if(isset($specification))
-    echo form_dropdown($data, $options_specs_name, $specification['name']);
-  else
-    echo form_dropdown($data, $options_specs_name);
+      echo form_label('Spec:', 'specification_measurement');
+    ?>
+  </div>
 
-  $data = array('name' => "prices[{$prices_count}][specifications][{$specs_count}][measurement]",
-    'type' => 'text',
-    'class' => 'specification_measurement',
-    'placeholder' => 'Measurement',
-    'value' => isset($specification) ? set_value('measurement', $specification['measurement']) : set_value('measurement'));
-  echo form_input($data);
+  <div class="input-field col s3">
+    <?php
+      $data = array('name' => "prices[{$prices_count}][specifications][{$specs_count}][measurement]",
+        'type' => 'text',
+        'class' => 'specification_measurement',
+        'placeholder' => 'Measurement',
+        'value' => isset($specification) ? set_value('measurement', $specification['measurement']) : set_value('measurement'));
+      echo form_input($data);
 
-  $data = array('name' => "prices[{$prices_count}][specifications][{$specs_count}][unit]",
-    'class' => 'specification_unit');
+      echo form_label('Measurement:', 'specification_measurement');
+    ?>
+  </div>
 
-  if(isset($specification))
-    echo form_dropdown($data, $options_specs_unit, $specification['unit']);
-  else
-    echo form_dropdown($data, $options_specs_unit);
+  <div class="input-field col s3">
+    <?php
+      $data = array('name' => "prices[{$prices_count}][specifications][{$specs_count}][name]",
+        'class' => 'specification_name');
 
-  echo "</div><!-- close .specifications -->";
-?>
+      if(isset($specification))
+        echo form_dropdown($data, $options_specs_name, $specification['name'], '0', 'disabled=disabled');
+      else
+        echo form_dropdown($data, $options_specs_name, '0', 'disabled=disabled');
+
+      echo form_label('Size:', 'specification_measurement');
+    ?>
+  </div>
+  <div class="input-field col s1 delSpec">
+    <a class="waves-effect waves-light btn red delete_spec"><i class="material-icons">delete_forever</i></a>
+  </div>
+</div><!-- close .specifications.spec -->
