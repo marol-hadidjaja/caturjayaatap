@@ -76,6 +76,7 @@
 
               ksort($prices, SORT_NUMERIC);
               $first_key = key($prices);
+              print_r($prices);
               $m = array_map(function($p){ return $p['name']; }, $prices[$first_key]);
             ?>
             <table>

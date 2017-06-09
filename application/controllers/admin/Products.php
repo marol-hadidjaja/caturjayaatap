@@ -179,9 +179,11 @@ class Products extends Admin_Controller{
   }
 
   public function update(){
+    /*
     echo "<pre>";
     print_r($this->input->post());
     echo "</pre>";
+     */
     $product_id = $this->input->post('product_id');
     // echo "product_id: {$product_id}";
     $data = array('product' => array('name' => $this->input->post('name'),

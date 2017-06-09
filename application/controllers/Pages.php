@@ -58,7 +58,7 @@ class Pages extends Public_Controller{
           if(count($categories) > 0){
             foreach($categories as $idx => $category){
               $categories[$idx]['images'] = $this->product_image_model->get($category['id']);
-              print_r($categories[$idx]);
+              // print_r($categories[$idx]);
             }
             $this->data['categories'] = $categories;
           }
