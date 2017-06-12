@@ -51,8 +51,34 @@ class Sliders extends Admin_Controller{
       else{
         // echo "Upload succeed<br/>";
         $image_data = $this->upload->data();
-        $r['status'] = 'success';
-        $r['filename'] = $image_data['file_name'];
+        // $r['status'] = 'success';
+        // $r['filename'] = $image_data['file_name'];
+        $image_lib_config['image_library'] = 'gd2';
+        $image_lib_config['source_image'] = $image_data['full_path']; //get original image
+        $image_lib_config['maintain_ratio'] = TRUE;
+        $image_lib_config['width'] = 150;
+        $image_lib_config['height'] = 100;
+        $image_lib_config['create_thumb'] = TRUE;
+        $image_lib_config['thumb_marker'] = '_thumb';
+        $image_lib_config['master_dim'] = 'height';
+        $image_lib_config['remove_spaces'] = TRUE;
+        $this->load->library('image_lib');
+        $this->image_lib->initialize($image_lib_config);
+        if (!$this->image_lib->resize()) {
+          // $this->handle_error($this->image_lib->display_errors());
+          // array_push($result['error']['resize'], $image_data['orig_name']);
+          $r['status'] = 'error';
+          $r['filename'] = $image_data['orig_name'];
+        }
+        else{
+          echo "image_lib resize OK<br/>";
+          $alt = pathinfo($image_data['orig_name'], PATHINFO_FILENAME);
+          $r['status'] = 'success';
+          $r['filename'] = $image_data['file_name'];
+          $r['alt'] = $alt;
+          // array_push($result['success'], array('filename' => $image_data['file_name'], 'alt' => $alt));
+          // $this->handle_success('Image was successfully uploaded to direcoty <strong>' . $upload_path . '</strong> and resized.');
+        }
       }// close check upload file succeed
     } // close check is_file_error
 

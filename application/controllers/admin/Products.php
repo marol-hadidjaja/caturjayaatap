@@ -11,15 +11,18 @@ class Products extends Admin_Controller{
 
     $this->load->model('product_model');
 
-    $this->options_per = array("Choose your type" => "", "lembar" => "lembar", "unit" => "unit", "batang" => "batang");
-    $this->options_specs_name = array("Choose your spec" => "", "panjang" => "panjang", "lebar" => "lebar", "tebal" => "tebal", "tinggi" => "tinggi");
-    $this->options_specs_unit = array("Choose your size" => "", "in" => "Inchi - in", "m" => "Meter - m", "cm" => "Centimeter - cm", "mm" => "Milimeter - mm");
+    $this->options_per = array("" => "Choose your type", "lbr" => "lembar", "unit" => "unit", "btg" => "batang");
+    $this->options_specs_name = array("" => "Choose your spec", "panjang" => "panjang", "lebar" => "lebar", "tebal" => "tebal", "tinggi" => "tinggi");
+    $this->options_specs_unit = array("" => "Choose your size", "in" => "Inchi - in", "m" => "Meter - m", "cm" => "Centimeter - cm", "mm" => "Milimeter - mm");
   }
 
   // this function make user can access /admin/products/new
   public function _remap($method, $params = array()){
     if ($method === 'new'){
-      $this->_new();
+      $this->_new($params);
+    }
+    else if($method === 'delete'){
+      $this->_delete($params);
     }
     else{
       $this->$method($params);
@@ -29,34 +32,42 @@ class Products extends Admin_Controller{
   public function index(){
     $this->middle = 'admin/products/index';
     $this->data['products'] = $this->product_model->get();
+    $this->data['categories'] = $this->category_model->get();
     $this->layout();
   }
 
-  public function _new(){
+  public function _new($params){
     $this->middle = 'admin/products/new';
     $this->data["options_per"] = $this->options_per;
     $this->data["options_specs_name"] = $this->options_specs_name;
     $this->data["options_specs_unit"] = $this->options_specs_unit;
     $this->data["prices_count"] = 0;
     $this->data["specs_count"] = 0;
+    $this->data["category"] = $params[0];
     $this->layout();
   }
 
   public function create(){
-    $data = array('product' => array('name' => $this->input->post('name'),
-        'description' => $this->input->post('description'),
-        'category' => $this->input->post('category'),
-        'hide' => $this->input->post('hide'),
-        'featured' => $this->input->post('featured')),
-        'prices' => $this->input->post('prices'));
+    $product_featured = ($this->input->post('featured') == NULL ? 0 : $this->input->post('featured'));
+    $product_hide = ($this->input->post('hide') == NULL ? 0 : $this->input->post('hide'));
 
-    $images = $this->handle_upload($_FILES, 'image', array('thumb'));
+    $data = array('product' => array('name' => $this->input->post('name'),
+      'description' => $this->input->post('description'),
+      'category' => $this->input->post('category'),
+      'hide' => $product_hide,
+      'featured' => $product_featured,
+    ),
+    'prices' => $this->input->post('prices'));
+
+    $images = array('success' => array());
+    // $images = $this->handle_upload($_FILES, 'image', array('thumb'));
     if($this->product_model->create($data, $images))
       $this->session->set_flashdata('message', "Create product succeed");
     else
       $this->session->set_flashdata('message', "Create product failed");
 
-    redirect('admin/products');
+    // redirect('admin/products');
+    redirect('admin/categories/edit/'.$this->input->post('category'));
   }
 
   public function edit($params){
@@ -158,6 +169,8 @@ class Products extends Admin_Controller{
           $image_lib_config['height'] = 100;
           $image_lib_config['create_thumb'] = TRUE;
           $image_lib_config['thumb_marker'] = '_thumb';
+          $image_lib_config['master_dim'] = 'height';
+          $image_lib_config['remove_spaces'] = TRUE;
           $this->load->library('image_lib');
           $this->image_lib->initialize($image_lib_config);
           if (!$this->image_lib->resize()) {
@@ -194,7 +207,8 @@ class Products extends Admin_Controller{
         'prices' => $this->input->post('prices'),
         'images' => $this->input->post('product_images'));
 
-    $new_images = $this->handle_upload($_FILES, 'images', array('thumb'));
+    $new_images = array('success' => array());
+    // $new_images = $this->handle_upload($_FILES, 'images', array('thumb'));
     /*
     echo "images result: <br/>";
     print_r($new_images);
@@ -205,11 +219,14 @@ class Products extends Admin_Controller{
     else
       $this->session->set_flashdata('message', "Update product failed");
 
-    redirect('admin/products');
+    // redirect('admin/products');
+    redirect('admin/categories/edit/'.$this->input->post('category'));
   }
 
-  public function delete($params){
-    if($this->product_model->_delete($params[0]))
+  public function _delete($params){
+    if($this->product_model->_delete($params[0])){
+      $this->session->set_flashdata("message", "Delete product succeed");
       redirect('admin/products');
+    }
   }
 }

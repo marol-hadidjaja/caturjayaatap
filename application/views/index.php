@@ -73,7 +73,7 @@
         foreach($featured_products as $key => $product){
           echo '<div class="col s12 m4">';
           echo '<div class="card">';
-          echo '<a href="'.base_url().'products/'.$product['id'].'/detail">';
+          echo '<a href="'.base_url().'products/detail/'.$product['category_id'].'">';
           echo '<div class="card-image">';
           if(count($product['images']) > 0)
             echo img('uploads/'.$product['images'][0]['filename']);

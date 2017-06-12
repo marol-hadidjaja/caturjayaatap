@@ -36,18 +36,30 @@ class Product_model extends CI_Model{
     return $result;
   }
 
-  public function get_by_category($category_id){
+  public function get_by_category($category_id, $limit = FALSE, $frontend = FALSE){
     $this->db->select('products.name AS name, products.id AS product_id, products.description AS description,
-      products.hide AS hide, products.featured AS featured');
+      products.hide AS hide, products.featured AS featured, products.created_at AS created_at, products.updated_at AS updated_at,
+      products.category_id');
 
     // $this->db->join('categories', 'categories.id = products.category_id');
-    $this->db->where('category_id', $category_id);
+    if($frontend == TRUE)
+      $this->db->where('hide', FALSE);
+
+    if(is_numeric($category_id))
+      $this->db->where('category_id', $category_id);
+
     $this->db->from('products');
-    $this->db->order_by('products.updated_at', 'DESC');
+    $this->db->order_by('products.name', 'ASC');
+    if(is_numeric($limit))
+      $this->db->limit($limit);
+
     $query = $this->db->get();
     $products = $query->result_array();
-    foreach($products as $key => $product){
-      $products[$key]['prices'] = $this->price_model->get($product['product_id']);
+
+    if($category_id != FALSE){
+      foreach($products as $key => $product){
+        $products[$key]['prices'] = $this->price_model->get($product['product_id']);
+      }
     }
     return $products;
   }
@@ -99,12 +111,14 @@ class Product_model extends CI_Model{
     $this->db->insert('products', $product);
     $product_id = $this->db->insert_id();
 
-    foreach($images['success'] as $image){
-      $image_item = array('product_id' => $product_id,
-        'filename' => $image['filename'],
-        'alt' => $image['alt'],
-        'created_at' => (new DateTime())->format('Y-m-d h:m:s'));
-      $this->product_image_model->create($image_item);
+    if(count($images['success']) > 0){
+      foreach($images['success'] as $image){
+        $image_item = array('product_id' => $product_id,
+          'filename' => $image['filename'],
+          'alt' => $image['alt'],
+          'created_at' => (new DateTime())->format('Y-m-d h:m:s'));
+        $this->product_image_model->create($image_item);
+      }
     }
 
     foreach($data['prices'] as $price){
@@ -171,12 +185,15 @@ class Product_model extends CI_Model{
     print_r($images);
     echo "<br/>";
      */
-    foreach($images['success'] as $image){
-      $image_item = array('product_id' => $id,
-        'filename' => $image['filename'],
-        'alt' => $image['alt'],
-        'created_at' => (new DateTime())->format('Y-m-d h:m:s'));
-      $this->product_image_model->create($image_item);
+
+    if(count($images['success']) > 0){
+      foreach($images['success'] as $image){
+        $image_item = array('product_id' => $id,
+          'filename' => $image['filename'],
+          'alt' => $image['alt'],
+          'created_at' => (new DateTime())->format('Y-m-d h:m:s'));
+        $this->product_image_model->create($image_item);
+      }
     }
 
     $product_prices = $this->price_model->get($id);

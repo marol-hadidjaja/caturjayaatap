@@ -50,7 +50,9 @@
       echo '<div>Maximum file size: 2MB</div>';
 
       if(isset($slider)){
-        echo img("uploads/{$slider['filename']}");
+        $extension_pos = strrpos($slider['filename'], '.'); // find position of the last dot, so where the extension starts
+        $thumb = substr($slider['filename'], 0, $extension_pos) . '_thumb' . substr($slider['filename'], $extension_pos);
+        echo img("uploads/{$thumb}");
       }
     ?>
   </div>

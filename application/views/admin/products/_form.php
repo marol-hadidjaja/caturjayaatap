@@ -28,6 +28,7 @@
 
   <div class="col s12">
     <?php
+      /*
       echo form_label('Category', 'category');
       echo '<div>';
       $data = array('name' => "category",
@@ -39,11 +40,17 @@
         echo form_dropdown($data, array());
 
       echo '</div>';
+      */
+      if(isset($product))
+        echo form_hidden('category', $product['category_id']);
+      else
+        echo form_hidden('category', $category);
     ?>
   </div>
 
   <div class="input-field col s12">
     <?php
+      /*
       echo form_label('Description', 'description');
       $data = array('name' => 'description',
         'class' => 'materialize-textarea',
@@ -52,6 +59,7 @@
         'placeholder' => 'Product description',
         'value' => isset($product) ? set_value('description', $product['description']) : set_value('description'));
       echo form_textarea($data);
+      */
     ?>
   </div>
 
@@ -63,23 +71,28 @@
     echo form_label('Featured', 'featured');
   ?>
 
+  <!--
   <div class="file-field input-field">
     <div class="btn">
       <span>Images</span>
       <?php
+        /*
         $data = array('name' => 'images[]',
           'class' => '',
           'id' => 'images',
           'multiple' => true);
         echo form_upload($data);
+        */
       ?>
     </div>
     <div class="file-path-wrapper">
       <input class="file-path validate" type="text" placeholder="Upload one or more files">
     </div>
   </div>
+  -->
 
   <?php
+    /*
     if(isset($images) && count($images) > 0){
       foreach($images as $image){
         $extension_pos = strrpos($image['filename'], '.'); // find position of the last dot, so where the extension starts
@@ -99,6 +112,7 @@
         'value' => join($image_ids, ','));
       echo form_input($data);
     }
+    */
   ?>
 
   <div class="detProd">
@@ -197,7 +211,7 @@
   });
 
   $("body").on("click", ".add_spec", function(e){
-    $prices = $(this).parent('.prices');
+    $prices = $(this).parents('.prices');
     specs_count = $prices.find('.specifications').length - 1;
 
     prices_count = -($prices.index() - ($('.prices').length - 1));

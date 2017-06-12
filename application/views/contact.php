@@ -57,6 +57,7 @@
 
 <!-- maps -->
 <script type="text/javascript">
+/*
   function loadScript(){
     var script = document.createElement("script");
     script.type = "text/javascript";
@@ -100,8 +101,8 @@
   }
 
   loadScript();
+*/
 
-/*
 var geocoder;
 var map;
 function initialize() {
@@ -115,7 +116,8 @@ function initialize() {
 }
 
 function codeAddress() {
-  address = "<?= preg_replace('/\s+/', '+', $setting->office_address) ?>";
+  address = "<?//= preg_replace('/\s+/', '+', $setting->office_address) ?>";
+address = 'Gunung Kweni no 2 Anggaswagi Sukodono';
   // console.log('address: ', address)
   // var address = document.getElementById('address').value;
   geocoder.geocode( { 'address': address }, function(results, status) {
@@ -130,7 +132,8 @@ function codeAddress() {
     }
   });
 }
-*/
+initialize();
+codeAddress();
 </script>
 
 <!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7VKj-zyKnDaIMva1JxE21m0DtwvwG-_E&callback=codeAddress">

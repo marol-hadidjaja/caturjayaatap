@@ -5,6 +5,8 @@ class Categories extends Admin_Controller{
     parent::__construct();
 
     $this->load->model('category_model');
+    $this->load->model('product_image_model');
+    $this->load->model('product_model');
   }
 
   public function index(){
@@ -15,5 +17,14 @@ class Categories extends Admin_Controller{
       array_push($categories_res, array('id' => (string)$category['id'], 'text' => $category['name']));
     }
     echo json_encode($categories_res);
+  }
+
+  public function edit($id){
+    $this->middle = 'admin/categories/edit';
+    $this->data['category'] = $this->category_model->find_by_id($id);
+    $this->data['products'] = $this->product_model->get_by_category($id);
+    $this->data['images'] = $this->product_image_model->get($id);
+
+    $this->layout();
   }
 }

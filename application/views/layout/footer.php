@@ -23,7 +23,7 @@
             <?php
               foreach($latest_products as $key => $product){
                 echo '<li>';
-                echo '<a href="products/'.$product['id'].'/detail">';
+                echo '<a href="products/detail/'.$product['category_id'].'">';
                 if(count($product['images']) > 0){
                   echo img('uploads/'.$product['images'][0]['filename'], TRUE, array('title' => $product['images'][0]['alt']));
                 }
@@ -43,8 +43,11 @@
             <?= (isset($setting) && $setting->workshop_phone) ? '<li><i class="material-icons left">phone</i> '.$setting->workshop_phone.'</li>' : '' ?>
             <?= (isset($setting) && $setting->office_phone) ? '<li><i class="material-icons left">smartphone</i> '.$setting->office_phone.'</li>' : '' ?>
             <?= (isset($setting) && $setting->email) ? '<li><i class="material-icons left">mail</i> '.$setting->email.'</li>' : '' ?>
-            <?= (isset($setting) && $setting->office_address) ? '<li><i class="material-icons left">account_balance</i> '.$setting->office_address.'</li>' : '' ?>
-            <?= (isset($setting) && $setting->workshop_address) ? '<li><i class="material-icons left">account_balance</i> '.$setting->workshop_address.'</li>' : '' ?>
+            <?= (isset($setting) && $setting->office_address) ? '<li><i class="material-icons left">business</i> '.$setting->office_address.'</li>' : '' ?>
+            <?= (isset($setting) && $setting->workshop_address) ? '<li><i class="material-icons left">local_convenience_store</i> '.$setting->workshop_address.'</li>' : '' ?>
+            <?= (isset($setting) && $setting->twitter) ? '<li><i class="fa fa-twitter left"></i> '.anchor($setting->twitter, 'Twitter', array('target' => '_blank')).'</li>' : '' ?>
+            <?= (isset($setting) && $setting->facebook) ? '<li><i class="fa fa-facebook left"></i> '.anchor($setting->facebook, 'Facebook', array('target' => '_blank')).'</li>' : '' ?>
+            <?= (isset($setting) && $setting->instagram) ? '<li><i class="fa fa-instagram left"></i> '.anchor($setting->instagram, 'Instagram', array('target' => '_blank')).'</li>' : '' ?>
           </ul>
         </div>
       </div>

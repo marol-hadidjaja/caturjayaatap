@@ -59,18 +59,10 @@
         <?php } ?>
       </div><!-- content -->
 
-<pre>
-<?//= print_r($products) ?>
-</pre>
-
-<?// = "Category: " ?>
-<pre>
-<?// = print_r($category) ?>
-</pre>
       <div class="l8 m12 s12 col contentProd">
         <div class="subcontent">
           <div class="title">
-            <h5>Category name: <?= $category['name'] ?></h5>
+            <h5><?= $category['name'] ?></h5>
             <a class="waves-effect waves-light btn" href="<?= base_url() ?>products"><i class="material-icons left">keyboard_arrow_left</i>Back Product</a>
           </div>
 
@@ -89,25 +81,12 @@
                   $first_key = key($prices);
                   if(count($prices) > 0){
                     $m = array_map(function($p){ return $p['name']; }, $prices[$first_key]);
-                    echo "<pre>";
-                    echo "Product['prices']:";
-                    // print_r($product['prices']);
-                    echo "</pre>";
-                    $help_prices_2 = array_map(function($p){ return array('name' => $p['name'], 'measurement' => $p['measurement'], 'unit' => $p['unit']); }, $product['prices']);
-                    // $prices_2 = array_map('unserialize', array_unique(array_map('serialize', $help_prices_2)));
-                    echo "<pre>";
-                    // print_r($help_prices_2);
-                    //echo "Prices2:";
-                    /*
-                    $h1 = array_column($help_prices_2, 'measurement');
-                    echo "h1:";
-                    print_r($h1);
-                    echo "<br/>";
-                    $h2 = array_flip($h1);
-                    echo "h2:";
-                    print_r($h2);
-                    print_r(array_count_values($h2));
-                     */
+                    $help_prices_2 = array_map(function($p){
+                      return array('name' => $p['name'],
+                        'measurement' => $p['measurement'],
+                        'unit' => $p['unit']);
+                    }, $product['prices']);
+
                     $counts = array();
                     foreach($help_prices_2 as $k => $v){
                       $help_key = "{$v['name']}{$v['measurement']}{$v['unit']}";
@@ -116,11 +95,12 @@
                       else
                         $counts[$help_key] = 1;
                     }
-                    print_r($counts);
+                    //echo "counts:";
+                    //print_r($counts);
                     echo "</pre>";
                   }
                 ?>
-                <div classs="product_name"><?= $product['name'] ?></div>
+                <div class="product_name"><?= $product['name'] ?></div>
                 <?php
                   if(count($prices) > 0){
                     if(min($counts) >= 4){
@@ -135,10 +115,16 @@
 
                       $values_key_as_columns = array_filter($help_prices_2, function($p) use ($product_measurement_keys){ return $p['name'] == $product_measurement_keys[0]['name']; });
                       $values_key_as_columns = array_map('unserialize', array_unique(array_map('serialize', $values_key_as_columns)));
+                      usort($values_key_as_columns, function($a, $b){
+                        return $a['measurement'] <=> $b['measurement'];
+                      });
 
                       $values_key_as_rows = array_filter($help_prices_2, function($p) use ($product_measurement_keys){ return $p['name'] == $product_measurement_keys[1]['name']; });
                       $values_key_as_rows = array_map('unserialize', array_unique(array_map('serialize', $values_key_as_rows)));
-                      ?>
+                      usort($values_key_as_rows, function($a, $b){
+                        return $a['measurement'] <=> $b['measurement'];
+                      });
+                  ?>
                       <table>
                         <thead>
                           <tr>
@@ -153,9 +139,30 @@
 
                         <tbody>
                           <?php
-                            foreach($values_key_as_rows as $k => $v){
+                            foreach($values_key_as_rows as $key_row => $values_key_as_row){
                               echo "<tr>";
-                              echo "<td>{$v['measurement']}</td>";
+                              echo "<td>{$values_key_as_row['measurement']}</td>";
+                              foreach($values_key_as_columns as $key_column => $values_key_as_column){
+                                echo "<td>";
+                                $j = array_filter($prices, function($p) use ($values_key_as_column, $values_key_as_row){
+                                  $find_by_row = array_filter($p, function($p_2) use($values_key_as_row){
+                                    return $p_2['measurement'] == $values_key_as_row['measurement'] && $p_2['name'] == $values_key_as_row['name'];
+                                  });
+                                  $find_by_column = array_filter($p, function($p_2) use($values_key_as_column){
+                                    return $p_2['measurement'] == $values_key_as_column['measurement'] && $p_2['name'] == $values_key_as_column['name'];
+                                  });
+
+                                  if(count($find_by_column) == 1 && count($find_by_row) == 1)
+                                    return $p;
+                                });
+
+                                $keys_1 = array_keys($j);
+                                $keys_2 = array_keys($j[$keys_1[0]]);
+                                $price = $j[$keys_1[0]][$keys_2[0]]['price'];
+                                $price_per = $j[$keys_1[0]][$keys_2[0]]['per'];
+                                echo 'Rp. '.number_format($price, 0, ',', '.').'/'.$price_per;
+                                echo "</td>";
+                              }
                               echo "</tr>";
                             }
                           ?>
@@ -164,6 +171,7 @@
                       <?php
                     }
                     else{
+                      // show price as ordinary table
                       ?>
                       <table>
                         <thead>
@@ -183,7 +191,8 @@
                               $measurements = array_map(function($p){ return "{$p['measurement']}{$p['unit']}"; }, $price);
                               echo "<td>".implode('x', $measurements)."</td>";
                               $first_key = key($price);
-                              echo "<td>".$price[$first_key]['price']."</td>";
+                              $price_per = $price[$first_key]['per'];
+                              echo "<td>".'Rp. '.number_format($price[$first_key]['price'], 0, ',', '.').'/'.$price_per."</td>";
                               echo "</tr>";
                               $count += 1;
                             }

@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url() ?>public/stylesheets/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>public/stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>public/stylesheets/font-awesome.min.css">
 
     <script src="<?= base_url() ?>public/javascripts/materialize.min.js"></script>
 

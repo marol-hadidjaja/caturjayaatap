@@ -1,7 +1,7 @@
 <div class="col l2 m3 left">
   <div class="sideLeft">
     <div class="companyName">
-      <a href="#">Catur Jaya Atap</a>
+    <a href="<?= base_url() ?>">Catur Jaya Atap</a>
     </div>
     <?php $user = $this->ion_auth->user()->row() ?>
     <ul class="menu">

@@ -21,7 +21,7 @@
       if(isset($specification))
         echo form_dropdown($data, $options_specs_unit, $specification['unit']);
       else
-        echo form_dropdown($data, $options_specs_unit, '0', 'disabled=disabled');
+        echo form_dropdown($data, $options_specs_unit, '0');
 
       echo form_label('Spec:', 'specification_measurement');
     ?>
@@ -46,9 +46,9 @@
         'class' => 'specification_name');
 
       if(isset($specification))
-        echo form_dropdown($data, $options_specs_name, $specification['name'], '0', 'disabled=disabled');
+        echo form_dropdown($data, $options_specs_name, $specification['name'], '0');
       else
-        echo form_dropdown($data, $options_specs_name, '0', 'disabled=disabled');
+        echo form_dropdown($data, $options_specs_name, '0');
 
       echo form_label('Size:', 'specification_measurement');
     ?>

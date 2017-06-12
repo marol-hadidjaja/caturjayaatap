@@ -33,9 +33,9 @@
             'class' => 'prices_per');
 
           if(isset($price))
-            echo form_dropdown($data, $options_per, $price['per'], '0', 'disabled=disabled');
+            echo form_dropdown($data, $options_per, $price['per'], '0');
           else
-            echo form_dropdown($data, $options_per, '0', 'disabled=disabled');
+            echo form_dropdown($data, $options_per, '0');
 
           echo form_label('Type:', 'prices_per');
         ?>

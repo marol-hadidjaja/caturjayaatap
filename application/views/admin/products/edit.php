@@ -1,6 +1,6 @@
 <div class="title">
   <h5>Product <?= $product['name'] ?></h5>
-  <a href="<?= base_url().'admin/products' ?>" class="waves-effect waves-light btn"><i class="material-icons left">arrow_back</i>Back to Product</a>
+  <a href="<?= base_url().'admin/categories/edit/'.$product['category_id'] ?>" class="waves-effect waves-light btn"><i class="material-icons left">arrow_back</i>Back to Product</a>
 </div>
 
 <?php echo validation_errors(); ?>

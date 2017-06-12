@@ -16,7 +16,7 @@ class Products extends Public_Controller{
     $this->data['id'] = $id;
     // $this->data['product'] = $this->product_model->get($id);
     $this->data['category'] = $this->category_model->find_by_id($id);
-    $this->data['products'] = $this->product_model->get_by_category($id);
+    $this->data['products'] = $this->product_model->get_by_category($id, TRUE);
     $this->data['images'] = $this->product_image_model->get($id);
     // $this->middle = 'detail_product';
     $this->middle = 'detail_product_new';
