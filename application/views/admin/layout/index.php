@@ -32,7 +32,12 @@
         if($middle){
           echo '<div class="col l10 m9 right">';
           echo '<div class="sideRight">';
-          echo '<div id="message" class="col s12">'.$this->session->flashdata('message').'</div>';
+          if($this->session->flashdata('message_success'))
+            echo '<div id="message" class="success">'.$this->session->flashdata('message_success').'</div>';
+
+
+          if($this->session->flashdata('message_fail'))
+            echo '<div id="message" class="fail">'.$this->session->flashdata('message_fail').'</div>';
           echo $middle;
           echo '</div><!-- close .sideRight -->';
           echo '</div><!-- close .col.l10.m9.right -->';

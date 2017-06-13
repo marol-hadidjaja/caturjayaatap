@@ -62,9 +62,9 @@ class Products extends Admin_Controller{
     $images = array('success' => array());
     // $images = $this->handle_upload($_FILES, 'image', array('thumb'));
     if($this->product_model->create($data, $images))
-      $this->session->set_flashdata('message', "Create product succeed");
+      $this->session->set_flashdata('message_success', "Create product succeed");
     else
-      $this->session->set_flashdata('message', "Create product failed");
+      $this->session->set_flashdata('message_fail', "Create product failed");
 
     // redirect('admin/products');
     redirect('admin/categories/edit/'.$this->input->post('category'));
@@ -215,9 +215,9 @@ class Products extends Admin_Controller{
     echo "<br/>";
     */
     if($this->product_model->update($product_id, $data, $new_images))
-      $this->session->set_flashdata('message', "Update product succeed");
+      $this->session->set_flashdata('message_success', "Update product succeed");
     else
-      $this->session->set_flashdata('message', "Update product failed");
+      $this->session->set_flashdata('message_fail', "Update product failed");
 
     // redirect('admin/products');
     redirect('admin/categories/edit/'.$this->input->post('category'));
@@ -225,7 +225,7 @@ class Products extends Admin_Controller{
 
   public function _delete($params){
     if($this->product_model->_delete($params[0])){
-      $this->session->set_flashdata("message", "Delete product succeed");
+      $this->session->set_flashdata("message_success", "Delete product succeed");
       redirect('admin/products');
     }
   }

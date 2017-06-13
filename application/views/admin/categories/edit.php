@@ -23,23 +23,25 @@
     </div>
   </div>
 
-  <div class="actionBtn">
-    <a class="waves-effect waves-light btn btnSave">Save</a>
-  </div>
-
   <?php
     if(isset($images) && count($images) > 0){
+      echo "<div class='product_images'>";
+      echo '<div class="row">';
       foreach($images as $image){
         $extension_pos = strrpos($image['filename'], '.'); // find position of the last dot, so where the extension starts
         $thumb = substr($image['filename'], 0, $extension_pos) . '_thumb' . substr($image['filename'], $extension_pos);
-        echo "<div class='product_images' data-id='{$image['id']}'>";
+        echo '<div class="col s3 product_image" data-id="'.$image['id'].'">';
+        echo '<div class="imgUp">';
         echo img("uploads/{$thumb}");
 
-        echo "<a data-category_image_id='".$image['id']."' class='delete_image waves-effect waves-light btn'>";
-        echo "<i class='material-icons left'>clear</i>";
+        echo "<a data-category_image_id='".$image['id']."' class='delete_image waves-effect waves-light btn red'>";
+        echo "<i class='material-icons left'>delete_forever</i>";
         echo "</a>";
-        echo "</div><!-- close .product_images -->";
+        echo '</div><!-- close .imgUp -->';
+        echo '</div><!-- close .col.s3 -->';
       }
+      echo '</div><!-- close .row -->';
+      echo "</div><!-- close .product_images -->";
     }
   ?>
 
@@ -90,15 +92,14 @@
       e.preventDefault();
   });
 
-  $("body").on("click", ".btnSave", function(e){
-    $('.editPage').submit();
+  $("body").on("change", "#images", function(e){
+    $(".editPage").submit();
   });
 
   $("body").on("click", ".delete_image", function(e){
     var category_image_id = this.dataset['category_image_id'],
-      $product_image = $(this).parent('.product_images');
+      $product_image = $(this).parents('.product_image');
 
-    console.log('category_image_id: ', category_image_id);
     if(confirm("Apakah anda yakin untuk menghapus gambar ini?")){
       $.ajax({
         url: '<?= base_url() ?>admin/product_images/delete/'+category_image_id,

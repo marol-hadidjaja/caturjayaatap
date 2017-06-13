@@ -114,15 +114,21 @@ nav{
 			margin-top: 15px;
 		}
 
+    /*
 		.contentProd .title{
 			margin-bottom: 3%;
 		}
+    */
 		.mobImgProd{ display: none; }
 footer{
 	height: 350px;
 	object-fit: cover;
 	position: relative;
 	color: white;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 	footer a{
 		color: rgba(255,255,255,0.9);
@@ -138,7 +144,7 @@ footer{
 	.fatFooter{
 		position: absolute;
 		width: 100%;
-		padding-top: 5%;
+		padding-top: 4%;
 	}
 	footer p{
 		color: white;
@@ -256,9 +262,12 @@ blockquote{
 	position: relative;
 }
 .viewProduct img, .zoomContainer {
-    width: 92% !important;
-    height: inherit !important;
-    object-fit: cover
+  width: 92% !important;
+  height: inherit !important;
+  object-fit: cover
+}
+.viewProduct .thumb:first-child img{
+  margin-left: 0;
 }
 
 img#pict1 {
@@ -275,15 +284,19 @@ img#pict1 {
 	  border: 1px solid #c4c1c1;
 	  margin: 0 5px;
 	  cursor: pointer;
-	  width: 90px !important;
+	  width: 60px !important;
+    height: 50px !important;
+    object-fit: cover;
 	}
 
 .priceList table{
 	border: 1px solid #d0d0d0;
   background: white;
-  margin-bottom: 10px;
+  margin-bottom: 25px;
 }
   .priceList .product_name{
+    margin-bottom: 10px;
+    margin-top: 5px;
     font-size: 17px;
   }
 	.priceList table td, .priceList table th{

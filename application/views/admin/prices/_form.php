@@ -54,7 +54,7 @@
         // echo "<br/>";
 
 
-        echo "<div class='specs_container'>";
+        echo "<div class='specs_container col s12'>";
         if(isset($price) && count($price['specifications']) > 0){
           // key in $prices is different from what I want
           // I want curent order but just reverse the keys
@@ -63,9 +63,11 @@
             // echo "specification in prices/_form.php:";
             // print_r($specification);
             // echo "<br/>";
+            echo "<div class='row'>";
             $this->load->view('admin/specifications/_form', array('prices_count' => $prices_count,
               'specs_count' => $specs_count,
               'specification' => $specification));
+            echo "</div>";
             $specs_count --;
           }
         }

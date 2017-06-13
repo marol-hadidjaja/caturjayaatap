@@ -106,9 +106,9 @@ class Sliders extends Admin_Controller{
       $data['filename'] = $result_upload['filename'];
 
     if($this->slider_model->create($data))
-      $this->session->set_flashdata('message', "Create slider succeed");
+      $this->session->set_flashdata('message_success', "Create slider succeed");
     else
-      $this->session->set_flashdata('message', "Create slider failed");
+      $this->session->set_flashdata('message_fail', "Create slider failed");
 
     redirect('admin/sliders');
   }
@@ -130,9 +130,9 @@ class Sliders extends Admin_Controller{
 
       $slider_id = $this->input->post('id');
       if($this->slider_model->update($slider_id, $data))
-        $this->session->set_flashdata('message', "Update slider succeed");
+        $this->session->set_flashdata('message_success', "Update slider succeed");
       else
-        $this->session->set_flashdata('message', "Update slider failed");
+        $this->session->set_flashdata('message_fail', "Update slider failed");
 
       redirect('admin/sliders');
     }
@@ -140,7 +140,7 @@ class Sliders extends Admin_Controller{
       $upload_message = '';
       if(strpos($result_upload['message'], 'exceeds the maximum') >= 0)
         $upload_message = 'Maximum file size: 2MB';
-      $this->session->set_flashdata('message', "Update slider failed: ".$upload_message);
+      $this->session->set_flashdata('message_fail', "Update slider failed: ".$upload_message);
     }
   }
 }

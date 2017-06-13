@@ -142,8 +142,8 @@ form.editPage > .row > .input-field.col label{ left: 0; }
 .actionBtn{
   margin-top: 20px;
 }
-  .detPage .title h5{ display: inline-block; }
-  .detPage .title a{
+  .products .title h5, .detPage .title h5{ display: inline-block; }
+  .products .title a, .detPage .title a{
     float: right !important;
     font-size: 12px;
     line-height: 25px;
@@ -153,11 +153,11 @@ form.editPage > .row > .input-field.col label{ left: 0; }
 
 /* PRODUCT.html */
 .addProduct{
-  position: absolute;
+  position: fixed;
   right: 15px;
   bottom: 15px;
 }
-  .products a{ margin-right: 30px; }
+  .sliders a, .products a{ margin-right: 30px; }
 
 /* DETPRODUCT.html */
 .detProd{
@@ -204,3 +204,44 @@ section h5{
     padding: 0 10px;
     width: 100%;
   }
+
+.product_images{
+  margin-left: -.75rem;
+  margin-right: -.75rem;
+}
+.product_images .imgUp{
+  margin-bottom: 10px;
+  position: relative;
+}
+.product_images img{
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+  .product_images .imgUp .btn {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    padding: 0px 10px;
+    line-height: 35px;
+    height: 35px;
+    margin-right: 0;
+  }
+    .product_images .imgUp .btn i{
+      font-size: 16px;
+      margin-right: 0;
+    }
+
+.success{
+  border: 1px solid green;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  color: green;
+}
+
+.fail{
+  border: 1px solid red;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  color: red;
+}

@@ -34,7 +34,7 @@
       <?php
         echo form_label('Content', 'content');
         echo '<div class="row">';
-        echo '<div class="input-field col s12">';
+        echo '<div>';
         $data = array('name' => 'content',
           'class' => '',
           'id' => 'content',

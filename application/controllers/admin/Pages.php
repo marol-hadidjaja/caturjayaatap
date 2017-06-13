@@ -8,7 +8,7 @@ class Pages extends Admin_Controller{
   }
 
   private function handle_upload($files, $input_name){
-    $r = array('status' => '', 'filename' => '');
+    $r = array('status' => '', 'filename' => '', 'message' => '');
     $upload_path = './uploads';
     $config = array();
     $config['upload_path'] = $upload_path;
@@ -28,6 +28,7 @@ class Pages extends Admin_Controller{
     if (!$is_file_error) {
       $this->load->library('upload');
       $this->upload->initialize($config);
+      $this->upload->overwrite = true;
       if(!$this->upload->do_upload('image')){
         // if file upload failed then catch the errors
         $image_data = $this->upload->data();
@@ -40,8 +41,33 @@ class Pages extends Admin_Controller{
       } // close check upload file failed
       else{
         $image_data = $this->upload->data();
-        $r['status'] = 'success';
-        $r['filename'] = $image_data['file_name'];
+
+        // Resize file
+        $image_lib_config = array();
+        $image_lib_config['image_library'] = 'gd2';
+        $image_lib_config['source_image'] = $image_data['full_path']; //get original image
+        $image_lib_config['maintain_ratio'] = TRUE;
+        $image_lib_config['width'] = 150;
+        $image_lib_config['height'] = 100;
+        $image_lib_config['create_thumb'] = TRUE;
+        $image_lib_config['thumb_marker'] = '_thumb';
+        $image_lib_config['master_dim'] = 'height';
+        $image_lib_config['remove_spaces'] = TRUE;
+        $this->load->library('image_lib');
+        $this->image_lib->initialize($image_lib_config);
+
+        if (!$this->image_lib->resize()) {
+          // $this->handle_error($this->image_lib->display_errors());
+          $r['status'] = 'error';
+          $r['message'] = $this->image_lib->display_errors();
+          //$r['filename'] = $image_data['orig_name']);
+        }
+        else{
+          $r['status'] = 'success';
+          $r['filename'] = $image_data['file_name'];
+        }
+        // $r['status'] = 'success';
+        // $r['filename'] = $image_data['file_name'];
       }// close check upload file succeed
     } // close check is_file_error
 
@@ -50,10 +76,8 @@ class Pages extends Admin_Controller{
 
   public function edit($url){
     $this->middle = 'admin/pages/edit';
-    $data = array();
-    $data['page'] = $this->page_model->get_pages($url);
-    $data['url'] = $url;
-    $this->data = $data;
+    $this->data['page'] = $this->page_model->get_pages($url);
+    $this->data['url'] = $url;
     $this->layout();
   }
 
@@ -62,10 +86,14 @@ class Pages extends Admin_Controller{
       'summary' => $this->input->post('summary'),
       'content' => $this->input->post('content'));
     $result_upload = $this->handle_upload($_FILES, 'image');
-    if($this->page_model->update_page($url, $data))
+    if($result_upload['status'] == 'success' && $this->page_model->update_page($url, $data))
       $this->session->set_flashdata('message', "Update {$url} succeed");
-    else
-      $this->session->set_flashdata('message', "Update {$url} failed");
+    else{
+      $message = "Update {$url} failed";
+      if($result_upload['status'] == 'error')
+        $message .= ": ".$result_upload['message'];
+      $this->session->set_flashdata('message', $message);
+    }
 
     redirect('admin/dashboard');
   }
