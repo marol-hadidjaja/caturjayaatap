@@ -102,8 +102,6 @@ class Product_images extends Admin_Controller{
   public function add($params){
     $new_images = $this->handle_upload($_FILES, 'images', array('thumb'));
     $result = $this->product_image_model->bulk_create($new_images['success'], $params[0]);
-    echo "count files: ".count($_FILES)."<br/>";
-    echo "result:".count($result)."<br/>";
     if(count($result) >= count($_FILES[$input_name]['name']))
       $this->session->set_flashdata('message', "Product images succeed to add");
     else

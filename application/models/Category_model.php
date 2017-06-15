@@ -16,7 +16,11 @@ class Category_model extends CI_Model{
   public function get($name = FALSE){
     if ($name === FALSE){
       $query = $this->db->get('categories');
-      return $query->result_array();
+      $result = $query->result_array();
+      foreach($result as $k => $v){
+        $result[$k]['images'] = $this->product_image_model->get($v['id']);
+      }
+      return $result;
     }
 
     $this->db->where('name', $name);

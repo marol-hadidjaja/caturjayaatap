@@ -24,6 +24,7 @@ class Categories extends Admin_Controller{
     $this->data['category'] = $this->category_model->find_by_id($id);
     $this->data['products'] = $this->product_model->get_by_category($id);
     $this->data['images'] = $this->product_image_model->get($id);
+    $this->data['title'] = 'CJA Admin - Products in '.$this->data['category']['name'];
 
     $this->layout();
   }

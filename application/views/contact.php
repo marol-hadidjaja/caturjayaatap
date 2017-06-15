@@ -27,7 +27,9 @@
           <div class="title">
             <h5>Hubungi <span>Kami</span></h5>
           </div>
-          <p>Untuk informasi lebih lanjut, Silahkan menghubungi kami</p>
+
+          <?= $page['summary']?>
+
           <?php
             if(isset($setting->workshop_address) && $setting->workshop_address != '')
               echo "<p><b>Alamat Workshop:</b> {$setting->workshop_address}</p>";

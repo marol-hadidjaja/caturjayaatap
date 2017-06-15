@@ -72,7 +72,7 @@
 
 <div class="actionBtn">
   <a class="waves-effect waves-light btn btnSave">Save</a>
-  <a class="waves-effect waves-light btn grey">Cancel</a>
+  <?= anchor('admin/dashboard', 'Cancel', array('class' => "waves-effect waves-light btn grey")) ?>
 </div>
 
 <script>

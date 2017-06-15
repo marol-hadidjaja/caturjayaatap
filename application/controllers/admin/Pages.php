@@ -20,8 +20,8 @@ class Pages extends Admin_Controller{
     // Check if files are selected or not
     if($files[$input_name]['error'] == 4 || empty($files[$input_name]['name'])) {
       $is_file_error = TRUE;
-      $r['status'] = 'error';
-      $r['message'] = 'Select an image file.';
+      $r['status'] = 'success';
+      // $r['message'] = 'Select an image file.';
     }
 
     // if file was selected then proceed to upload
@@ -78,6 +78,7 @@ class Pages extends Admin_Controller{
     $this->middle = 'admin/pages/edit';
     $this->data['page'] = $this->page_model->get_pages($url);
     $this->data['url'] = $url;
+    $this->data['title'] = 'CJA Admin - Edit Page '.$this->data['page']['title'];
     $this->layout();
   }
 
@@ -86,13 +87,39 @@ class Pages extends Admin_Controller{
       'summary' => $this->input->post('summary'),
       'content' => $this->input->post('content'));
     $result_upload = $this->handle_upload($_FILES, 'image');
-    if($result_upload['status'] == 'success' && $this->page_model->update_page($url, $data))
-      $this->session->set_flashdata('message', "Update {$url} succeed");
+    // echo ($url == 'about' && $result_upload['status'] == 'success') ? 'true I<br/>' : 'false I<br/>';
+    // echo $url != 'about' ? 'true II<br/>' : 'false II<br/>';
+    // echo $this->page_model->update_page($url, $data) ? 'true III<br/>' : 'false II<br/>';
+    /*
+    if((($url == 'about' && $result_upload['status'] == 'success') ||
+       $url != 'about') && $this->page_model->update_page($url, $data)){
+      $this->session->set_flashdata('message_success', "Update {$url} succeed");
+    }
     else{
       $message = "Update {$url} failed";
       if($result_upload['status'] == 'error')
         $message .= ": ".$result_upload['message'];
-      $this->session->set_flashdata('message', $message);
+      $this->session->set_flashdata('message_fail', $message);
+    }
+    */
+    if($url == 'about'){
+      if($result_upload['status'] == 'success' && $this->page_model->update_page($url, $data)){
+        $this->session->set_flashdata('message_success', "Update {$url} succeed");
+      }
+      else{
+        $message = "Update {$url} failed";
+        if($result_upload['status'] == 'error')
+          $message .= ": ".$result_upload['message'];
+        $this->session->set_flashdata('message_fail', $message);
+      }
+    }
+    else{
+      if($this->page_model->update_page($url, $data)){
+        $this->session->set_flashdata('message_success', "Update {$url} succeed");
+      }
+      else{
+        $this->session->set_flashdata('message_fail', "Update {$url} failed");
+      }
     }
 
     redirect('admin/dashboard');

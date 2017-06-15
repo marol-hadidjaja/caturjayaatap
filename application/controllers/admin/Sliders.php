@@ -89,11 +89,13 @@ class Sliders extends Admin_Controller{
     $this->middle = 'admin/sliders/index';
     $data = array();
     $this->data['sliders'] = $this->slider_model->get();
+    $this->data['title'] = 'CJA Admin - Sliders';
     $this->layout();
   }
 
   public function _new(){
     $this->middle = 'admin/sliders/new';
+    $this->data['title'] = 'CJA Admin - New Slider';
     $this->layout();
   }
 
@@ -117,6 +119,7 @@ class Sliders extends Admin_Controller{
     $this->middle = 'admin/sliders/edit';
     $this->data['id'] = $params[0];
     $this->data['slider'] = $this->slider_model->get($params[0]);
+    $this->data['title'] = 'CJA Admin - Edit Slider '.$this->data['slider']['title'];
     $this->layout();
   }
 

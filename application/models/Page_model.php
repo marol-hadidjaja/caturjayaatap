@@ -20,11 +20,16 @@ class Page_model extends CI_Model{
   }
 
   public function update_page($url, $data){
+    $this->db->trans_start();
+
     $this->db->set($data);
     $url = $url == "home" ? "" : $url;
     $this->db->where('url', $url);
     $query = $this->db->update('pages');
-    if($this->db->affected_rows() == 1)
+
+    $this->db->trans_complete();
+
+    if($this->db->trans_status())
       return TRUE;
     else
       return FALSE;

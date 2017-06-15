@@ -28,13 +28,12 @@
           <div class="title">
             <h5>Produk <span>Kami</span></h5>
           </div>
-          <p>Kami menyediakan berbagai macam produk yang dibutuhkan pelanggan. Produk kami terdiri dari:</p>
+          <?= $page['summary']?>
         </div>
       </div><!-- content -->
     </div>
     <div class="row">
       <?php
-        // foreach($products as $key => $product){
         foreach($categories as $key => $category){
           echo '<div class="col s12 m4">';
           echo '<div class="card">';

@@ -6,6 +6,7 @@
   <table class="striped">
     <thead>
       <tr>
+        <!--<th></th>-->
         <th width="40%">Name</th>
         <th width="30%">Updated</th>
         <th width="30%">Actions</th>
@@ -16,6 +17,14 @@
       <?php
         foreach($categories as $key => $item){
           echo "<tr>";
+          /*
+          echo "<td>";
+          if(count($item['images']) > 0)
+            echo img($item['images'][0]['filename']);
+          else
+            echo img('public/images/no image.jpg');
+          */
+          echo "</td>";
           echo "<td>{$item["name"]}</td>";
           echo "<td>{$item["updated_at"]}</td>";
           echo "<td>";

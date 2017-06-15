@@ -15,7 +15,7 @@ class Admin_Controller extends MY_Controller{
   }
 
   var $template  = array();
-  var $data      = array();
+  var $data      = array('title' => 'CJA Admin');
   public function layout(){
     // making template and send data to view.
     // $this->template['header'] = $this->load->view('admin/layout/header', $this->data, true);

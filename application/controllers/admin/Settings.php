@@ -12,6 +12,7 @@ class Settings extends Admin_Controller{
     $this->middle = 'admin/settings/edit';
     $this->data['setting'] = $this->setting_model->get();
     $this->data['missions'] = $this->mission_model->get();
+    $this->data['title'] = 'CJA Admin - Settings';
     $this->layout();
   }
 
@@ -25,9 +26,9 @@ class Settings extends Admin_Controller{
       'misi' => $this->input->post('misi'));
 
     if($this->setting_model->update($data))
-      $this->session->set_flashdata('message', "Update setting succeed");
+      $this->session->set_flashdata('message_success', "Update setting succeed");
     else
-      $this->session->set_flashdata('message', "Update setting failed");
+      $this->session->set_flashdata('message_fail', "Update setting failed");
 
     redirect('admin/dashboard');
   }

@@ -33,6 +33,7 @@ class Products extends Admin_Controller{
     $this->middle = 'admin/products/index';
     $this->data['products'] = $this->product_model->get();
     $this->data['categories'] = $this->category_model->get();
+    $this->data['title'] = 'CJA Admin - Product Categories';
     $this->layout();
   }
 
@@ -44,6 +45,7 @@ class Products extends Admin_Controller{
     $this->data["prices_count"] = 0;
     $this->data["specs_count"] = 0;
     $this->data["category"] = $params[0];
+    $this->data["title"] = 'CJA Admin - New Product';
     $this->layout();
   }
 
@@ -100,6 +102,7 @@ class Products extends Admin_Controller{
     $this->data["options_per"] = $this->options_per;
     $this->data["options_specs_name"] = $this->options_specs_name;
     $this->data["options_specs_unit"] = $this->options_specs_unit;
+    $this->data["title"] = 'CJA Admin - Edit Product '.$this->data['product']['name'];
     $this->layout();
   }
 

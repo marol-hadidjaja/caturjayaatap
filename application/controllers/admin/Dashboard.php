@@ -9,8 +9,8 @@ class Dashboard extends Admin_Controller{
 
   public function index(){
     $this->middle = 'admin/pages/index';
-    $data = array();
     $this->data['pages'] = $this->page_model->get_pages();
+    $this->data['title'] = 'CJA Admin - Pages';
     $this->layout();
   }
 }

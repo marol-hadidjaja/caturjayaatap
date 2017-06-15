@@ -6,6 +6,7 @@
   <?php
     $old_password['placeholder'] = 'Your Old Password';
     $old_password['class'] = 'validate';
+    $old_password['autofocus'] = '';
   ?>
   <?php echo form_input($old_password);?>
   <?php echo lang('change_password_old_password_label', 'old_password');?> <br />

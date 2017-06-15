@@ -45,9 +45,25 @@
             <?= (isset($setting) && $setting->email) ? '<li><i class="material-icons left">mail</i> '.$setting->email.'</li>' : '' ?>
             <?= (isset($setting) && $setting->office_address) ? '<li><i class="material-icons left">business</i> '.$setting->office_address.'</li>' : '' ?>
             <?= (isset($setting) && $setting->workshop_address) ? '<li><i class="material-icons left">local_convenience_store</i> '.$setting->workshop_address.'</li>' : '' ?>
-            <?= (isset($setting) && $setting->twitter) ? '<li><i class="fa fa-twitter left"></i> '.anchor($setting->twitter, 'Twitter', array('target' => '_blank')).'</li>' : '' ?>
-            <?= (isset($setting) && $setting->facebook) ? '<li><i class="fa fa-facebook left"></i> '.anchor($setting->facebook, 'Facebook', array('target' => '_blank')).'</li>' : '' ?>
-            <?= (isset($setting) && $setting->instagram) ? '<li><i class="fa fa-instagram left"></i> '.anchor($setting->instagram, 'Instagram', array('target' => '_blank')).'</li>' : '' ?>
+            <?php
+              if(isset($setting) && $setting->twitter){
+                $tmp = explode('/', $setting->twitter);
+                $twitter_id = end($tmp);
+              }
+
+              if(isset($setting) && $setting->facebook){
+                $tmp = explode('/', $setting->facebook);
+                $facebook_id = end($tmp);
+              }
+
+              if(isset($setting) && $setting->instagram){
+                $tmp = explode('/', $setting->instagram);
+                $instagram_id = end($tmp);
+              }
+            ?>
+            <?= (isset($setting) && $setting->twitter) ? '<li><i class="fa fa-twitter left"></i> '.anchor($setting->twitter, $twitter_id, array('target' => '_blank')).'</li>' : '' ?>
+            <?= (isset($setting) && $setting->facebook) ? '<li><i class="fa fa-facebook left"></i> '.anchor($setting->facebook, $facebook_id, array('target' => '_blank')).'</li>' : '' ?>
+            <?= (isset($setting) && $setting->instagram) ? '<li><i class="fa fa-instagram left"></i> '.anchor($setting->instagram, $instagram_id, array('target' => '_blank')).'</li>' : '' ?>
           </ul>
         </div>
       </div>

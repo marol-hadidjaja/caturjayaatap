@@ -105,6 +105,8 @@
 <script>
   $('.sideRight').addClass('detPage');
 
+  $('#office_address').focus();
+
   $('body').on("click", ".btnSave", function(e){
     $('.updateSetting').submit();
     e.preventDefault();
@@ -116,6 +118,7 @@
       url: '<?= base_url() ?>' + 'admin/missions/new?missions_count=' + missions_count,
       success: function(result){
         $('#missions_container').prepend(result);
+        $(".missions")[0].focus();
       }
     });
     e.preventDefault();
