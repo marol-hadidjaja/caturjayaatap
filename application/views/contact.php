@@ -59,13 +59,10 @@
 
 <!-- maps -->
 <script type="text/javascript">
-/*
   function loadScript(){
     var script = document.createElement("script");
     script.type = "text/javascript";
     script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyD7VKj-zyKnDaIMva1JxE21m0DtwvwG-_E&sensor=false&callback=loadmap";
-    // script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyD7VKj-zyKnDaIMva1JxE21m0DtwvwG-_E&sensor=false";
-    // script.src = "https://maps.google.com/maps/api/js?sensor=false&callback=loadmap";
     setTimeout(function () {
       try{
         if (!google || !google.maps) {
@@ -83,8 +80,7 @@
 
   // google maps
   function loadmap(){
-    var latlng = new google.maps.LatLng(-7.267138, 112.741282);
-    var maplatlng = new google.maps.LatLng(-7.267138, 112.741282);
+    var maplatlng = new google.maps.LatLng(-7.415812, 112.674312);
     var settings = {
       zoom: 17,
       center: maplatlng,
@@ -97,46 +93,10 @@
 
     var map = new google.maps.Map(document.getElementById("map_canvas"), settings);
     var marker = new google.maps.Marker({
-      position: latlng,
+      position: maplatlng,
       map: map
     });
   }
 
   loadScript();
-*/
-
-var geocoder;
-var map;
-function initialize() {
-  geocoder = new google.maps.Geocoder();
-  var latlng = new google.maps.LatLng(-34.397, 150.644);
-  var mapOptions = {
-    zoom: 8,
-    center: latlng
-  }
-  map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
-}
-
-function codeAddress() {
-  address = "<?//= preg_replace('/\s+/', '+', $setting->office_address) ?>";
-address = 'Gunung Kweni no 2 Anggaswagi Sukodono';
-  // console.log('address: ', address)
-  // var address = document.getElementById('address').value;
-  geocoder.geocode( { 'address': address }, function(results, status) {
-    if (status == google.maps.GeocoderStatus.OK) {
-      map.setCenter(results[0].geometry.location);
-      var marker = new google.maps.Marker({
-          map: map,
-          position: results[0].geometry.location
-      });
-    } else {
-      alert('Geocode was not successful for the following reason: ' + status);
-    }
-  });
-}
-initialize();
-codeAddress();
 </script>
-
-<!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7VKj-zyKnDaIMva1JxE21m0DtwvwG-_E&callback=codeAddress">
-</script>-->

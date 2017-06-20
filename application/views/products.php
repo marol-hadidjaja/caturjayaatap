@@ -39,10 +39,16 @@
           echo '<div class="card">';
           echo '<a href="'.base_url().'products/detail/'.$category['id'].'">';
           echo '<div class="card-image">';
-          if(count($category['images']) > 0)
-            echo img('uploads/'.$category['images'][0]['filename']);
+
+          if(count($category['images']) > 0){
+            $filename = $category['images'][0]['filename'];
+            $extension_pos = strrpos($filename, '.'); // find position of the last dot, so where the extension starts
+            $thumb = substr($filename, 0, $extension_pos) . '_thumb' . substr($filename, $extension_pos);
+            echo img('uploads/'.$thumb);
+          }
           else
             echo img('public/images/no image.jpg');
+
           echo '</div><!-- .card-image -->';
           echo '<div class="card-content">';
           echo '<h5 class="truncate">'.$category['name'].'</h5>';

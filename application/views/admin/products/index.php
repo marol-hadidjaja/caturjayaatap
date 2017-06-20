@@ -40,9 +40,9 @@
   <p>No products yet</p>
 <?php } ?>
 
-<!--<div class="addProduct">
-<a href="<?//= base_url().'admin/products/new' ?>" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">add</i></a>
-</div>--><!-- addProduct -->
+<div class="addProduct">
+<a href="<?= base_url().'admin/categories/new' ?>" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">add</i></a>
+</div><!-- addProduct -->
 
 <script>
   $('.sideRight').addClass('products');
