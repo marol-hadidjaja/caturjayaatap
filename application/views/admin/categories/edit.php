@@ -106,7 +106,6 @@
         type: "POST",
         dataType: 'json',
         success: function(result){
-          console.log('result: ', result);
           $product_image.remove();
         }
       });

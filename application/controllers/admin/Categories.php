@@ -28,4 +28,16 @@ class Categories extends Admin_Controller{
 
     $this->layout();
   }
+
+  public function create(){
+    if($category_id = $this->category_model->create($this->input->post('category'))){
+      $this->session->set_flashdata('message_success', "Create category succeed");
+      redirect('admin/categories/edit/'.$category_id);
+    }
+    else{
+      $this->session->set_flashdata('message_fail', "Create category failed");
+      redirect('admin/products/');
+    }
+
+  }
 }

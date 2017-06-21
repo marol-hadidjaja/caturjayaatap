@@ -25,10 +25,15 @@ class Slider_model extends CI_Model{
   }
 
   public function update($id, $data){
+    $this->db->trans_start();
+
     $this->db->set($data);
     $this->db->where('id', $id);
     $query = $this->db->update('sliders');
-    if($this->db->affected_rows() == 1)
+
+    $this->db->trans_complete();
+
+    if($this->db->trans_status())
       return TRUE;
     else
       return FALSE;

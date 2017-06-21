@@ -19,11 +19,12 @@ class Sliders extends Admin_Controller{
 
   private function handle_upload($files, $input_name){
     $r = array('status' => '', 'filename' => '');
-    $upload_path = './uploads';
+    $upload_path = './uploads/';
     $config = array();
     $config['upload_path'] = $upload_path;
     $config['allowed_types'] = 'jpg|jpeg|png';
     $config['encrypt_name'] = TRUE;
+    $config['max_size'] = '2048';
 
     $image_data = array();
     $is_file_error = FALSE;
@@ -49,10 +50,7 @@ class Sliders extends Admin_Controller{
         }
       } // close check upload file failed
       else{
-        // echo "Upload succeed<br/>";
         $image_data = $this->upload->data();
-        // $r['status'] = 'success';
-        // $r['filename'] = $image_data['file_name'];
         $image_lib_config['image_library'] = 'gd2';
         $image_lib_config['source_image'] = $image_data['full_path']; //get original image
         $image_lib_config['maintain_ratio'] = TRUE;
@@ -60,18 +58,18 @@ class Sliders extends Admin_Controller{
         $image_lib_config['height'] = 100;
         $image_lib_config['create_thumb'] = TRUE;
         $image_lib_config['thumb_marker'] = '_thumb';
-        $image_lib_config['master_dim'] = 'height';
         $image_lib_config['remove_spaces'] = TRUE;
         $this->load->library('image_lib');
         $this->image_lib->initialize($image_lib_config);
+
         if (!$this->image_lib->resize()) {
           // $this->handle_error($this->image_lib->display_errors());
           // array_push($result['error']['resize'], $image_data['orig_name']);
           $r['status'] = 'error';
           $r['filename'] = $image_data['orig_name'];
+          $r['message'] = $this->image_lib->display_errors();
         }
         else{
-          echo "image_lib resize OK<br/>";
           $alt = pathinfo($image_data['orig_name'], PATHINFO_FILENAME);
           $r['status'] = 'success';
           $r['filename'] = $image_data['file_name'];
@@ -130,20 +128,21 @@ class Sliders extends Admin_Controller{
     $result_upload = $this->handle_upload($_FILES, 'image');
     if($result_upload['status'] == 'success'){
       $data['filename'] = $result_upload['filename'];
-
-      $slider_id = $this->input->post('id');
-      if($this->slider_model->update($slider_id, $data))
-        $this->session->set_flashdata('message_success', "Update slider succeed");
-      else
-        $this->session->set_flashdata('message_fail', "Update slider failed");
-
-      redirect('admin/sliders');
     }
     else{
-      $upload_message = '';
-      if(strpos($result_upload['message'], 'exceeds the maximum') >= 0)
+      $upload_message = trim(strip_tags($result_upload['message']));
+      if(strpos($upload_message, 'exceeds the maximum') != null && strpos($upload_message, 'exceeds the maximum') >= 0)
         $upload_message = 'Maximum file size: 2MB';
+
       $this->session->set_flashdata('message_fail', "Update slider failed: ".$upload_message);
     }
+
+    $slider_id = $this->input->post('id');
+    if($this->slider_model->update($slider_id, $data))
+      $this->session->set_flashdata('message_success', "Update slider succeed");
+    else
+      $this->session->set_flashdata('message_fail', "Update slider failed");
+
+    redirect('admin/sliders');
   }
 }
