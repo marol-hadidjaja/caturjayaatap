@@ -20,9 +20,9 @@ class Pages extends Public_Controller{
     $this->data['sliders'] = $this->slider_model->get();
     $featured_products = $this->product_model->get_featured(3);
 
-    if(count($featured_products) < 0){
+    if(count($featured_products) > 0){
       foreach($featured_products as $idx => $product){
-        $featured_products[$idx]['images'] = $this->product_image_model->get($product['id']);
+        $featured_products[$idx]['images'] = $this->product_image_model->get($product['category_id']);
       }
       $this->data['featured_products'] = $featured_products;
     }

@@ -107,9 +107,12 @@ class Pages extends Admin_Controller{
         $this->session->set_flashdata('message_success', "Update {$url} succeed");
       }
       else{
-        $message = "Update {$url} failed";
-        if($result_upload['status'] == 'error')
-          $message .= ": ".$result_upload['message'];
+        $upload_message = trim(strip_tags($result_upload['message']));
+
+        if(strpos($upload_message, 'exceeds the maximum') != null && strpos($upload_message, 'exceeds the maximum') >= 0)
+          $upload_message = 'Maximum file size: 2MB';
+
+        $message = "Update {$url} failed: ".$upload_message;
         $this->session->set_flashdata('message_fail', $message);
       }
     }

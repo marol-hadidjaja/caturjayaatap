@@ -138,8 +138,10 @@ class Sliders extends Admin_Controller{
     }
 
     $slider_id = $this->input->post('id');
-    if($this->slider_model->update($slider_id, $data))
-      $this->session->set_flashdata('message_success', "Update slider succeed");
+    if($this->slider_model->update($slider_id, $data)){
+      if($result_upload['status'] == 'success')
+        $this->session->set_flashdata('message_success', "Update slider succeed");
+    }
     else
       $this->session->set_flashdata('message_fail', "Update slider failed");
 

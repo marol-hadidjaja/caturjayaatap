@@ -15,6 +15,7 @@ class Category_model extends CI_Model{
 
   public function get($name = FALSE){
     if ($name === FALSE){
+      $this->db->order_by('name ASC');
       $query = $this->db->get('categories');
       $result = $query->result_array();
       foreach($result as $k => $v){

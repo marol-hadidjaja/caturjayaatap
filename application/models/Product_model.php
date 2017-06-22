@@ -18,7 +18,7 @@ class Product_model extends CI_Model{
       $this->db->from('products');
       // $this->db->join('prices', 'products.id = prices.product_id');
       // $this->db->join('specifications', 'specifications.price_id = prices.id');
-      $this->db->order_by('updated_at', 'DESC');
+      $this->db->order_by('name', 'ASC');
       // $this->db->order_by('products.updated_at DESC, prices.updated_at DESC, specifications.updated_at DESC');
       if($limit)
         $this->db->limit($limit);
@@ -67,10 +67,11 @@ class Product_model extends CI_Model{
   public function get_featured($limit = FALSE){
     $this->db->from('products');
     $this->db->where('featured', true);
-    $this->db->order_by('updated_at', 'DESC');
+    $this->db->order_by('name', 'ASC');
     if($limit)
       $this->db->limit($limit);
     $query = $this->db->get();
+
     return $query->result_array();
   }
 
