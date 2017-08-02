@@ -28,19 +28,6 @@
 
   <div class="col s12">
     <?php
-      /*
-      echo form_label('Category', 'category');
-      echo '<div>';
-      $data = array('name' => "category",
-        'id' => 'category');
-
-      if(isset($product))
-        echo form_dropdown($data, array($product['category_id'] => $product['category_name']));
-      else
-        echo form_dropdown($data, array());
-
-      echo '</div>';
-      */
       if(isset($product))
         echo form_hidden('category', $product['category_id']);
       else
@@ -71,50 +58,6 @@
     echo form_label('Featured', 'featured');
   ?>
 
-  <!--
-  <div class="file-field input-field">
-    <div class="btn">
-      <span>Images</span>
-      <?php
-        /*
-        $data = array('name' => 'images[]',
-          'class' => '',
-          'id' => 'images',
-          'multiple' => true);
-        echo form_upload($data);
-        */
-      ?>
-    </div>
-    <div class="file-path-wrapper">
-      <input class="file-path validate" type="text" placeholder="Upload one or more files">
-    </div>
-  </div>
-  -->
-
-  <?php
-    /*
-    if(isset($images) && count($images) > 0){
-      foreach($images as $image){
-        $extension_pos = strrpos($image['filename'], '.'); // find position of the last dot, so where the extension starts
-        $thumb = substr($image['filename'], 0, $extension_pos) . '_thumb' . substr($image['filename'], $extension_pos);
-        echo "<div class='product_images' data-id='{$image['id']}'>";
-        echo img("uploads/{$thumb}");
-
-        $data = array('name' => 'delete_image',
-          'class' => 'delete_image');
-        echo form_button($data, 'X');
-        echo "</div><!-- close .product_images -->";
-      }
-      $image_ids = array_map(function($val){ return $val['id']; }, $images);
-      $data = array('name' => 'product_images',
-        'type' => 'hidden',
-        'id' => 'product_images',
-        'value' => join($image_ids, ','));
-      echo form_input($data);
-    }
-    */
-  ?>
-
   <div class="detProd">
     <section>
       <h5>Detail Product</h5>
@@ -129,18 +72,10 @@
       <?php
         echo "<div id='prices_container'>";
         if(isset($prices) && count($prices) > 0){
-          // echo 'prices in products/_form.php: <br/>';
-          // print_r($prices);
-          // echo "<br/>";
-
           // key in $prices is different from what I want
           // I want curent order but just reverse the keys
           $prices_count = count($prices) - 1;
           foreach($prices as $price){
-            // echo "price in products/_form.php: <br/>";
-            // print_r($price);
-            // echo "<br/>";
-
             $this->load->view('admin/prices/_form', array('price' => $price, 'prices_count' => $prices_count));
 
             $prices_count --;
@@ -164,7 +99,6 @@
     "ajax": {
       "url": url,
       data:function (params) {
-        // console.log('params: ', params);
         return { term:params.term, page:params.page };
       },
       dataType:"json",
@@ -204,6 +138,7 @@
       url: '<?= base_url() ?>' + 'admin/prices/new?prices_count=' + prices_count,
       success: function(result){
         $('#prices_container').prepend(result);
+        $('#prices_container .prices:first-child .prices_price').focus();
         $("select").material_select();
       }
     });
@@ -219,13 +154,14 @@
       url: '<?= base_url() ?>' + 'admin/specifications/new?specs_count=' + specs_count + '&prices_count=' + prices_count,
       success: function(result){
         $prices.find('.specs_container').prepend(result);
+        $prices.find('.specification_unit:first-child').focus();
         $("select").material_select();
       }
     });
   });
 
   $("body").on("click", ".delete_spec", function(e){
-    $spec = $(this).parent('.specifications');
+    $spec = $(this).parents('.specifications');
     $spec.remove();
   });
 

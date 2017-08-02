@@ -55,19 +55,19 @@
  */
 	// define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
   if(! defined('ENVIRONMENT') ){
-  $domain = strtolower($_SERVER['HTTP_HOST']);
-  switch($domain){
-    case 'caturjayaatap.com' :
-      define('ENVIRONMENT', 'production');
-    break;
-    case 'test.yoursite.tld' :
-      define('ENVIRONMENT', 'testing');
-    break;
-    default :
-      define('ENVIRONMENT', 'development');
-    break;
+    $domain = strtolower($_SERVER['HTTP_HOST']);
+    switch($domain){
+      case 'caturjayaatap.com' :
+        define('ENVIRONMENT', 'production');
+      break;
+      case 'test.yoursite.tld' :
+        define('ENVIRONMENT', 'testing');
+      break;
+      default :
+        define('ENVIRONMENT', 'development');
+      break;
+    }
   }
-}
 
 /*
  *---------------------------------------------------------------

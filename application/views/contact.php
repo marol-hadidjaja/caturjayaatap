@@ -62,7 +62,7 @@
   function loadScript(){
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyD7VKj-zyKnDaIMva1JxE21m0DtwvwG-_E&sensor=false&callback=loadmap";
+    script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyBmtfl3iVGQXNvcQrZLzIIs7T1tlWvBatg&sensor=false&callback=getLocation";
     setTimeout(function () {
       try{
         if (!google || !google.maps) {
@@ -74,13 +74,24 @@
         console.log(e);
         console.log("error -- load script");
       }
-    }, 5000);
+    }, 2000);
     document.body.appendChild(script);
   }
 
-  // google maps
-  function loadmap(){
-    var maplatlng = new google.maps.LatLng(-7.415812, 112.674312);
+  var myLatLng;
+  var latit;
+  var longit;
+  function geoSuccess(position) {
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+    myLatLng = {
+      lat: latitude,
+      lng: longitude
+    };
+
+    var maplatlng = new google.maps.LatLng(-7.413437, 112.675562);
     var settings = {
       zoom: 17,
       center: maplatlng,
@@ -90,12 +101,74 @@
       scaleControl: false,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-
     var map = new google.maps.Map(document.getElementById("map_canvas"), settings);
     var marker = new google.maps.Marker({
       position: maplatlng,
       map: map
     });
+
+    // var directionsService = new google.maps.DirectionsService;
+    // var directionsDisplay = new google.maps.DirectionsRenderer;
+    // call renderer to display directions
+    // directionsDisplay.setMap(map);
+
+    // Display multiple markers on a map
+    var infoWindow = new google.maps.InfoWindow(),
+        marker, i;
+
+    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+      return function() {
+        latit = marker.getPosition().lat();
+        longit = marker.getPosition().lng();
+         console.log("lat: " + latit);
+         console.log("lng: " + longit);
+      }
+    })(marker, i));
+    marker.addListener('click', function() {
+      // window.open('http://google.co.id/maps/preview/@' + latit + ',' + longit + ',17z');
+      window.open('http://google.co.id/maps?q=loc:' + latit + ',' + longit);
+      /*
+        directionsService.route({
+          // origin: document.getElementById('start').value,
+          origin: myLatLng,
+          // destination: marker.getPosition(),
+          destination: {
+              lat: latit,
+              lng: longit
+          },
+          travelMode: 'DRIVING'
+        }, function(response, status) {
+          if (status === 'OK') {
+              directionsDisplay.setDirections(response);
+          } else {
+              window.alert('Directions request failed due to ' + status);
+          }
+        });
+      */
+    });
+  }
+
+  function geoError() {
+    alert("Geocoder failed.");
+  }
+
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+      // alert("Geolocation is supported by this browser.");
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
+
+  // google maps
+  function loadmap(){
+    // Kebon Agung
+    // var maplatlng = new google.maps.LatLng(-7.415812, 112.674312);
+
+    // Gunung Kweni
+    // var maplatlng = new google.maps.LatLng(-7.413437, 112.675562);
+    getLocation()
   }
 
   loadScript();

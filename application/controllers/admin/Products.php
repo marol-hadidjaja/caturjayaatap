@@ -222,14 +222,21 @@ class Products extends Admin_Controller{
     else
       $this->session->set_flashdata('message_fail', "Update product failed");
 
-    // redirect('admin/products');
     redirect('admin/categories/edit/'.$this->input->post('category'));
   }
 
   public function _delete($params){
+    /*
     if($this->product_model->_delete($params[0])){
       $this->session->set_flashdata("message_success", "Delete product succeed");
       redirect('admin/products');
+    }
+    */
+
+    $get_product = $this->product_model->get_full($params[0]);
+    if($this->product_model->_delete($params[0])){
+      $this->session->set_flashdata("message_success", "Delete product succeed");
+      redirect('admin/categories/edit/'.$get_product["product"]["category_id"]);
     }
   }
 }

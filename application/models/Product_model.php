@@ -125,13 +125,15 @@ class Product_model extends CI_Model{
     foreach($data['prices'] as $price){
       $item = array('price' => $price['price'],
         'per' => $price['per'],
-        'product_id' => $product_id);
+        'product_id' => $product_id,
+        'created_at' => (new DateTime())->format('Y-m-d h:m:s'));
 
       $this->price_model->create($item);
       $price_id = $this->db->insert_id();
 
       foreach($price['specifications'] as $specification){
         $specification['price_id'] = $price_id;
+        $specification['created_at'] = (new DateTime())->format('Y-m-d h:m:s');
         $this->specification_model->create($specification);
       }
     }
@@ -204,16 +206,24 @@ class Product_model extends CI_Model{
     echo "current product_price_ids: ";
     print_r($product_price_ids);
     echo "<br/>";
-    echo "data prices:";
+    */
+    echo "data prices:<pre>";
     print_r($data['prices']);
-    echo "<br/>";
-    */
-    $h_prices = array_map(function($val){ return $val['id']; }, $data['prices']);
+    echo "</pre><br/>";
+    // find updated price data
+    $h_prices = array_map(function($val){
+      if(array_key_exists('id', $val))
+        return $val['id'];
+      }, $data['prices']);
+
+    $h_prices = array_filter($h_prices);
     /*
-    echo "h_prices: ";
+    echo "h_prices: <pre>";
     print_r($h_prices);
-    echo "<br/>";
+    echo "</pre><br/>";
     */
+
+
     $deleted_price_ids = array_diff($product_price_ids, $h_prices);
     if(count($deleted_price_ids) > 0){
       $this->price_model->_delete($deleted_price_ids);
@@ -253,7 +263,7 @@ class Product_model extends CI_Model{
       else{
         // echo "price_id not found<br/>";
         $item['product_id'] = $id;
-        $this->price_model->create($item);
+        $new_price_id = $this->price_model->create($item);
       }
 
       foreach($price['specifications'] as $specification){
@@ -269,9 +279,22 @@ class Product_model extends CI_Model{
           $this->specification_model->update($specification['id'], $item_2);
         }
         else{
-          // echo "specification_id not found<br/>";
-          // echo "price_id: {$price['id']}<br/>";
-          $item_2['price_id'] = $price['id'];
+          /*
+          echo "specification_id not found<br/>";
+          echo "specification: <pre>";
+          print_r($specification);
+          echo "</pre>";
+          echo "item_2: <pre>";
+          print_r($item_2);
+          echo "</pre>";
+          echo "price: <pre>";
+          print_r($price);
+          echo "</pre>";
+          */
+          if(isset($price['id']))
+            $item_2['price_id'] = $price['id'];
+          else
+            $item_2['price_id'] = $new_price_id;
           $this->specification_model->create($item_2);
         }
         // echo "<hr/>";

@@ -24,6 +24,7 @@ class Price_model extends CI_Model{
 
   public function create($data){
     $this->db->insert('prices', $data);
+    return $this->db->insert_id();
   }
 
   public function update($id, $data){
